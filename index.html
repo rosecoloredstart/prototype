@@ -2210,12 +2210,150 @@ let rfIdx=0;
 const interestOptions=['Mental Health','Black Joy','Therapy & Care','Community Events','Creative Arts','Finance & Wealth','Identity & Culture','Relationships','News & Policy','Spirituality'];
 
 // ── Tabs ──
+// ── Daily Ritual ──
+const POLLS = [
+  {
+    q: "Be honest. What's your current situationship with sleep?",
+    opts: ["We had a whole thing going", "It ghosted me", "I'm the problem, honestly", "Thriving, actually", "What is sleep"],
+    community: "You're not alone — half the house says sleep ghosted them too."
+  },
+  {
+    q: "Rate your energy today, no filter.",
+    opts: ["Main character, no notes", "Running on vibes and caffeine", "Neutral like Switzerland", "Foggy but functional", "Don't ask me that right now"],
+    community: "The house is split — half of us are running on vibes, and that's valid."
+  },
+  {
+    q: "The group chat energy today is...",
+    opts: ["On ten for no reason", "Quiet but lurking", "Somebody's about to start something", "Pure comedy, no notes", "I left the group, honestly"],
+    community: "Somebody in this house left a group chat today and we respect the peace."
+  },
+  {
+    q: "What are you finally giving yourself permission to do?",
+    opts: ["Rest without guilt", "Say no and mean it", "Take up space out loud", "Want something just for me", "Start before I feel ready"],
+    community: "Half the house is learning to rest without earning it. You're in good company."
+  },
+  {
+    q: "What's something small that's been making you smile lately?",
+    opts: ["A song I forgot I loved", "Someone checked on me unexpectedly", "Good food, no occasion", "My own company, actually", "The sun came out at the right moment"],
+    community: "The house is smiling at small things today. That's the whole point."
+  },
+  {
+    q: "How are you moving this season?",
+    opts: ["Intentionally slow", "Building something quietly", "Letting go of what's not for me", "Chasing what actually matters", "Figuring it out in real time"],
+    community: "Most of the house is building something quietly right now. So are you."
+  },
+  {
+    q: "Monday check-in: what's the vibe?",
+    opts: ["Reluctant but here", "Strangely motivated", "Fully unbothered", "Already tired and it's 9am", "New week, different me (we'll see)"],
+    community: "The house is mostly reluctant but present. That counts as showing up."
+  }
+];
+
+const FEELING_DATA = {
+  heavy: {
+    response: "That's a real thing to carry. We're not going to tell you to push through. Maybe just set it down for a minute.",
+    actions: [
+      {label:"Open The Lens", tab:"wellness"},
+      {label:"Find a Therapist", tab:"therapists"},
+      {label:"Noise Cleanse", tab:"wellness"}
+    ],
+    quote: {text:'"You don't have to be strong all the time. You don't have to pretend to feel okay."', attr:"— Iyanla Vanzant"}
+  },
+  foggy: {
+    response: "Foggy is okay. You don't have to be clear to be present. Sometimes the fog is just the brain asking for patience.",
+    actions: [
+      {label:"Visual Cleanse", tab:"wellness"},
+      {label:"Read Something", tab:"library"},
+      {label:"Community", tab:"community"}
+    ],
+    quote: {text:'"Rest until you feel like playing. Then play until you feel like resting."', attr:"— African Proverb"}
+  },
+  steady: {
+    response: "Steady is underrated. There's a lot of power in knowing where your feet are.",
+    actions: [
+      {label:"What's in the news?", tab:"news"},
+      {label:"Community", tab:"community"},
+      {label:"Just Catch Me Up", action:"catchup"}
+    ],
+    quote: {text:'"Not everything that is faced can be changed, but nothing can be changed until it is faced."', attr:"— James Baldwin"}
+  },
+  hopeful: {
+    response: "Hopeful is a muscle. You're using it today — that's not nothing.",
+    actions: [
+      {label:"Share in Community", tab:"community"},
+      {label:"Write it down", tab:"wellness"},
+      {label:"Just Catch Me Up", action:"catchup"}
+    ],
+    quote: {text:'"I am deliberate and afraid of nothing."', attr:"— Audre Lorde"}
+  },
+  expansive: {
+    response: "That energy is worth documenting. Something about today is working — let's not waste it.",
+    actions: [
+      {label:"Write it in your journal", tab:"wellness"},
+      {label:"Share it in Community", tab:"community"},
+      {label:"Create something", tab:"create"}
+    ],
+    quote: {text:'"When I dare to be powerful — to use my strength in the service of my vision — then it becomes less and less important whether I am afraid."', attr:"— Audre Lorde"}
+  },
+  litup: {
+    response: "Say less. Carry that. The community would love to hear what's got you like this.",
+    actions: [
+      {label:"Tell the community", tab:"community"},
+      {label:"Create something", tab:"create"},
+      {label:"Document it", tab:"wellness"}
+    ],
+    quote: {text:'"When you're Black and you're excellent, you're a miracle. And miracles should be celebrated."', attr:"— Viola Davis"}
+  }
+};
+
+let currentPoll = null;
+let selectedPollOpt = null;
+let selectedFeeling = null;
+let ritualDone = false;
+let catchupSlide = 0;
+const CATCHUP_TOTAL = 6;
+
+function openRitual(){
+  const overlay=document.getElementById('ritualOverlay');
+  if(!overlay) return;
+  // Reset all steps
+  document.querySelectorAll('.ritual-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('ritual-poll')?.classList.add('active');
+  const btn=document.getElementById('pollSubmitBtn');
+  if(btn) btn.disabled=true;
+  const fr=document.getElementById('feelingResponse');
+  if(fr) fr.style.display='none';
+  document.querySelectorAll('.ritual-poll-opt').forEach(o=>o.classList.remove('selected'));
+  document.querySelectorAll('.feeling-opt').forEach(o=>o.classList.remove('selected','heavy-feel'));
+  selectedPollOpt=null;
+  selectedFeeling=null;
+  // Populate poll question
+  const dayIdx=new Date().getDay();
+  currentPoll=POLLS[dayIdx % POLLS.length];
+  const qEl=document.getElementById('pollQuestion');
+  if(qEl) qEl.textContent=currentPoll.q;
+  const optsEl=document.getElementById('pollOpts');
+  if(optsEl){
+    optsEl.innerHTML='';
+    currentPoll.opts.forEach(opt=>{
+      const d=document.createElement('div');
+      d.className='ritual-poll-opt';
+      d.textContent=opt;
+      d.onclick=()=>selectPollOpt(d);
+      optsEl.appendChild(d);
+    });
+  }
+  // Show overlay
+  overlay.classList.remove('hidden');
+}
+
 function showTab(id){
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-'+id)?.classList.add('active');
   document.querySelector(`[data-tab="${id}"]`)?.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='home') openRitual();
 }
 function showSubTab(parent,id,el){
   document.querySelectorAll(`#tab-${parent} .sub-panel`).forEach(p=>p.classList.remove('active'));
@@ -2642,113 +2780,7 @@ document.querySelectorAll('.modal-overlay').forEach(o=>{o.addEventListener('clic
 
 
 
-// ── Daily Ritual ──
-const POLLS = [
-  {
-    q: "Be honest. What's your current situationship with sleep?",
-    opts: ["We had a whole thing going", "It ghosted me", "I'm the problem, honestly", "Thriving, actually", "What is sleep"],
-    community: "You're not alone — half the house says sleep ghosted them too."
-  },
-  {
-    q: "Rate your energy today, no filter.",
-    opts: ["Main character, no notes", "Running on vibes and caffeine", "Neutral like Switzerland", "Foggy but functional", "Don't ask me that right now"],
-    community: "The house is split — half of us are running on vibes, and that's valid."
-  },
-  {
-    q: "The group chat energy today is...",
-    opts: ["On ten for no reason", "Quiet but lurking", "Somebody's about to start something", "Pure comedy, no notes", "I left the group, honestly"],
-    community: "Somebody in this house left a group chat today and we respect the peace."
-  },
-  {
-    q: "What are you finally giving yourself permission to do?",
-    opts: ["Rest without guilt", "Say no and mean it", "Take up space out loud", "Want something just for me", "Start before I feel ready"],
-    community: "Half the house is learning to rest without earning it. You're in good company."
-  },
-  {
-    q: "What's something small that's been making you smile lately?",
-    opts: ["A song I forgot I loved", "Someone checked on me unexpectedly", "Good food, no occasion", "My own company, actually", "The sun came out at the right moment"],
-    community: "The house is smiling at small things today. That's the whole point."
-  },
-  {
-    q: "How are you moving this season?",
-    opts: ["Intentionally slow", "Building something quietly", "Letting go of what's not for me", "Chasing what actually matters", "Figuring it out in real time"],
-    community: "Most of the house is building something quietly right now. So are you."
-  },
-  {
-    q: "Monday check-in: what's the vibe?",
-    opts: ["Reluctant but here", "Strangely motivated", "Fully unbothered", "Already tired and it's 9am", "New week, different me (we'll see)"],
-    community: "The house is mostly reluctant but present. That counts as showing up."
-  }
-];
-
-const FEELING_DATA = {
-  heavy: {
-    response: "That's a real thing to carry. We're not going to tell you to push through. Maybe just set it down for a minute.",
-    actions: [
-      {label:"Open The Lens", tab:"wellness"},
-      {label:"Find a Therapist", tab:"therapists"},
-      {label:"Noise Cleanse", tab:"wellness"}
-    ],
-    quote: {text:'"You don't have to be strong all the time. You don't have to pretend to feel okay."', attr:"— Iyanla Vanzant"}
-  },
-  foggy: {
-    response: "Foggy is okay. You don't have to be clear to be present. Sometimes the fog is just the brain asking for patience.",
-    actions: [
-      {label:"Visual Cleanse", tab:"wellness"},
-      {label:"Read Something", tab:"library"},
-      {label:"Community", tab:"community"}
-    ],
-    quote: {text:'"Rest until you feel like playing. Then play until you feel like resting."', attr:"— African Proverb"}
-  },
-  steady: {
-    response: "Steady is underrated. There's a lot of power in knowing where your feet are.",
-    actions: [
-      {label:"What's in the news?", tab:"news"},
-      {label:"Community", tab:"community"},
-      {label:"Just Catch Me Up", action:"catchup"}
-    ],
-    quote: {text:'"Not everything that is faced can be changed, but nothing can be changed until it is faced."', attr:"— James Baldwin"}
-  },
-  hopeful: {
-    response: "Hopeful is a muscle. You're using it today — that's not nothing.",
-    actions: [
-      {label:"Share in Community", tab:"community"},
-      {label:"Write it down", tab:"wellness"},
-      {label:"Just Catch Me Up", action:"catchup"}
-    ],
-    quote: {text:'"I am deliberate and afraid of nothing."', attr:"— Audre Lorde"}
-  },
-  expansive: {
-    response: "That energy is worth documenting. Something about today is working — let's not waste it.",
-    actions: [
-      {label:"Write it in your journal", tab:"wellness"},
-      {label:"Share it in Community", tab:"community"},
-      {label:"Create something", tab:"create"}
-    ],
-    quote: {text:'"When I dare to be powerful — to use my strength in the service of my vision — then it becomes less and less important whether I am afraid."', attr:"— Audre Lorde"}
-  },
-  litup: {
-    response: "Say less. Carry that. The community would love to hear what's got you like this.",
-    actions: [
-      {label:"Tell the community", tab:"community"},
-      {label:"Create something", tab:"create"},
-      {label:"Document it", tab:"wellness"}
-    ],
-    quote: {text:'"When you're Black and you're excellent, you're a miracle. And miracles should be celebrated."', attr:"— Viola Davis"}
-  }
-};
-
-let currentPoll = null;
-let selectedPollOpt = null;
-let selectedFeeling = null;
-let ritualDone = false;
-let catchupSlide = 0;
-const CATCHUP_TOTAL = 6;
-
 function initRitual(){
-  // For demo: always show. In production, uncomment localStorage check below.
-  // try{ const today=new Date().toDateString(); if(localStorage.getItem('rcRitualDate')===today){ritualDone=true;return;} }catch(e){}
-
   // Pick poll for today (based on day of week)
   const dayIdx = new Date().getDay();
   currentPoll = POLLS[dayIdx % POLLS.length];
