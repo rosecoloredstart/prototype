@@ -623,9 +623,9 @@ span.d{display:inline !important;}span.r{display:none !important;}
 .home-dest-desc{font-size:11.5px;color:var(--text-muted);line-height:1.4;}
 
 /* ═══════════ DAILY RITUAL OVERLAY ═══════════ */
-.ritual-overlay{position:fixed;inset:0;z-index:1800;background:rgba(6,4,3,0.85);backdrop-filter:blur(12px);display:flex;align-items:flex-end;justify-content:center;animation:fadeIn 0.3s ease;}
-.ritual-overlay.hidden{display:none;}
-.ritual-sheet{background:var(--bg2);border:1px solid var(--border);border-radius:28px 28px 0 0;width:100%;max-width:640px;max-height:88vh;overflow-y:auto;padding:12px 28px 40px;position:relative;animation:slideUp 0.4s cubic-bezier(0.25,0.46,0.45,0.94);}
+.ritual-overlay{position:fixed;inset:0;z-index:1800;background:rgba(6,4,3,0.88);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;padding:20px;}
+.ritual-overlay.hidden{display:none !important;}
+.ritual-sheet{background:var(--bg2);border:1px solid var(--border);border-radius:20px;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;padding:28px 28px 36px;position:relative;animation:slideUp 0.35s cubic-bezier(0.25,0.46,0.45,0.94);}
 @keyframes slideUp{from{transform:translateY(60px);opacity:0;}to{transform:translateY(0);opacity:1;}}
 .ritual-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 20px;}
 .ritual-skip{position:absolute;top:18px;right:24px;background:transparent;border:none;font-family:'Syne',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);cursor:pointer;transition:color 0.2s;padding:4px 0;}
@@ -1569,10 +1569,9 @@ span.d{display:inline !important;}span.r{display:none !important;}
 </div>
 
 <!-- ═══════════ DAILY RITUAL ═══════════ -->
-<div class="ritual-overlay" id="ritualOverlay">
+<div class="ritual-overlay hidden" id="ritualOverlay">
   <div class="ritual-sheet">
-    <div class="ritual-handle"></div>
-    <button class="ritual-skip" onclick="skipRitual()">take me in &#8594;</button>
+    <button class="ritual-skip" onclick="skipRitual()">Skip &#8594;</button>
 
     <!-- Step 1: Poll -->
     <div class="ritual-step active" id="ritual-poll">
@@ -2921,10 +2920,8 @@ const CATCHUP_TOTAL = 6;
 function initRitual(){
   // Check if already done today
   const today = new Date().toDateString();
-  if(localStorage.getItem('rcRitualDate') === today){
-    ritualDone = true;
-    return;
-  }
+  try{ if(localStorage.getItem('rcRitualDate') === today){ ritualDone=true; return; } } catch(e){}
+
   // Pick poll for today (based on day of week)
   const dayIdx = new Date().getDay();
   currentPoll = POLLS[dayIdx % POLLS.length];
@@ -3040,7 +3037,7 @@ function skipRitual(){
     setTimeout(()=>overlay.classList.add('hidden'),300);
   }
   // Mark done for today
-  localStorage.setItem('rcRitualDate', new Date().toDateString());
+  try{ localStorage.setItem('rcRitualDate', new Date().toDateString()); }catch(e){}
   ritualDone = true;
 }
 
