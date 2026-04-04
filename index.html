@@ -586,6 +586,127 @@ span.d{display:inline !important;}span.r{display:none !important;}
 .event-spots{font-family:'Syne',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);}
 .evt-toggle{font-family:'Syne',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:6px 14px;border-radius:50px;border:1px solid var(--border2);background:transparent;color:var(--text-muted);cursor:pointer;transition:var(--transition);}
 .evt-toggle.active{background:var(--bg4);border-color:var(--border);color:var(--text);}
+
+/* ═══════════ APP HOME PAGE ═══════════ */
+.app-home{min-height:calc(100vh - var(--nav-h));display:flex;justify-content:center;padding:0 0 80px;}
+.app-home-wrap{width:100%;max-width:680px;padding:32px 24px 0;}
+
+/* Greeting */
+.home-greeting{margin-bottom:28px;}
+.home-greeting-time{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;}
+.home-greeting-name{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,28px);font-weight:300;line-height:1.2;}
+.home-greeting-name em{font-style:italic;color:var(--accent);}
+
+/* Catch Me Up Button */
+.catch-me-up-btn{width:100%;background:linear-gradient(135deg,var(--bg3),var(--bg4));border:1px solid var(--border);border-radius:18px;padding:22px 24px;text-align:left;cursor:pointer;transition:var(--transition);margin-bottom:18px;display:block;position:relative;overflow:hidden;}
+.catch-me-up-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--accent),var(--rose));opacity:0;transition:opacity 0.3s;}
+.catch-me-up-btn:hover{border-color:var(--accent);transform:translateY(-1px);}
+.catch-me-up-btn:hover::before{opacity:0.04;}
+.catch-me-up-label{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;position:relative;}
+.catch-me-up-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:var(--text);margin-bottom:4px;position:relative;}
+.catch-me-up-sub{font-size:12.5px;color:var(--text-muted);line-height:1.5;position:relative;}
+.catch-me-up-arrow{position:absolute;top:22px;right:22px;width:32px;height:32px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:var(--transition);}
+.catch-me-up-btn:hover .catch-me-up-arrow{border-color:var(--accent);color:var(--accent);}
+
+/* Daily quote */
+.home-quote{padding:18px 20px;border-left:2px solid var(--accent);margin-bottom:24px;background:var(--bg2);border-radius:0 10px 10px 0;}
+.home-quote-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--text-soft);line-height:1.6;margin-bottom:6px;}
+.home-quote-attr{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);}
+
+/* Destination grid */
+.home-dest-label{font-family:'Syne',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;}
+.home-dest-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.home-dest-card{background:var(--bg3);border:1px solid var(--border2);border-radius:14px;padding:16px;cursor:pointer;transition:var(--transition);}
+.home-dest-card:hover{border-color:var(--border);background:var(--bg4);transform:translateY(-1px);}
+.home-dest-icon{margin-bottom:10px;}
+.home-dest-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;margin-bottom:3px;}
+.home-dest-desc{font-size:11.5px;color:var(--text-muted);line-height:1.4;}
+
+/* ═══════════ DAILY RITUAL OVERLAY ═══════════ */
+.ritual-overlay{position:fixed;inset:0;z-index:1800;background:rgba(6,4,3,0.85);backdrop-filter:blur(12px);display:flex;align-items:flex-end;justify-content:center;animation:fadeIn 0.3s ease;}
+.ritual-overlay.hidden{display:none;}
+.ritual-sheet{background:var(--bg2);border:1px solid var(--border);border-radius:28px 28px 0 0;width:100%;max-width:640px;max-height:88vh;overflow-y:auto;padding:12px 28px 40px;position:relative;animation:slideUp 0.4s cubic-bezier(0.25,0.46,0.45,0.94);}
+@keyframes slideUp{from{transform:translateY(60px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.ritual-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 20px;}
+.ritual-skip{position:absolute;top:18px;right:24px;background:transparent;border:none;font-family:'Syne',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);cursor:pointer;transition:color 0.2s;padding:4px 0;}
+.ritual-skip:hover{color:var(--accent);}
+
+/* Ritual steps */
+.ritual-step{display:none;}
+.ritual-step.active{display:block;animation:tabIn 0.3s ease;}
+
+/* Poll */
+.ritual-poll-label{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+.ritual-poll-q{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3.5vw,26px);font-weight:400;line-height:1.2;margin-bottom:20px;color:var(--text);}
+.ritual-poll-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.ritual-poll-opt{padding:13px 16px;border:1px solid var(--border2);border-radius:10px;font-size:14px;color:var(--text-soft);cursor:pointer;transition:var(--transition);background:var(--bg3);display:flex;align-items:center;gap:10px;}
+.ritual-poll-opt::before{content:'';width:14px;height:14px;border:1.5px solid var(--border);border-radius:50%;flex-shrink:0;transition:var(--transition);}
+.ritual-poll-opt:hover{border-color:var(--border);color:var(--text);}
+.ritual-poll-opt.selected{border-color:var(--accent);color:var(--text);background:rgba(200,144,74,0.06);}
+.ritual-poll-opt.selected::before{background:var(--accent);border-color:var(--accent);}
+
+/* Poll results */
+.poll-community-line{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--text-soft);line-height:1.5;margin-bottom:20px;padding:14px 16px;background:var(--bg3);border-radius:10px;border-left:2px solid var(--accent);}
+.poll-result-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.poll-result-label{font-size:12.5px;color:var(--text-muted);flex-shrink:0;width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.poll-result-bar-wrap{flex:1;background:var(--bg4);border-radius:50px;height:6px;overflow:hidden;}
+.poll-result-bar{height:100%;border-radius:50px;background:var(--accent);transition:width 0.6s ease;}
+.poll-result-pct{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;color:var(--text-muted);flex-shrink:0;width:30px;text-align:right;}
+
+/* Feeling check */
+.ritual-house{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,4vw,32px);font-weight:400;margin-bottom:6px;color:var(--text);}
+.ritual-house-sub{font-size:14px;color:var(--text-muted);margin-bottom:22px;}
+.feeling-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.feeling-opt{padding:16px 10px;border:1px solid var(--border2);border-radius:12px;text-align:center;cursor:pointer;transition:var(--transition);background:var(--bg3);}
+.feeling-opt:hover{border-color:var(--border);background:var(--bg4);}
+.feeling-opt.selected{border-color:var(--accent);background:rgba(200,144,74,0.06);}
+.feeling-opt.selected.heavy-feel{border-color:var(--rose);background:rgba(232,112,138,0.06);}
+.feeling-emoji{font-size:24px;margin-bottom:6px;line-height:1;}
+.feeling-label{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);}
+.feeling-opt.selected .feeling-label{color:var(--text);}
+.feeling-response{margin-top:16px;padding:16px 18px;border-radius:12px;border:1px solid var(--border2);background:var(--bg3);animation:tabIn 0.3s ease;}
+.feeling-response-text{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--text-soft);line-height:1.65;margin-bottom:12px;font-style:italic;}
+.feeling-response-actions{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* Paths step */
+.ritual-quote{padding:18px 20px;border-left:2px solid var(--accent);margin-bottom:20px;background:var(--bg3);border-radius:0 10px 10px 0;}
+.ritual-quote-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--text-soft);line-height:1.6;margin-bottom:6px;}
+.ritual-quote-attr{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);}
+
+/* ═══════════ CATCH ME UP OVERLAY ═══════════ */
+.catchup-overlay{position:fixed;inset:0;z-index:1900;background:var(--bg);display:none;flex-direction:column;animation:fadeIn 0.3s ease;}
+.catchup-overlay.open{display:flex;}
+.catchup-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 14px;border-bottom:1px solid var(--border2);flex-shrink:0;}
+.catchup-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;font-style:italic;}
+.catchup-logo span{color:var(--accent);}
+.catchup-close{background:transparent;border:1px solid var(--border2);border-radius:50px;font-family:'Syne',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);padding:7px 14px;cursor:pointer;transition:var(--transition);}
+.catchup-close:hover{border-color:var(--border);color:var(--text);}
+.catchup-progress{display:flex;gap:4px;padding:12px 24px 0;flex-shrink:0;}
+.catchup-progress-dot{flex:1;height:3px;border-radius:2px;background:var(--border2);transition:background 0.3s;}
+.catchup-progress-dot.done{background:var(--accent);}
+.catchup-progress-dot.active{background:var(--accent);opacity:0.6;}
+.catchup-body{flex:1;overflow:hidden;position:relative;}
+.catchup-slide{position:absolute;inset:0;padding:32px 24px;opacity:0;transform:translateX(40px);transition:opacity 0.35s ease,transform 0.35s ease;pointer-events:none;overflow-y:auto;}
+.catchup-slide.active{opacity:1;transform:translateX(0);pointer-events:all;}
+.catchup-slide.exit{opacity:0;transform:translateX(-40px);}
+.catchup-slide-label{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.catchup-slide-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,4vw,30px);font-weight:400;line-height:1.15;margin-bottom:8px;}
+.catchup-slide-body{font-size:13.5px;color:var(--text-muted);line-height:1.6;margin-bottom:18px;}
+.catchup-slide-card{background:var(--bg3);border:1px solid var(--border2);border-radius:14px;padding:18px;cursor:pointer;transition:var(--transition);}
+.catchup-slide-card:hover{border-color:var(--border);background:var(--bg4);}
+.catchup-slide-card-label{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.catchup-slide-card-text{font-size:14px;color:var(--text);line-height:1.55;margin-bottom:6px;}
+.catchup-slide-card-sub{font-size:11px;color:var(--text-muted);}
+.catchup-action-card{background:linear-gradient(135deg,var(--bg3),var(--bg4));border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center;}
+.catchup-action-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:var(--text);line-height:1.4;margin-bottom:10px;}
+.catchup-action-body{font-size:13px;color:var(--text-muted);margin-bottom:18px;}
+.catchup-footer{display:flex;align-items:center;justify-content:space-between;padding:16px 24px 28px;border-top:1px solid var(--border2);flex-shrink:0;}
+.catchup-nav-btn{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:10px 20px;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:var(--transition);}
+.catchup-nav-btn:hover{border-color:var(--accent);color:var(--accent);}
+.catchup-nav-btn.primary{background:var(--accent);color:#060403;border-color:var(--accent);}
+.catchup-nav-btn.primary:hover{background:var(--rose);border-color:var(--rose);color:#fff;}
+.catchup-counter{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);}
+
 </style>
 </head>
 <body>
@@ -639,150 +760,77 @@ span.d{display:inline !important;}span.r{display:none !important;}
 
 <!-- ═══════════ HOME ═══════════ -->
 <div class="tab-content active" id="tab-home">
+  <div class="app-home">
+    <div class="app-home-wrap">
 
-  <!-- Hero -->
-  <div class="hero">
-    <div class="hero-left">
-      <div class="hero-eyebrow d">Built for Black Life</div>
-      <div class="hero-eyebrow r">The Lens Is On</div>
-      <h1 class="hero-headline d">See the world<br>through the lens<br>you <em>always deserved.</em></h1>
-      <h1 class="hero-headline r">You chose to<br>see <em>differently.</em><br>Welcome back.</h1>
-      <p class="hero-sub d">A space for Black joy, creativity, community, and care — built entirely around you. Not as an afterthought. As the whole point.</p>
-      <p class="hero-sub r">The world looks different from here. This is your space to move through it on your own terms.</p>
-      <button class="hero-cta-btn" onclick="document.getElementById('needs-anchor').scrollIntoView({behavior:'smooth'})">
-        <span>What do you need today?</span>
-        <div class="hero-cta-arrow">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 2v10M3 8l4 4 4-4"/></svg>
+      <!-- Greeting -->
+      <div class="home-greeting">
+        <div class="home-greeting-time" id="homeTimeLabel">Good morning</div>
+        <div class="home-greeting-name d">Welcome back. <em>This is your house.</em></div>
+        <div class="home-greeting-name r">The lens is on. <em>See it differently.</em></div>
+      </div>
+
+      <!-- Just Catch Me Up -->
+      <button class="catch-me-up-btn" onclick="openCatchUp()">
+        <div class="catch-me-up-label">&#10022; New since you left</div>
+        <div class="catch-me-up-title">Just catch me up</div>
+        <div class="catch-me-up-sub">Forums, art, reframes, today's headline — in one swipe.</div>
+        <div class="catch-me-up-arrow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg>
         </div>
       </button>
-    </div>
-    <div class="hero-right">
-      <div class="hero-img-grid">
-        <div class="hero-img" id="hero-slot-0">
-          <img id="hero-img-0" src="https://images.unsplash.com/photo-1523824921871-d6f1a15151f1?auto=format&fit=crop&w=600&q=80" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="hero-img-fallback" style="background:linear-gradient(160deg,var(--bg4) 0%,var(--bg5) 100%);position:absolute;inset:0;display:flex;align-items:flex-end;padding:20px;">
-            <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:var(--text-soft);line-height:1.5;">"The world<br>looks different<br>from here."</div>
-          </div>
-        </div>
-        <div class="hero-img" id="hero-slot-1">
-          <img id="hero-img-1" src="https://images.unsplash.com/photo-1611432579402-7037e3e2c1e4?auto=format&fit=crop&w=400&q=80" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="hero-img-fallback" style="background:linear-gradient(200deg,var(--bg3) 0%,var(--bg5) 100%);position:absolute;inset:0;"></div>
-        </div>
-        <div class="hero-img" id="hero-slot-2">
-          <img id="hero-img-2" src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?auto=format&fit=crop&w=400&q=80" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="hero-img-fallback" style="background:linear-gradient(140deg,var(--bg5) 0%,var(--bg4) 100%);position:absolute;inset:0;display:flex;align-items:flex-end;padding:14px;">
-            <div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);">Rose Colored</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- About (immediately after hero) -->
-  <div class="wrap">
-    <div class="about-section">
-      <div class="about-grid">
-        <div>
-          <div class="eyebrow">&#10022; This Space Is Yours</div>
-          <h2 class="about-headline">
-            <span class="d">Built for Black life — <em>all of it.</em></span>
-            <span class="r">The lens is on. The world looks <em>different now.</em></span>
-          </h2>
-          <div class="about-body">
-            <p class="d">Joy, creativity, community, mental health, culture, connection — this is where Black people come to experience all of it, without having to shrink, translate, or explain themselves first.</p>
-            <p class="d">This is a space for thriving, for celebrating, for healing on your own terms, for finding your people, and for creating something the world hasn't seen yet. The context is already built in — because this was built by people who live it.</p>
-            <p class="d">You don't have to justify your presence here. You never did.</p>
-            <p class="r">Everything here was designed with the understanding that Black life is full, layered, and worthy of a space that reflects all of it. Not just the parts that make other people comfortable.</p>
-          </div>
-        </div>
-        <div class="thriving-grid">
-          <div class="thrive-box">
-            <div class="thrive-num">73%</div>
-            <div class="thrive-label">Of Black adults say cultural connection improves their overall wellbeing</div>
-          </div>
-          <div class="thrive-box">
-            <div class="thrive-num">2x</div>
-            <div class="thrive-label">More likely to thrive with culturally affirming mental health care</div>
-          </div>
-          <div class="thrive-box">
-            <div class="thrive-num">1 in 3</div>
-            <div class="thrive-label">Black adults report needing more community-based support systems</div>
-          </div>
-          <div class="thrive-box">
-            <div class="thrive-num">&#10022;</div>
-            <div class="thrive-label">Rose Colored fills the gap — across all of it</div>
-          </div>
-        </div>
+      <!-- Daily quote (responds to feeling) -->
+      <div class="home-quote" id="homeQuote">
+        <div class="home-quote-text" id="homeQuoteText">"The most common way people give up their power is by thinking they don't have any."</div>
+        <div class="home-quote-attr" id="homeQuoteAttr">&#8212; Alice Walker</div>
       </div>
-    </div>
-  </div>
 
-  <!-- What Do You Need Today -->
-  <div class="needs-section" id="needs-anchor">
-    <div class="wrap">
-      <div class="needs-headline">What do you need <em>today?</em></div>
-      <div class="needs-grid">
-        <div class="need-card" onclick="showTab('therapists')">
-          <div class="need-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><circle cx="10" cy="6" r="3.5"/><path d="M3 18c0-4 3.1-7 7-7s7 3 7 7"/></svg></div>
-          <div class="need-title">Someone to talk to</div>
-          <div class="need-desc">Find a culturally competent therapist who gets the full picture — without having to explain it first.</div>
-          <span class="need-link">Find a Therapist &#8594;</span>
+      <!-- Destinations -->
+      <div class="home-dest-label">&#10022; Where do you want to go?</div>
+      <div class="home-dest-grid">
+        <div class="home-dest-card" onclick="showTab('therapists')">
+          <div class="home-dest-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><circle cx="10" cy="6" r="3.5"/><path d="M3 18c0-4 3.1-7 7-7s7 3 7 7"/></svg></div>
+          <div class="home-dest-name">Therapists</div>
+          <div class="home-dest-desc">Find someone who already gets it</div>
         </div>
-        <div class="need-card" onclick="showTab('community')">
-          <div class="need-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><path d="M18 14c0 2.2-1.8 4-4 4H6l-3 2v-6c0-2.2 1.8-4 4-4h6c2.2 0 4 1.8 4 4z"/><path d="M5 8c0-2.2 1.8-4 4-4h5c2.2 0 4 1.8 4 4"/></svg></div>
-          <div class="need-title">My people</div>
-          <div class="need-desc">Real conversations, real connection. Live threads, forums, groups, and events near you.</div>
-          <span class="need-link">Find Your Community &#8594;</span>
+        <div class="home-dest-card" onclick="showTab('community')">
+          <div class="home-dest-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><path d="M18 14c0 2.2-1.8 4-4 4H6l-3 2v-6c0-2.2 1.8-4 4-4h6c2.2 0 4 1.8 4 4z"/></svg></div>
+          <div class="home-dest-name">Community</div>
+          <div class="home-dest-desc">Your people, no translation needed</div>
         </div>
-        <div class="need-card" onclick="showTab('wellness')">
-          <div class="need-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><circle cx="10" cy="10" r="8"/><path d="M10 6v4l2.5 2.5"/></svg></div>
-          <div class="need-title">A moment to breathe</div>
-          <div class="need-desc">Noise cleanse, affirmations, journaling, and The Lens. Tools for the daily work of being whole.</div>
-          <span class="need-link">Open Your Toolkit &#8594;</span>
+        <div class="home-dest-card" onclick="showTab('news')">
+          <div class="home-dest-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M7 9h6M7 12h4"/></svg></div>
+          <div class="home-dest-name">News</div>
+          <div class="home-dest-desc">The same world, a different lens</div>
         </div>
-        <div class="need-card" onclick="showTab('news')">
-          <div class="need-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M7 9h6M7 12h4"/></svg></div>
-          <div class="need-title">The news, honestly</div>
-          <div class="need-desc">Headlines reframed through a lens that centers Black dignity — not deficit. See the same world differently.</div>
-          <span class="need-link">Read the Reframe &#8594;</span>
+        <div class="home-dest-card" onclick="showTab('wellness')">
+          <div class="home-dest-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--rose)"><circle cx="7" cy="10" r="3"/><circle cx="13" cy="10" r="3"/><path d="M4 10H2M16 10h2"/></svg></div>
+          <div class="home-dest-name">Wellness</div>
+          <div class="home-dest-desc">The Lens, sounds, journal, affirmations</div>
         </div>
-        <div class="need-card" onclick="showTab('library')">
-          <div class="need-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><rect x="4" y="3" width="8" height="14" rx="1"/><path d="M12 5h3a1 1 0 011 1v11"/></svg></div>
-          <div class="need-title">Something to read</div>
-          <div class="need-desc">Articles on identity, joy, grief, anxiety, and more — all written through a Black lens, for Black readers.</div>
-          <span class="need-link">Browse the Library &#8594;</span>
+        <div class="home-dest-card" onclick="showTab('library')">
+          <div class="home-dest-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><rect x="4" y="3" width="8" height="14" rx="1"/><path d="M12 5h3a1 1 0 011 1v11"/></svg></div>
+          <div class="home-dest-name">Library</div>
+          <div class="home-dest-desc">Reading that sees you in the subject</div>
         </div>
-        <div class="need-card" onclick="showTab('create')">
-          <div class="need-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><path d="M3 15l8-8 2 2-8 8H3v-2z"/><path d="M12 4l2 2M14 2l2 2"/></svg></div>
-          <div class="need-title">To express myself</div>
-          <div class="need-desc">Photography, writing, painting, video. A gallery built to hold Black creative expression in every form.</div>
-          <span class="need-link">Enter the Gallery &#8594;</span>
+        <div class="home-dest-card" onclick="showTab('create')">
+          <div class="home-dest-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><path d="M3 15l8-8 2 2-8 8H3v-2z"/><path d="M12 4l2 2M14 2l2 2"/></svg></div>
+          <div class="home-dest-name">Create</div>
+          <div class="home-dest-desc">Black creative expression, every form</div>
+        </div>
+        <div class="home-dest-card" onclick="showTab('events')">
+          <div class="home-dest-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8h14M7 2v4M13 2v4"/></svg></div>
+          <div class="home-dest-name">Events</div>
+          <div class="home-dest-desc">In-person and virtual, free and ticketed</div>
+        </div>
+        <div class="home-dest-card" onclick="showTab('crisis')">
+          <div class="home-dest-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--rose)"><path d="M9 1C6.2 1 4 3.2 4 6c0 1.9 1 3.5 2.5 4.4V13h5v-2.6C13 9.5 14 7.9 14 6c0-2.8-2.2-5-5-5z"/><path d="M6.5 13h5M7.5 15.5h3"/></svg></div>
+          <div class="home-dest-name">Support</div>
+          <div class="home-dest-desc">Resources and rights, when you need them</div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Manifesto -->
-  <div class="manifesto-section">
-    <div class="wrap">
-      <div class="eyebrow" style="text-align:center;">&#10022; The Rose Colored Manifesto</div>
-      <div class="manifesto-quote d">
-        "This is not a space for surviving Blackness. It is a space for <span class="hl">living it fully</span> — with joy, with community, with care, and with a lens adjusted to see yourself the way you always should have been seen."
-      </div>
-      <div class="manifesto-quote r">
-        "The lens doesn't change the facts. It changes <span class="hl">where you stand</span> when you look at them — and that changes everything."
-      </div>
-      <div class="manifesto-attr">&#8212; Rose Colored</div>
-    </div>
-  </div>
-
-  <!-- Home CTA -->
-  <div class="wrap">
-    <div style="text-align:center;padding:80px 0;">
-      <div class="eyebrow" style="text-align:center;">&#10022; Come As You Are</div>
-      <h2 class="display" style="font-size:clamp(30px,4.5vw,54px);margin-bottom:20px;">This is your space.<br><em>All of it.</em></h2>
-      <p class="body-text" style="max-width:420px;margin:0 auto 32px;">Free to join. No card required. Just bring yourself — and however much of yourself you're ready to share.</p>
-      <button class="btn btn-primary" style="font-size:11px;padding:14px 32px;" onclick="openJoinModal()">Join Free</button>
     </div>
   </div>
 </div>
@@ -1519,6 +1567,191 @@ span.d{display:inline !important;}span.r{display:none !important;}
     </div>
   </div>
 </div>
+
+<!-- ═══════════ DAILY RITUAL ═══════════ -->
+<div class="ritual-overlay" id="ritualOverlay">
+  <div class="ritual-sheet">
+    <div class="ritual-handle"></div>
+    <button class="ritual-skip" onclick="skipRitual()">take me in &#8594;</button>
+
+    <!-- Step 1: Poll -->
+    <div class="ritual-step active" id="ritual-poll">
+      <div class="ritual-poll-label">Today's Question</div>
+      <div class="ritual-poll-q" id="pollQuestion">Be honest. What's your current situationship with sleep?</div>
+      <div class="ritual-poll-opts" id="pollOpts">
+        <div class="ritual-poll-opt" onclick="selectPollOpt(this)">We had a whole thing going</div>
+        <div class="ritual-poll-opt" onclick="selectPollOpt(this)">It ghosted me</div>
+        <div class="ritual-poll-opt" onclick="selectPollOpt(this)">I'm the problem, honestly</div>
+        <div class="ritual-poll-opt" onclick="selectPollOpt(this)">Thriving, actually</div>
+        <div class="ritual-poll-opt" onclick="selectPollOpt(this)">What is sleep</div>
+      </div>
+      <button class="modal-nav-btn primary" id="pollSubmitBtn" onclick="submitPoll()" disabled style="width:100%;justify-content:center;display:flex;margin-top:4px;">See what the house said &#8594;</button>
+    </div>
+
+    <!-- Step 1b: Poll Results -->
+    <div class="ritual-step" id="ritual-results">
+      <div class="ritual-poll-label">The House Responded</div>
+      <div class="poll-community-line" id="pollCommunityLine">"You're not alone — half the house says sleep ghosted them too."</div>
+      <div id="pollResults"></div>
+      <button class="modal-nav-btn primary" onclick="goToFeeling()" style="width:100%;justify-content:center;display:flex;margin-top:20px;">Continue &#8594;</button>
+    </div>
+
+    <!-- Step 2: Feeling check -->
+    <div class="ritual-step" id="ritual-feeling">
+      <div class="ritual-house">This is your house.</div>
+      <div class="ritual-house-sub">How are you walking in today?</div>
+      <div class="feeling-grid">
+        <div class="feeling-opt heavy" onclick="selectFeeling(this,'heavy')">
+          <div class="feeling-emoji">🌧</div>
+          <div class="feeling-label">Carrying a lot</div>
+        </div>
+        <div class="feeling-opt heavy" onclick="selectFeeling(this,'foggy')">
+          <div class="feeling-emoji">🌫</div>
+          <div class="feeling-label">A little foggy</div>
+        </div>
+        <div class="feeling-opt" onclick="selectFeeling(this,'steady')">
+          <div class="feeling-emoji">🌱</div>
+          <div class="feeling-label">Steady</div>
+        </div>
+        <div class="feeling-opt" onclick="selectFeeling(this,'hopeful')">
+          <div class="feeling-emoji">🌤</div>
+          <div class="feeling-label">Hopeful</div>
+        </div>
+        <div class="feeling-opt" onclick="selectFeeling(this,'expansive')">
+          <div class="feeling-emoji">✨</div>
+          <div class="feeling-label">Expansive</div>
+        </div>
+        <div class="feeling-opt" onclick="selectFeeling(this,'litup')">
+          <div class="feeling-emoji">🔥</div>
+          <div class="feeling-label">Lit up</div>
+        </div>
+      </div>
+      <div class="feeling-response" id="feelingResponse" style="display:none;">
+        <div class="feeling-response-text" id="feelingResponseText"></div>
+        <div class="feeling-response-actions" id="feelingResponseActions"></div>
+      </div>
+    </div>
+
+    <!-- Step 3: Quote + paths -->
+    <div class="ritual-step" id="ritual-paths">
+      <div class="ritual-quote" id="ritualQuote">
+        <div class="ritual-quote-text" id="ritualQuoteText"></div>
+        <div class="ritual-quote-attr" id="ritualQuoteAttr"></div>
+      </div>
+      <button class="catch-me-up-btn" onclick="skipRitual();openCatchUp();" style="margin-bottom:14px;">
+        <div class="catch-me-up-label">&#10022; New since you left</div>
+        <div class="catch-me-up-title">Just catch me up</div>
+        <div class="catch-me-up-sub">Forums, art, reframes, today's headline — all in one swipe.</div>
+        <div class="catch-me-up-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </button>
+      <button class="modal-nav-btn" onclick="skipRitual()" style="width:100%;justify-content:center;display:flex;">Take me straight in</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ CATCH ME UP ═══════════ -->
+<div class="catchup-overlay" id="catchupOverlay">
+  <div class="catchup-header">
+    <div class="catchup-logo">Rose <span>Colored</span></div>
+    <button class="catchup-close" onclick="closeCatchUp()">Done &#215;</button>
+  </div>
+  <div class="catchup-progress" id="catchupProgress"></div>
+  <div class="catchup-body" id="catchupBody">
+
+    <!-- Slide 0: Personal -->
+    <div class="catchup-slide active" id="catchup-0">
+      <div class="catchup-slide-label">Just for you</div>
+      <div class="catchup-slide-title">Someone replied to your thread.</div>
+      <div class="catchup-slide-body">The community is showing up for what you shared.</div>
+      <div class="catchup-slide-card" onclick="closeCatchUp();showTab('community');">
+        <div class="catchup-slide-card-label">Community · Therapy Talk</div>
+        <div class="catchup-slide-card-text">"This is exactly what I needed to read today. Thank you for being real about it."</div>
+        <div class="catchup-slide-card-sub">&#8212; SacredBloom · 2 hrs ago</div>
+      </div>
+    </div>
+
+    <!-- Slide 1: Forums -->
+    <div class="catchup-slide" id="catchup-1">
+      <div class="catchup-slide-label">Community</div>
+      <div class="catchup-slide-title">The forums are alive today.</div>
+      <div class="catchup-slide-body">Two threads are really going right now.</div>
+      <div class="catchup-slide-card" onclick="closeCatchUp();showTab('community');">
+        <div class="catchup-slide-card-label">Joy &amp; Abundance · 47 new replies</div>
+        <div class="catchup-slide-card-text">"What's something small that's been making you smile this week?"</div>
+        <div class="catchup-slide-card-sub">Started by RootedCrown · Still going strong</div>
+      </div>
+      <div class="catchup-slide-card" onclick="closeCatchUp();showTab('community');" style="margin-top:10px;">
+        <div class="catchup-slide-card-label">Generational Healing · 23 new replies</div>
+        <div class="catchup-slide-card-text">"How do you have hard conversations with parents who don't have the language for it?"</div>
+        <div class="catchup-slide-card-sub">Started by QuietCipher · Getting deep</div>
+      </div>
+    </div>
+
+    <!-- Slide 2: New art -->
+    <div class="catchup-slide" id="catchup-2">
+      <div class="catchup-slide-label">Create</div>
+      <div class="catchup-slide-title">New work just dropped.</div>
+      <div class="catchup-slide-body">The gallery got a few new pieces while you were away.</div>
+      <div class="catchup-slide-card" onclick="closeCatchUp();showTab('create');">
+        <div class="catchup-slide-card-label">Photography · New Work</div>
+        <div class="catchup-slide-card-text">Crown Series: Hair as Resistance — a new set by Aisha Collins, Los Angeles</div>
+        <div class="catchup-slide-card-sub">Added this morning · 14 people viewed it</div>
+      </div>
+      <div class="catchup-slide-card" onclick="closeCatchUp();showTab('create');" style="margin-top:10px;">
+        <div class="catchup-slide-card-label">Writing · New Piece</div>
+        <div class="catchup-slide-card-text">On Being Seen Without Explaining Yourself First — by Kezia Thornton</div>
+        <div class="catchup-slide-card-sub">Just published · People are sharing it</div>
+      </div>
+    </div>
+
+    <!-- Slide 3: The Lens -->
+    <div class="catchup-slide" id="catchup-3">
+      <div class="catchup-slide-label">The Lens</div>
+      <div class="catchup-slide-title">A belief came back rewritten.</div>
+      <div class="catchup-slide-body">Someone submitted this. Here's what came back.</div>
+      <div class="catchup-slide-card" onclick="closeCatchUp();showTab('wellness');">
+        <div class="catchup-slide-card-label">Submitted belief</div>
+        <div class="catchup-slide-card-text" style="color:var(--text-muted);font-style:italic;">"I have to earn my place in every room."</div>
+        <div style="height:1px;background:var(--border2);margin:12px 0;"></div>
+        <div class="catchup-slide-card-label">Returned through the lens</div>
+        <div class="catchup-slide-card-text">"You were always allowed to be in the room. The belief that you must earn what others are simply given is a tax that was never yours to pay."</div>
+      </div>
+    </div>
+
+    <!-- Slide 4: News headline -->
+    <div class="catchup-slide" id="catchup-4">
+      <div class="catchup-slide-label">Today's Headline</div>
+      <div class="catchup-slide-title">The news, through the lens.</div>
+      <div class="catchup-slide-body"></div>
+      <div class="catchup-slide-card" onclick="closeCatchUp();showTab('news');">
+        <div class="catchup-slide-card-label">NPR Health · Today</div>
+        <div class="catchup-slide-card-text">Black Americans 40% more likely to develop high blood pressure, study finds</div>
+        <div style="height:1px;background:var(--border2);margin:12px 0;"></div>
+        <div class="catchup-slide-card-label" style="color:var(--rose);">Through the Lens</div>
+        <div class="catchup-slide-card-text" style="font-style:italic;font-family:'Cormorant Garamond',serif;font-size:15px;">"Your body is not the problem. It is responding intelligently to a world that asks a lot of it."</div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Action -->
+    <div class="catchup-slide" id="catchup-5">
+      <div class="catchup-slide-label">Your move today</div>
+      <div class="catchup-slide-title">One thing to carry with you.</div>
+      <div class="catchup-slide-body">Not a task. Just an intention.</div>
+      <div class="catchup-action-card">
+        <div class="catchup-action-title">"Notice one moment today where you take up space without apologizing for it."</div>
+        <div class="catchup-action-body">That's it. Just notice. The awareness is enough.</div>
+        <button class="btn btn-sm btn-outline" onclick="closeCatchUp();showTab('wellness');">Open your journal &#8594;</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="catchup-footer">
+    <button class="catchup-nav-btn" id="catchupPrev" onclick="prevCatchUp()" style="visibility:hidden;">&#8592; Back</button>
+    <div class="catchup-counter" id="catchupCounter">1 of 6</div>
+    <button class="catchup-nav-btn primary" id="catchupNext" onclick="nextCatchUp()">Next &#8594;</button>
+  </div>
+</div>
+
 </main>
 
 <!-- ═══════════ JOIN MODAL ═══════════ -->
@@ -2581,6 +2814,305 @@ function rsvpEvent(btn){
   btn.disabled=true;
   showToast('You\'re in: ' + title.slice(0,36) + (title.length>36?'…':''));
 }
+
+// ── Daily Ritual ──
+const POLLS = [
+  {
+    q: "Be honest. What's your current situationship with sleep?",
+    opts: ["We had a whole thing going", "It ghosted me", "I'm the problem, honestly", "Thriving, actually", "What is sleep"],
+    community: "You're not alone — half the house says sleep ghosted them too."
+  },
+  {
+    q: "Rate your energy today, no filter.",
+    opts: ["Main character, no notes", "Running on vibes and caffeine", "Neutral like Switzerland", "Foggy but functional", "Don't ask me that right now"],
+    community: "The house is split — half of us are running on vibes, and that's valid."
+  },
+  {
+    q: "The group chat energy today is...",
+    opts: ["On ten for no reason", "Quiet but lurking", "Somebody's about to start something", "Pure comedy, no notes", "I left the group, honestly"],
+    community: "Somebody in this house left a group chat today and we respect the peace."
+  },
+  {
+    q: "What are you finally giving yourself permission to do?",
+    opts: ["Rest without guilt", "Say no and mean it", "Take up space out loud", "Want something just for me", "Start before I feel ready"],
+    community: "Half the house is learning to rest without earning it. You're in good company."
+  },
+  {
+    q: "What's something small that's been making you smile lately?",
+    opts: ["A song I forgot I loved", "Someone checked on me unexpectedly", "Good food, no occasion", "My own company, actually", "The sun came out at the right moment"],
+    community: "The house is smiling at small things today. That's the whole point."
+  },
+  {
+    q: "How are you moving this season?",
+    opts: ["Intentionally slow", "Building something quietly", "Letting go of what's not for me", "Chasing what actually matters", "Figuring it out in real time"],
+    community: "Most of the house is building something quietly right now. So are you."
+  },
+  {
+    q: "Monday check-in: what's the vibe?",
+    opts: ["Reluctant but here", "Strangely motivated", "Fully unbothered", "Already tired and it's 9am", "New week, different me (we'll see)"],
+    community: "The house is mostly reluctant but present. That counts as showing up."
+  }
+];
+
+const FEELING_DATA = {
+  heavy: {
+    response: "That's a real thing to carry. We're not going to tell you to push through. Maybe just set it down for a minute.",
+    actions: [
+      {label:"Open The Lens", tab:"wellness"},
+      {label:"Find a Therapist", tab:"therapists"},
+      {label:"Noise Cleanse", tab:"wellness"}
+    ],
+    quote: {text:'"You don't have to be strong all the time. You don't have to pretend to feel okay."', attr:"— Iyanla Vanzant"}
+  },
+  foggy: {
+    response: "Foggy is okay. You don't have to be clear to be present. Sometimes the fog is just the brain asking for patience.",
+    actions: [
+      {label:"Visual Cleanse", tab:"wellness"},
+      {label:"Read Something", tab:"library"},
+      {label:"Community", tab:"community"}
+    ],
+    quote: {text:'"Rest until you feel like playing. Then play until you feel like resting."', attr:"— African Proverb"}
+  },
+  steady: {
+    response: "Steady is underrated. There's a lot of power in knowing where your feet are.",
+    actions: [
+      {label:"What's in the news?", tab:"news"},
+      {label:"Community", tab:"community"},
+      {label:"Just Catch Me Up", action:"catchup"}
+    ],
+    quote: {text:'"Not everything that is faced can be changed, but nothing can be changed until it is faced."', attr:"— James Baldwin"}
+  },
+  hopeful: {
+    response: "Hopeful is a muscle. You're using it today — that's not nothing.",
+    actions: [
+      {label:"Share in Community", tab:"community"},
+      {label:"Write it down", tab:"wellness"},
+      {label:"Just Catch Me Up", action:"catchup"}
+    ],
+    quote: {text:'"I am deliberate and afraid of nothing."', attr:"— Audre Lorde"}
+  },
+  expansive: {
+    response: "That energy is worth documenting. Something about today is working — let's not waste it.",
+    actions: [
+      {label:"Write it in your journal", tab:"wellness"},
+      {label:"Share it in Community", tab:"community"},
+      {label:"Create something", tab:"create"}
+    ],
+    quote: {text:'"When I dare to be powerful — to use my strength in the service of my vision — then it becomes less and less important whether I am afraid."', attr:"— Audre Lorde"}
+  },
+  litup: {
+    response: "Say less. Carry that. The community would love to hear what's got you like this.",
+    actions: [
+      {label:"Tell the community", tab:"community"},
+      {label:"Create something", tab:"create"},
+      {label:"Document it", tab:"wellness"}
+    ],
+    quote: {text:'"When you're Black and you're excellent, you're a miracle. And miracles should be celebrated."', attr:"— Viola Davis"}
+  }
+};
+
+let currentPoll = null;
+let selectedPollOpt = null;
+let selectedFeeling = null;
+let ritualDone = false;
+let catchupSlide = 0;
+const CATCHUP_TOTAL = 6;
+
+function initRitual(){
+  // Check if already done today
+  const today = new Date().toDateString();
+  if(localStorage.getItem('rcRitualDate') === today){
+    ritualDone = true;
+    return;
+  }
+  // Pick poll for today (based on day of week)
+  const dayIdx = new Date().getDay();
+  currentPoll = POLLS[dayIdx % POLLS.length];
+  document.getElementById('pollQuestion').textContent = currentPoll.q;
+  const optsEl = document.getElementById('pollOpts');
+  optsEl.innerHTML = '';
+  currentPoll.opts.forEach(opt => {
+    const d = document.createElement('div');
+    d.className = 'ritual-poll-opt';
+    d.textContent = opt;
+    d.onclick = () => selectPollOpt(d);
+    optsEl.appendChild(d);
+  });
+  // Set greeting
+  const hr = new Date().getHours();
+  const timeLabel = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
+  const el = document.getElementById('homeTimeLabel');
+  if(el) el.textContent = timeLabel;
+  // Show ritual
+  const overlay = document.getElementById('ritualOverlay');
+  if(overlay) overlay.classList.remove('hidden');
+}
+
+function selectPollOpt(el){
+  document.querySelectorAll('.ritual-poll-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedPollOpt = el.textContent;
+  document.getElementById('pollSubmitBtn').disabled = false;
+}
+
+function submitPoll(){
+  // Show results
+  const resultsEl = document.getElementById('pollResults');
+  resultsEl.innerHTML = '';
+  // Fake results with selected answer at ~35%
+  const opts = currentPoll.opts;
+  let remaining = 65;
+  const pcts = opts.map((opt,i) => {
+    if(opt === selectedPollOpt) return 35;
+    const p = i === opts.length-1 ? remaining : Math.floor(Math.random()*Math.min(remaining,25));
+    remaining -= p;
+    return p;
+  });
+  opts.forEach((opt,i) => {
+    const row = document.createElement('div');
+    row.className = 'poll-result-row';
+    row.innerHTML = `<div class="poll-result-label">${opt}</div><div class="poll-result-bar-wrap"><div class="poll-result-bar" style="width:0%" data-pct="${pcts[i]}"></div></div><div class="poll-result-pct">${pcts[i]}%</div>`;
+    resultsEl.appendChild(row);
+  });
+  document.getElementById('pollCommunityLine').textContent = currentPoll.community;
+  showRitualStep('ritual-results');
+  // Animate bars
+  setTimeout(() => {
+    document.querySelectorAll('.poll-result-bar').forEach(b => {
+      b.style.width = b.dataset.pct + '%';
+    });
+  }, 100);
+}
+
+function goToFeeling(){
+  showRitualStep('ritual-feeling');
+}
+
+function selectFeeling(el, type){
+  document.querySelectorAll('.feeling-opt').forEach(o=>{o.classList.remove('selected','heavy-feel');});
+  el.classList.add('selected');
+  if(type==='heavy'||type==='foggy') el.classList.add('heavy-feel');
+  selectedFeeling = type;
+  const data = FEELING_DATA[type];
+  const responseEl = document.getElementById('feelingResponse');
+  document.getElementById('feelingResponseText').textContent = data.response;
+  const actionsEl = document.getElementById('feelingResponseActions');
+  actionsEl.innerHTML = '';
+  data.actions.forEach(a => {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-sm btn-outline';
+    btn.textContent = a.label;
+    btn.onclick = () => {
+      skipRitual();
+      if(a.action==='catchup') openCatchUp();
+      else if(a.tab) showTab(a.tab);
+    };
+    actionsEl.appendChild(btn);
+  });
+  responseEl.style.display = 'block';
+  // After a moment, auto-advance to quote+paths
+  setTimeout(() => goToPaths(), 1800);
+}
+
+function goToPaths(){
+  const feeling = selectedFeeling || 'steady';
+  const data = FEELING_DATA[feeling];
+  document.getElementById('ritualQuoteText').textContent = data.quote.text;
+  document.getElementById('ritualQuoteAttr').textContent = data.quote.attr;
+  // Also update home page quote
+  const homeQuoteText = document.getElementById('homeQuoteText');
+  const homeQuoteAttr = document.getElementById('homeQuoteAttr');
+  if(homeQuoteText) homeQuoteText.textContent = data.quote.text;
+  if(homeQuoteAttr) homeQuoteAttr.textContent = data.quote.attr;
+  showRitualStep('ritual-paths');
+}
+
+function showRitualStep(id){
+  document.querySelectorAll('.ritual-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id)?.classList.add('active');
+}
+
+function skipRitual(){
+  const overlay = document.getElementById('ritualOverlay');
+  if(overlay){
+    overlay.style.opacity='0';
+    overlay.style.transition='opacity 0.3s';
+    setTimeout(()=>overlay.classList.add('hidden'),300);
+  }
+  // Mark done for today
+  localStorage.setItem('rcRitualDate', new Date().toDateString());
+  ritualDone = true;
+}
+
+// ── Catch Me Up ──
+function openCatchUp(){
+  catchupSlide = 0;
+  updateCatchupProgress();
+  document.querySelectorAll('.catchup-slide').forEach((s,i)=>{
+    s.classList.toggle('active', i===0);
+    s.classList.remove('exit');
+  });
+  document.getElementById('catchupPrev').style.visibility='hidden';
+  document.getElementById('catchupNext').textContent='Next →';
+  document.getElementById('catchupOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeCatchUp(){
+  document.getElementById('catchupOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function updateCatchupProgress(){
+  const prog = document.getElementById('catchupProgress');
+  if(!prog) return;
+  prog.innerHTML='';
+  for(let i=0;i<CATCHUP_TOTAL;i++){
+    const d=document.createElement('div');
+    d.className='catchup-progress-dot' + (i<catchupSlide?' done':i===catchupSlide?' active':'');
+    prog.appendChild(d);
+  }
+  document.getElementById('catchupCounter').textContent = (catchupSlide+1)+' of '+CATCHUP_TOTAL;
+}
+
+function nextCatchUp(){
+  if(catchupSlide >= CATCHUP_TOTAL-1){ closeCatchUp(); return; }
+  const current = document.getElementById('catchup-'+catchupSlide);
+  catchupSlide++;
+  const next = document.getElementById('catchup-'+catchupSlide);
+  current?.classList.add('exit');
+  current?.classList.remove('active');
+  setTimeout(()=>current?.classList.remove('exit'),350);
+  next?.classList.add('active');
+  document.getElementById('catchupPrev').style.visibility='visible';
+  document.getElementById('catchupNext').textContent = catchupSlide===CATCHUP_TOTAL-1?'Done ✓':'Next →';
+  updateCatchupProgress();
+}
+
+function prevCatchUp(){
+  if(catchupSlide<=0) return;
+  const current = document.getElementById('catchup-'+catchupSlide);
+  catchupSlide--;
+  const prev = document.getElementById('catchup-'+catchupSlide);
+  current?.classList.remove('active');
+  prev?.classList.add('active');
+  document.getElementById('catchupPrev').style.visibility = catchupSlide===0?'hidden':'visible';
+  document.getElementById('catchupNext').textContent='Next →';
+  updateCatchupProgress();
+}
+
+// Set greeting time on home load
+(function(){
+  const hr=new Date().getHours();
+  const el=document.getElementById('homeTimeLabel');
+  if(el) el.textContent = hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
+})();
+
+// Init ritual on first load (only if on home tab and not done today)
+setTimeout(()=>{
+  if(!ritualDone) initRitual();
+}, 600);
+
 </script>
 
 </body>
