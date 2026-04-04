@@ -708,6 +708,28 @@ span.d{display:inline !important;}span.r{display:none !important;}
 .catchup-nav-btn.primary:hover{background:var(--rose);border-color:var(--rose);color:#fff;}
 .catchup-counter{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);}
 
+
+/* ── Quick Nav Dropdown ── */
+.quick-nav{position:relative;margin-left:8px;}
+.quick-nav-trigger{display:flex;align-items:center;gap:7px;background:var(--bg3);border:1px solid var(--border);border-radius:50px;padding:7px 14px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-soft);cursor:pointer;transition:var(--transition);}
+.quick-nav-trigger:hover{border-color:var(--accent);color:var(--accent);}
+.quick-nav-menu{position:absolute;top:calc(100% + 8px);left:0;background:var(--bg2);border:1px solid var(--border);border-radius:14px;min-width:180px;overflow:hidden;z-index:2000;animation:tabIn 0.2s ease;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.quick-nav-item{padding:11px 18px;font-family:'Syne',sans-serif;font-size:11px;font-weight:600;color:var(--text-muted);cursor:pointer;transition:background 0.15s,color 0.15s;}
+.quick-nav-item:hover{background:var(--bg3);color:var(--accent);}
+.quick-nav-item:first-child{border-bottom:1px solid var(--border2);}
+
+
+/* ── Forum Q&A Cards ── */
+.forum-question-card{background:var(--bg3);border:1px solid var(--border2);border-radius:14px;padding:18px 20px;cursor:pointer;transition:var(--transition);}
+.forum-question-card:hover{border-color:var(--border);background:var(--bg4);}
+.fq-meta{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.fq-tag{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:rgba(200,144,74,0.08);border:1px solid rgba(200,144,74,0.2);border-radius:50px;padding:2px 10px;}
+.fq-time{font-size:11px;color:var(--text-muted);}
+.fq-title{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;line-height:1.35;margin-bottom:12px;color:var(--text);}
+.fq-footer{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.fq-stat{font-size:11px;color:var(--text-muted);}
+.fq-author{font-size:11px;color:var(--text-muted);margin-left:auto;}
+
 </style>
 </head>
 <body>
@@ -717,10 +739,10 @@ span.d{display:inline !important;}span.r{display:none !important;}
 
 <!-- ═══════════ NAV ═══════════ -->
 <nav>
-  <div class="nav-logo" onclick="showTab('home')">Rose <span>Colored</span></div>
+  <div class="nav-logo" onclick="showTab('home',true)">Rose <span>Colored</span></div>
   <div class="nav-tabs-wrap">
     <div class="nav-tabs">
-      <div class="nav-tab active" onclick="showTab('home')" data-tab="home">Home</div>
+      <div class="nav-tab active" onclick="showTab('home',true)" data-tab="home">Home</div>
       <div class="nav-tab" onclick="showTab('therapists')" data-tab="therapists">Therapists</div>
       <div class="nav-tab" onclick="showTab('community')" data-tab="community">Community</div>
       <div class="nav-tab" onclick="showTab('news')" data-tab="news">News</div>
@@ -729,6 +751,25 @@ span.d{display:inline !important;}span.r{display:none !important;}
       <div class="nav-tab" onclick="showTab('library')" data-tab="library">Library</div>
       <div class="nav-tab" onclick="showTab('events')" data-tab="events">Events</div>
       <div class="nav-tab" onclick="showTab('shop')" data-tab="shop">Shop</div>
+    </div>
+  </div>
+  <!-- Quick Nav Dropdown - shows when not on home -->
+  <div class="quick-nav" id="quickNav" style="display:none;">
+    <button class="quick-nav-trigger" onclick="toggleQuickNav()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4h10M2 7h10M2 10h10"/></svg>
+      <span id="quickNavLabel">Menu</span>
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" id="quickNavChevron"><path d="M2 3.5l3 3 3-3"/></svg>
+    </button>
+    <div class="quick-nav-menu" id="quickNavMenu" style="display:none;">
+      <div class="quick-nav-item" onclick="showTab('home',true);closeQuickNav()">&#8962; Home</div>
+      <div class="quick-nav-item" onclick="showTab('therapists');closeQuickNav()">Therapists</div>
+      <div class="quick-nav-item" onclick="showTab('community');closeQuickNav()">Community</div>
+      <div class="quick-nav-item" onclick="showTab('news');closeQuickNav()">News</div>
+      <div class="quick-nav-item" onclick="showTab('wellness');closeQuickNav()">Wellness</div>
+      <div class="quick-nav-item" onclick="showTab('create');closeQuickNav()">Create</div>
+      <div class="quick-nav-item" onclick="showTab('library');closeQuickNav()">Library</div>
+      <div class="quick-nav-item" onclick="showTab('events');closeQuickNav()">Events</div>
+      <div class="quick-nav-item" onclick="showTab('shop');closeQuickNav()">Shop</div>
     </div>
   </div>
   <div class="nav-right">
@@ -756,6 +797,18 @@ span.d{display:inline !important;}span.r{display:none !important;}
     <button class="btn-join" id="joinBtn" onclick="openJoinModal()">Join Free</button>
   </div>
 </nav>
+
+<!-- ═══════════ SPLASH ═══════════ -->
+<div id="splashScreen" style="position:fixed;inset:0;z-index:9999;background:#060403;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity 0.8s ease;">
+  <div id="splashContent" style="text-align:center;opacity:0;transition:opacity 0.6s ease;">
+    <div style="width:56px;height:56px;border-radius:50%;border:1px solid rgba(200,144,74,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+      <svg width="24" height="10" viewBox="0 0 24 10" fill="none"><circle cx="5" cy="5" r="4" stroke="#E8708A" stroke-width="1.4"/><circle cx="19" cy="5" r="4" stroke="#E8708A" stroke-width="1.4"/><path d="M9 5h6" stroke="#E8708A" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(22px,4vw,32px);font-weight:300;color:#F0E6D6;font-style:italic;line-height:1.2;">Time to put<br>the lens on.</div>
+    <div style="width:40px;height:1px;background:#C8904A;margin:18px auto;"></div>
+    <div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:#7A6654;">Rose Colored</div>
+  </div>
+</div>
 
 <main>
 
@@ -1007,19 +1060,52 @@ span.d{display:inline !important;}span.r{display:none !important;}
       </div>
     </div>
 
-    <!-- Forums -->
+    <!-- Forums - Q&A style with search -->
     <div class="sub-panel" id="community-forums">
-      <div style="margin-bottom:32px;">
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;margin-bottom:16px;">Mental Health</h3>
-        <div class="forum-row"><div class="forum-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div><div><div class="forum-name">Therapy Talk</div><div class="forum-desc">Finding care, navigating sessions, therapist recs</div></div><span class="forum-count">2.4k posts</span></div>
-        <div class="forum-row"><div class="forum-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><path d="M8 2v12M2 8h12"/></svg></div><div><div class="forum-name">Anxiety &amp; Stress</div><div class="forum-desc">Tools, experiences, and community support</div></div><span class="forum-count">1.8k posts</span></div>
-        <div class="forum-row"><div class="forum-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><rect x="3" y="3" width="10" height="10" rx="2"/></svg></div><div><div class="forum-name">Generational Healing</div><div class="forum-desc">Breaking cycles, family systems, intergenerational trauma</div></div><span class="forum-count">3.1k posts</span></div>
+      <!-- Search bar -->
+      <div style="display:flex;gap:10px;margin-bottom:20px;align-items:center;">
+        <div style="flex:1;position:relative;">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none;"><circle cx="6" cy="6" r="4"/><path d="M10 10l2.5 2.5"/></svg>
+          <input type="text" placeholder="Search questions..." style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:50px;padding:10px 14px 10px 34px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color 0.25s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border2)'">
+        </div>
+        <button class="btn btn-sm" onclick="openJoinModal()">+ Ask a Question</button>
       </div>
-      <div>
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;margin-bottom:16px;">Life &amp; Identity</h3>
-        <div class="forum-row"><div class="forum-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><circle cx="8" cy="8" r="6"/></svg></div><div><div class="forum-name">Black Men's Circle</div><div class="forum-desc">A space for Black men to speak freely</div></div><span class="forum-count">987 posts</span></div>
-        <div class="forum-row"><div class="forum-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--rose)"><path d="M8 2l1.5 4.5H14l-3.8 2.7 1.5 4.5L8 11l-3.7 2.7 1.5-4.5L2 6.5h4.5z"/></svg></div><div><div class="forum-name">Joy &amp; Abundance</div><div class="forum-desc">Wins, celebrations, and unapologetic Black joy</div></div><span class="forum-count">4.2k posts</span></div>
-        <div class="forum-row"><div class="forum-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><path d="M2 8h12M2 5h8M2 11h6"/></svg></div><div><div class="forum-name">Navigating Spaces</div><div class="forum-desc">Work, education, healthcare — surviving and thriving</div></div><span class="forum-count">1.5k posts</span></div>
+      <!-- Category filters -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;">
+        <div class="filter-pill active" onclick="setForumFilter(this,'all')">All</div>
+        <div class="filter-pill" onclick="setForumFilter(this,'mental-health')">Mental Health</div>
+        <div class="filter-pill" onclick="setForumFilter(this,'identity')">Identity</div>
+        <div class="filter-pill" onclick="setForumFilter(this,'relationships')">Relationships</div>
+        <div class="filter-pill" onclick="setForumFilter(this,'career')">Work &amp; Career</div>
+        <div class="filter-pill" onclick="setForumFilter(this,'joy')">Joy</div>
+      </div>
+      <!-- Questions list -->
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="forum-question-card">
+          <div class="fq-meta"><span class="fq-tag">Mental Health</span><span class="fq-time">2 hours ago</span></div>
+          <div class="fq-title">How do you find a therapist who actually understands racial trauma without having to explain everything from scratch?</div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 23 answers</span><span class="fq-stat">&#9670; 47 views</span><span class="fq-author">Asked by VividBloom</span></div>
+        </div>
+        <div class="forum-question-card">
+          <div class="fq-meta"><span class="fq-tag">Identity</span><span class="fq-time">5 hours ago</span></div>
+          <div class="fq-title">Does anyone else feel guilty for not being "strong" enough? How did you start letting that go?</div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 41 answers</span><span class="fq-stat">&#9670; 89 views</span><span class="fq-author">Asked by QuietCipher</span></div>
+        </div>
+        <div class="forum-question-card">
+          <div class="fq-meta"><span class="fq-tag">Work &amp; Career</span><span class="fq-time">Yesterday</span></div>
+          <div class="fq-title">I'm the only Black person at my company. How do you protect your peace while still advocating for yourself?</div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 18 answers</span><span class="fq-stat">&#9670; 62 views</span><span class="fq-author">Asked by RootedCrown</span></div>
+        </div>
+        <div class="forum-question-card">
+          <div class="fq-meta"><span class="fq-tag">Relationships</span><span class="fq-time">Yesterday</span></div>
+          <div class="fq-title">How do you have honest conversations about mental health with parents from a generation that didn't talk about it?</div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 35 answers</span><span class="fq-stat">&#9670; 104 views</span><span class="fq-author">Asked by TenderEmber</span></div>
+        </div>
+        <div class="forum-question-card">
+          <div class="fq-meta"><span class="fq-tag">Joy</span><span class="fq-time">2 days ago</span></div>
+          <div class="fq-title">What's one small thing you did this week that was purely for your own joy? Sharing for accountability.</div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 67 answers</span><span class="fq-stat">&#9670; 201 views</span><span class="fq-author">Asked by SacredHarvest</span></div>
+        </div>
       </div>
     </div>
 
@@ -1211,12 +1297,16 @@ span.d{display:inline !important;}span.r{display:none !important;}
       <h1 class="display d" style="font-size:clamp(32px,5vw,56px);">Tools for the <em>daily work</em> of being whole.</h1>
       <h1 class="display r" style="font-size:clamp(32px,5vw,56px);">Your wellness meets you <em>exactly where you are.</em></h1>
     </div>
+    <!-- Active tool panel - shows at top when a tool is selected -->
+    <div id="wellness-active-panel" style="margin-bottom:28px;display:none;"></div>
+    <!-- Tool selector grid -->
+    <div style="font-family:'Syne',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;" id="wellnessSelectorLabel">&#10022; Choose a tool</div>
     <div class="wellness-grid">
-      <div class="tool-card active-tool" onclick="openTool('lens-w',this)"><div class="tool-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--rose)"><circle cx="7" cy="10" r="3"/><circle cx="13" cy="10" r="3"/><path d="M4 10H2M16 10h2"/></svg></div><div class="tool-name">The Lens</div><div class="tool-desc">Submit a limiting belief. See it rewritten through a lens that centers your wholeness.</div></div>
-      <div class="tool-card" onclick="openTool('visual',this)"><div class="tool-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><rect x="2" y="4" width="16" height="11" rx="2"/><path d="M8 8l5 3-5 3V8z" fill="currentColor" stroke="none"/></svg></div><div class="tool-name">Visual Cleanse</div><div class="tool-desc">Lo-fi and ambient video moments to reset your nervous system. No algorithm, no noise.</div></div>
-      <div class="tool-card" onclick="openTool('affirm',this)"><div class="tool-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><path d="M10 2l1.8 5.5H18l-4.6 3.3 1.8 5.5L10 13.5l-5.2 2.8 1.8-5.5L2 7.5h6.2z"/></svg></div><div class="tool-name">Affirmations</div><div class="tool-desc">Daily affirmations written from a place of Black excellence and truth.</div></div>
-      <div class="tool-card" onclick="openTool('journal',this)"><div class="tool-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><rect x="4" y="3" width="12" height="14" rx="1"/><path d="M7 8h6M7 12h4"/></svg></div><div class="tool-name">Journal</div><div class="tool-desc">Prompted journaling with questions that go where most journals won't.</div></div>
-      <div class="tool-card" onclick="openTool('noise',this)"><div class="tool-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><path d="M3 8v4M6 5v10M9 3v14M12 6v8M15 4v12M18 8v4"/></svg></div><div class="tool-name">Noise Cleanse</div><div class="tool-desc">Eight soundscapes for focus, rest, and emotional reset.</div></div>
+      <div class="tool-card active-tool" onclick="openTool('lens-w',this)"><div class="tool-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--rose)"><circle cx="7" cy="10" r="3"/><circle cx="13" cy="10" r="3"/><path d="M4 10H2M16 10h2"/></svg></div><div class="tool-name">The Lens</div><div class="tool-desc">Submit a limiting belief. See it rewritten.</div></div>
+      <div class="tool-card" onclick="openTool('visual',this)"><div class="tool-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><rect x="2" y="4" width="16" height="11" rx="2"/><path d="M8 8l5 3-5 3V8z" fill="currentColor" stroke="none"/></svg></div><div class="tool-name">Visual Cleanse</div><div class="tool-desc">Lo-fi moments to reset your nervous system.</div></div>
+      <div class="tool-card" onclick="openTool('affirm',this)"><div class="tool-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><path d="M10 2l1.8 5.5H18l-4.6 3.3 1.8 5.5L10 13.5l-5.2 2.8 1.8-5.5L2 7.5h6.2z"/></svg></div><div class="tool-name">Affirmations</div><div class="tool-desc">Daily affirmations rooted in Black truth.</div></div>
+      <div class="tool-card" onclick="openTool('journal',this)"><div class="tool-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><rect x="4" y="3" width="12" height="14" rx="1"/><path d="M7 8h6M7 12h4"/></svg></div><div class="tool-name">Journal</div><div class="tool-desc">Prompts that go where most journals won't.</div></div>
+      <div class="tool-card" onclick="openTool('noise',this)"><div class="tool-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><path d="M3 8v4M6 5v10M9 3v14M12 6v8M15 4v12M18 8v4"/></svg></div><div class="tool-name">Noise Cleanse</div><div class="tool-desc">Soundscapes for focus, rest, and reset.</div></div>
     </div>
     <div class="tool-panel" id="tool-noise">
       <h3>Noise Cleanse</h3><p>Choose a soundscape. Let the world quiet down.</p>
@@ -1366,27 +1456,100 @@ span.d{display:inline !important;}span.r{display:none !important;}
 <!-- ═══════════ CRISIS & RIGHTS ═══════════ -->
 <div class="tab-content" id="tab-crisis">
   <div class="wrap">
-    <div class="page-header"><div class="eyebrow">&#10022; Crisis &amp; Rights</div><h1 class="display" style="font-size:clamp(32px,5vw,56px);">Resources for when you need <em>more than you can carry alone.</em></h1></div>
-    <div class="label" style="margin-bottom:20px;">&#10022; Crisis &amp; Mental Health Resources</div>
-    <div class="grid-3" style="margin-bottom:48px;">
-      <div class="crisis-resource"><div class="crisis-name">BlackLine</div><div class="crisis-num">1-800-604-5841</div><div class="crisis-desc">A crisis line that prioritizes Black, Indigenous, and People of Color. 24/7. Staffed by people who understand racial trauma.</div></div>
-      <div class="crisis-resource"><div class="crisis-name">Crisis Text Line</div><div class="crisis-num">Text HOME to 741741</div><div class="crisis-desc">Free, confidential crisis counseling via text, 24/7. Low-barrier access for those not ready to speak aloud.</div></div>
-      <div class="crisis-resource"><div class="crisis-name">988 Lifeline</div><div class="crisis-num">Call or Text 988</div><div class="crisis-desc">The national mental health crisis line, available 24/7. Free and confidential support for anyone in distress.</div></div>
-      <div class="crisis-resource"><div class="crisis-name">Therapy for Black Girls</div><div class="crisis-num">therapyforblackgirls.com</div><div class="crisis-desc">Mental wellness for Black women and girls. Therapist directory, podcast, and community resources.</div></div>
-      <div class="crisis-resource"><div class="crisis-name">Loveland Foundation</div><div class="crisis-num">thelovelandfoundation.org</div><div class="crisis-desc">Financial assistance for therapy to Black women and girls. Removing the financial barrier to care.</div></div>
-      <div class="crisis-resource"><div class="crisis-name">B.E.A.M.</div><div class="crisis-num">beam.community</div><div class="crisis-desc">Black Emotional and Mental Health Collective. Training, grants, and organizing to support Black community healing.</div></div>
-      <div class="crisis-resource"><div class="crisis-name">Boris Lawrence Henson Foundation</div><div class="crisis-num">borislhensonfoundation.org</div><div class="crisis-desc">Destigmatizing mental health in the Black community through education, advocacy, and access to care.</div></div>
-      <div class="crisis-resource"><div class="crisis-name">NQTTCN</div><div class="crisis-num">nqttcn.com</div><div class="crisis-desc">National Queer and Trans Therapists of Color Network. Affirming therapist database for QTPOC.</div></div>
-      <div class="crisis-resource"><div class="crisis-name">Sista Afya</div><div class="crisis-num">sistaafya.com</div><div class="crisis-desc">Community mental wellness for Black women. Sliding scale therapy, community programs, virtual and Chicago-based.</div></div>
+    <div class="page-header">
+      <div class="eyebrow">&#10022; Support &amp; Rights</div>
+      <h1 class="display" style="font-size:clamp(28px,4vw,48px);">You don't have to carry this <em>alone.</em></h1>
+      <p class="body-text" style="margin-top:12px;max-width:520px;">Resources organized so you can find what you need, when you need it — without having to read everything.</p>
     </div>
-    <div class="section-line"></div>
-    <div class="label" style="margin-bottom:20px;">&#10022; Know Your Rights</div>
-    <p class="body-text" style="margin-bottom:28px;max-width:600px;">Knowledge is a form of protection.</p>
+
+    <!-- If you need help right now -->
+    <div style="background:linear-gradient(135deg,rgba(232,112,138,0.08),rgba(200,144,74,0.06));border:1px solid rgba(232,112,138,0.25);border-radius:16px;padding:24px;margin-bottom:32px;">
+      <div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose);margin-bottom:14px;">&#10022; If you need help right now</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
+        <div style="background:var(--bg3);border-radius:12px;padding:16px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;margin-bottom:4px;">BlackLine</div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--rose);margin-bottom:6px;">1-800-604-5841</div>
+          <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">Prioritizes BIPOC. 24/7. Staffed by people who understand racial trauma.</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:12px;padding:16px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;margin-bottom:4px;">Crisis Text Line</div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--rose);margin-bottom:6px;">Text HOME to 741741</div>
+          <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">Free, confidential via text. 24/7. For those not ready to speak aloud.</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:12px;padding:16px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;margin-bottom:4px;">988 Lifeline</div>
+          <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--rose);margin-bottom:6px;">Call or Text 988</div>
+          <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">National mental health crisis line. Free, confidential, 24/7.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What do you need? category cards -->
+    <div style="font-family:'Syne',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;">&#10022; What do you need?</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:36px;">
+
+      <!-- Therapy & Care -->
+      <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:14px;overflow:hidden;">
+        <div style="padding:16px 18px;border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:10px;">
+          <div style="width:28px;height:28px;border-radius:8px;background:rgba(200,144,74,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="7" cy="4" r="2.5"/><path d="M2 12c0-3 2.2-5 5-5s5 2 5 5"/></svg>
+          </div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;">Therapy &amp; Care</div>
+        </div>
+        <div style="padding:14px 18px;display:flex;flex-direction:column;gap:10px;">
+          <div><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;">Therapy for Black Girls</div><div style="font-size:11px;color:var(--text-muted);">therapyforblackgirls.com · Directory + community for Black women &amp; girls</div></div>
+          <div><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;">Sista Afya</div><div style="font-size:11px;color:var(--text-muted);">sistaafya.com · Sliding scale therapy for Black women</div></div>
+          <div><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;">NQTTCN</div><div style="font-size:11px;color:var(--text-muted);">nqttcn.com · QTPOC affirming therapist database</div></div>
+        </div>
+      </div>
+
+      <!-- Financial Access -->
+      <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:14px;overflow:hidden;">
+        <div style="padding:16px 18px;border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:10px;">
+          <div style="width:28px;height:28px;border-radius:8px;background:rgba(200,144,74,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 4v6M5 5.5h3a1.5 1.5 0 010 3H5"/></svg>
+          </div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;">Financial Access</div>
+        </div>
+        <div style="padding:14px 18px;display:flex;flex-direction:column;gap:10px;">
+          <div><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;">Loveland Foundation</div><div style="font-size:11px;color:var(--text-muted);">thelovelandfoundation.org · Therapy grants for Black women &amp; girls</div></div>
+          <div><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;">B.E.A.M.</div><div style="font-size:11px;color:var(--text-muted);">beam.community · Grants, training &amp; community healing resources</div></div>
+          <div><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;">Boris Henson Foundation</div><div style="font-size:11px;color:var(--text-muted);">borislhensonfoundation.org · Advocacy &amp; access programs</div></div>
+        </div>
+      </div>
+
+      <!-- Community & Education -->
+      <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:14px;overflow:hidden;">
+        <div style="padding:16px 18px;border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:10px;">
+          <div style="width:28px;height:28px;border-radius:8px;background:rgba(200,144,74,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M7 2l5 3v4l-5 3-5-3V5z"/></svg>
+          </div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;">Community &amp; Education</div>
+        </div>
+        <div style="padding:14px 18px;display:flex;flex-direction:column;gap:10px;">
+          <div><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;">1N4 Foundation</div><div style="font-size:11px;color:var(--text-muted);">1n4.org · Destigmatizing mental illness in the Black community</div></div>
+          <div><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;">B.E.A.M. Learning</div><div style="font-size:11px;color:var(--text-muted);">beam.community · Free training &amp; mental wellness education</div></div>
+          <div><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;">Melanin &amp; Mental Health</div><div style="font-size:11px;color:var(--text-muted);">melaninandmentalhealth.com · Therapist directory &amp; community</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Know Your Rights - accordion stays but better header -->
+    <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:16px;padding:24px;margin-bottom:8px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+        <div style="width:28px;height:28px;border-radius:8px;background:rgba(200,144,74,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M7 1l1.5 4h4l-3.3 2.4 1.3 4L7 9 3.5 11.4l1.3-4L1.5 5h4z"/></svg>
+        </div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;">Know Your Rights</div>
+      </div>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;">Knowledge is a form of protection. Tap any section to expand.</p>
+
     <div class="accordion" id="acc1"><div class="accordion-head" onclick="toggleAccordion('acc1')"><span class="accordion-title">During a Traffic Stop</span><div class="accordion-icon"></div></div><div class="accordion-body"><ol><li>Pull over safely and promptly. Keep hands visible on the steering wheel.</li><li>You are required to provide license, registration, and proof of insurance.</li><li>You have the right to remain silent beyond required documents. Say: <em>"I am invoking my right to remain silent."</em></li><li>You do not have to consent to a vehicle search. Say: <em>"I do not consent to this search."</em> Compliance preserves safety and legal options.</li><li>Document everything immediately after — badge number, car, names, time, location.</li><li>Contact a civil rights attorney if rights were violated. ACLU and NAACP Legal Defense Fund provide resources.</li></ol></div></div>
     <div class="accordion" id="acc2"><div class="accordion-head" onclick="toggleAccordion('acc2')"><span class="accordion-title">As a Bystander Witnessing Police Contact</span><div class="accordion-icon"></div></div><div class="accordion-body"><ol><li>You have the right to observe and record police activity in public. Stand at safe distance. Do not interfere.</li><li>Your presence as a witness and documentation is your contribution.</li><li>If approached, ask: <em>"Am I free to go?"</em> If yes, leave. If not, you have the right to know why you're detained.</li><li>Upload footage to a secure location immediately. Do not delete under any pressure.</li></ol></div></div>
     <div class="accordion" id="acc3"><div class="accordion-head" onclick="toggleAccordion('acc3')"><span class="accordion-title">Housing Discrimination</span><div class="accordion-icon"></div></div><div class="accordion-body"><p>The Fair Housing Act prohibits discrimination in housing based on race, color, national origin, religion, sex, disability, and familial status.</p><ol style="margin-top:12px;"><li>Document all interactions — emails, texts, verbal statements with dates and times.</li><li>File a complaint with HUD at hud.gov or call 1-800-669-9777.</li><li>Contact the National Fair Housing Alliance (nationalfairhousing.org).</li><li>You may have grounds for a private lawsuit. Consult a civil rights attorney.</li></ol></div></div>
     <div class="accordion" id="acc4"><div class="accordion-head" onclick="toggleAccordion('acc4')"><span class="accordion-title">Medical Discrimination &amp; Patient Rights</span><div class="accordion-icon"></div></div><div class="accordion-body"><ol><li>You have the right to ask for a different doctor, second opinion, or patient advocate at any time.</li><li>If dismissed, document what you were told and by whom, immediately after.</li><li>File a complaint with the hospital's patient relations department. Ask for written response.</li><li>File with the U.S. Office for Civil Rights (OCR) if race-based: hhs.gov/ocr</li><li>Bring someone with you to appointments when possible.</li></ol></div></div>
     <div class="accordion" id="acc5"><div class="accordion-head" onclick="toggleAccordion('acc5')"><span class="accordion-title">Workplace Discrimination &amp; Racial Harassment</span><div class="accordion-icon"></div></div><div class="accordion-body"><p>Title VII protects employees from discrimination based on race, color, religion, sex, and national origin.</p><ol style="margin-top:12px;"><li>Document every incident immediately outside of work devices — dates, times, witnesses, exact words.</li><li>Report to HR in writing. Keep a copy.</li><li>File with the EEOC at eeoc.gov. Time limit: typically 180–300 days from the discriminatory act.</li><li>Retaliation for reporting is also illegal. Document any adverse actions taken after you report.</li></ol></div></div>
+    </div><!-- close rights card -->
   </div>
 </div>
 
@@ -1935,9 +2098,9 @@ span.d{display:inline !important;}span.r{display:none !important;}
         <p>That said: <strong>Black wellbeing is the center from which everything here radiates.</strong> The content, the framing, the community — all of it was built around Black life, Black needs, and Black flourishing. The lens is already set. That doesn't shift.</p>
         <p>If you're here in allyship or solidarity, you're genuinely welcome. Just know that this space doesn't adjust itself to make you comfortable — and that's precisely what makes it safe for who it was built for.</p>
       </div>
-      <div class="confirm-check" onclick="toggleConfirm()">
-        <input type="checkbox" id="disclaimerCheck">
-        <label for="disclaimerCheck">I understand and respect that this space is built for and centered around Black wellbeing. I'm here with intention.</label>
+      <div class="confirm-check" onclick="toggleConfirm(event)">
+        <input type="checkbox" id="disclaimerCheck" onclick="event.stopPropagation();toggleConfirm(event)">
+        <label for="disclaimerCheck" onclick="event.stopPropagation();toggleConfirm(event)">I understand and respect that this space is built for and centered around Black wellbeing. I'm here with intention.</label>
       </div>
       <div class="modal-footer">
         <button class="modal-nav-btn" onclick="document.getElementById('step-disclaimer').classList.remove('active');document.getElementById('step-presence').classList.add('active');updateProgress(60);">&#8592; Back</button>
@@ -2213,6 +2376,21 @@ let rfIdx=0;
 const interestOptions=['Mental Health','Black Joy','Therapy & Care','Community Events','Creative Arts','Finance & Wealth','Identity & Culture','Relationships','News & Policy','Spirituality'];
 
 // ── Tabs ──
+
+// ── Splash screen ──
+(function(){
+  const splash = document.getElementById('splashScreen');
+  const content = document.getElementById('splashContent');
+  if(!splash) return;
+  // Fade in content
+  setTimeout(()=>{ content.style.opacity='1'; }, 100);
+  // Fade out splash
+  setTimeout(()=>{
+    splash.style.opacity='0';
+    setTimeout(()=>{ splash.style.display='none'; }, 800);
+  }, 2000);
+})();
+
 // ── Daily Ritual ──
 const POLLS = [
   {
@@ -2350,14 +2528,33 @@ function openRitual(){
   overlay.classList.remove('hidden');
 }
 
-function showTab(id){
+function showTab(id,forceRitual){
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-'+id)?.classList.add('active');
   document.querySelector(`[data-tab="${id}"]`)?.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
-  if(id==='home') openRitual();
+  if(id==='home' && forceRitual) openRitual();
+  // Quick nav
+  const qn=document.getElementById('quickNav');
+  const lbl=document.getElementById('quickNavLabel');
+  const tabNames={'therapists':'Therapists','community':'Community','news':'News','wellness':'Wellness','create':'Create','library':'Library','events':'Events','shop':'Shop'};
+  if(qn) qn.style.display=id==='home'?'none':'flex';
+  if(lbl && tabNames[id]) lbl.textContent=tabNames[id];
+  closeQuickNav();
 }
+function toggleQuickNav(){
+  const m=document.getElementById('quickNavMenu');
+  if(m) m.style.display=m.style.display==='block'?'none':'block';
+}
+function closeQuickNav(){
+  const m=document.getElementById('quickNavMenu');
+  if(m) m.style.display='none';
+}
+document.addEventListener('click',e=>{
+  const qn=document.getElementById('quickNav');
+  if(qn && !qn.contains(e.target)) closeQuickNav();
+});
 function showSubTab(parent,id,el){
   document.querySelectorAll(`#tab-${parent} .sub-panel`).forEach(p=>p.classList.remove('active'));
   document.querySelectorAll(`#tab-${parent} .sub-tab`).forEach(t=>t.classList.remove('active'));
@@ -2507,10 +2704,15 @@ function goToDisclaimer(){
   document.getElementById('step-disclaimer').classList.add('active');
   updateProgress(88);
 }
-function toggleConfirm(){
+function toggleConfirm(e){
   const cb=document.getElementById('disclaimerCheck');
-  cb.checked=!cb.checked;
-  document.getElementById('disclaimerNext').disabled=!cb.checked;
+  // If clicking the checkbox itself, let browser handle it, just read state after
+  if(e && e.target===cb){
+    setTimeout(()=>{document.getElementById('disclaimerNext').disabled=!cb.checked;},0);
+  } else {
+    cb.checked=!cb.checked;
+    document.getElementById('disclaimerNext').disabled=!cb.checked;
+  }
 }
 function goToWelcome(){
   document.querySelectorAll('.modal-step').forEach(s=>s.classList.remove('active'));
@@ -2703,9 +2905,31 @@ async function runLens(){
 // ── Wellness ──
 function openTool(id,cardEl){
   document.querySelectorAll('.tool-card').forEach(c=>c.classList.remove('active-tool'));
-  document.querySelectorAll('.tool-panel').forEach(p=>p.classList.remove('active'));
   cardEl.classList.add('active-tool');
-  document.getElementById('tool-'+id)?.classList.add('active');
+  // Get panel content and clone into top container
+  const panel = document.getElementById('tool-'+id);
+  const topContainer = document.getElementById('wellness-active-panel');
+  if(panel && topContainer){
+    topContainer.innerHTML = '';
+    // Add a close/back label
+    const backBar = document.createElement('div');
+    backBar.style.cssText='display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;';
+    backBar.innerHTML='<div style="font-family:Syne,sans-serif;font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);">&#10022; '+cardEl.querySelector('.tool-name').textContent+'</div>';
+    topContainer.appendChild(backBar);
+    // Clone panel content
+    const clone = panel.cloneNode(true);
+    clone.style.display='block';
+    clone.style.margin='0';
+    topContainer.appendChild(clone);
+    topContainer.style.display='block';
+    topContainer.style.animation='tabIn 0.3s ease';
+    // Scroll to top of wellness tab
+    document.getElementById('tab-wellness').scrollTo({top:0,behavior:'smooth'});
+    window.scrollTo({top:document.getElementById('tab-wellness').offsetTop - 70,behavior:'smooth'});
+    // Update label
+    const lbl = document.getElementById('wellnessSelectorLabel');
+    if(lbl) lbl.textContent='&#10022; Switch tool';
+  }
 }
 function toggleSound(btn,name){
   const wasPlaying=btn.classList.contains('playing');
