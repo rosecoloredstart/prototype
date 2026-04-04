@@ -2918,9 +2918,8 @@ let catchupSlide = 0;
 const CATCHUP_TOTAL = 6;
 
 function initRitual(){
-  // Check if already done today
-  const today = new Date().toDateString();
-  try{ if(localStorage.getItem('rcRitualDate') === today){ ritualDone=true; return; } } catch(e){}
+  // For demo: always show. In production, uncomment localStorage check below.
+  // try{ const today=new Date().toDateString(); if(localStorage.getItem('rcRitualDate')===today){ritualDone=true;return;} }catch(e){}
 
   // Pick poll for today (based on day of week)
   const dayIdx = new Date().getDay();
@@ -3043,15 +3042,19 @@ function skipRitual(){
 
 // ── Catch Me Up ──
 function openCatchUp(){
+  const overlay = document.getElementById('catchupOverlay');
+  if(!overlay){ console.error('catchupOverlay not found'); return; }
   catchupSlide = 0;
   updateCatchupProgress();
   document.querySelectorAll('.catchup-slide').forEach((s,i)=>{
     s.classList.toggle('active', i===0);
     s.classList.remove('exit');
   });
-  document.getElementById('catchupPrev').style.visibility='hidden';
-  document.getElementById('catchupNext').textContent='Next →';
-  document.getElementById('catchupOverlay').classList.add('open');
+  const prev = document.getElementById('catchupPrev');
+  const next = document.getElementById('catchupNext');
+  if(prev) prev.style.visibility='hidden';
+  if(next) next.textContent='Next →';
+  overlay.classList.add('open');
   document.body.style.overflow='hidden';
 }
 
@@ -3105,10 +3108,13 @@ function prevCatchUp(){
   if(el) el.textContent = hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
 })();
 
-// Init ritual on first load (only if on home tab and not done today)
-setTimeout(()=>{
+// Init ritual on page load
+function tryInitRitual(){
+  const overlay = document.getElementById('ritualOverlay');
+  if(!overlay){ setTimeout(tryInitRitual, 200); return; }
   if(!ritualDone) initRitual();
-}, 600);
+}
+setTimeout(tryInitRitual, 400);
 
 </script>
 
