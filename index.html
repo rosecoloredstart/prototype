@@ -461,6 +461,7 @@ span.d{display:inline !important;}span.r{display:none !important;}
 .tour-float-icon{font-size:16px;line-height:1;}
 .tour-float-label{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-soft);white-space:nowrap;}
 .tour-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9998;background:rgba(6,4,3,0.96);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:20px;}
+.tour-overlay[style*="display:none"]{pointer-events:none;}
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 .tour-modal{background:var(--bg2);border:1px solid var(--border);border-radius:22px;width:100%;max-width:480px;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;animation:slideUp 0.35s cubic-bezier(0.25,0.46,0.45,0.94);}
 .tour-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 14px;border-bottom:1px solid var(--border2);flex-shrink:0;}
@@ -695,7 +696,8 @@ span.d{display:inline !important;}span.r{display:none !important;}
 .home-dest-desc{font-size:11.5px;color:var(--text-muted);line-height:1.4;}
 
 /* ═══════════ DAILY RITUAL OVERLAY ═══════════ */
-.ritual-overlay{position:fixed;inset:0;z-index:1800;background:rgba(6,4,3,0.88);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;padding:20px;}
+.ritual-overlay{position:fixed;inset:0;z-index:1800;background:rgba(6,4,3,0.88);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;padding:20px;}
+.ritual-overlay:not(.hidden){display:flex;}
 .ritual-overlay.hidden{display:none !important;}
 .ritual-sheet{background:var(--bg2);border:1px solid var(--border);border-radius:20px;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;padding:28px 28px 36px;position:relative;animation:slideUp 0.35s cubic-bezier(0.25,0.46,0.45,0.94);}
 @keyframes slideUp{from{transform:translateY(60px);opacity:0;}to{transform:translateY(0);opacity:1;}}
@@ -781,14 +783,6 @@ span.d{display:inline !important;}span.r{display:none !important;}
 .catchup-counter{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);}
 
 
-/* ── Quick Nav Dropdown ── */
-.quick-nav{position:relative;margin-left:8px;}
-.quick-nav-trigger{display:flex;align-items:center;gap:7px;background:var(--bg3);border:1px solid var(--border);border-radius:50px;padding:7px 14px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-soft);cursor:pointer;transition:var(--transition);}
-.quick-nav-trigger:hover{border-color:var(--accent);color:var(--accent);}
-.quick-nav-menu{position:absolute;top:calc(100% + 8px);left:0;background:var(--bg2);border:1px solid var(--border);border-radius:14px;min-width:180px;overflow:hidden;z-index:2000;animation:tabIn 0.2s ease;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
-.quick-nav-item{padding:11px 18px;font-family:'Syne',sans-serif;font-size:11px;font-weight:600;color:var(--text-muted);cursor:pointer;transition:background 0.15s,color 0.15s;}
-.quick-nav-item:hover{background:var(--bg3);color:var(--accent);}
-.quick-nav-item:first-child{border-bottom:1px solid var(--border2);}
 
 
 /* ── Forum Q&A Cards ── */
@@ -3331,24 +3325,25 @@ function initRitual(){
   // Pick poll for today (based on day of week)
   const dayIdx = new Date().getDay();
   currentPoll = POLLS[dayIdx % POLLS.length];
-  document.getElementById('pollQuestion').textContent = currentPoll.q;
+  const qEl = document.getElementById('pollQuestion');
+  if(qEl) qEl.textContent = currentPoll.q;
   const optsEl = document.getElementById('pollOpts');
-  optsEl.innerHTML = '';
-  currentPoll.opts.forEach(opt => {
-    const d = document.createElement('div');
-    d.className = 'ritual-poll-opt';
-    d.textContent = opt;
-    d.onclick = () => selectPollOpt(d);
-    optsEl.appendChild(d);
-  });
+  if(optsEl){
+    optsEl.innerHTML = '';
+    currentPoll.opts.forEach(opt => {
+      const d = document.createElement('div');
+      d.className = 'ritual-poll-opt';
+      d.textContent = opt;
+      d.onclick = () => selectPollOpt(d);
+      optsEl.appendChild(d);
+    });
+  }
   // Set greeting
   const hr = new Date().getHours();
   const timeLabel = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
   const el = document.getElementById('homeTimeLabel');
   if(el) el.textContent = timeLabel;
-  // Show ritual
-  const overlay = document.getElementById('ritualOverlay');
-  if(overlay) overlay.classList.remove('hidden');
+  // Don't auto-show — overlay is triggered by openRitual() when user navigates home
 }
 
 function selectPollOpt(el){
