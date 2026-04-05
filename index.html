@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rose Colored — Built for Black Life</title>
+<meta name="theme-color" content="#060403">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Rose Colored">
+<!-- PWA Icon: rose-colored glasses on dark bg -->
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%23060403'/%3E%3Crect x='8' y='8' width='176' height='176' rx='36' fill='%230e0a06'/%3E%3Cline x1='48' y1='96' x2='20' y2='88' stroke='%23E8708A' stroke-width='5' stroke-linecap='round'/%3E%3Crect x='48' y='76' width='40' height='40' rx='20' fill='none' stroke='%23E8708A' stroke-width='5'/%3E%3Crect x='104' y='76' width='40' height='40' rx='20' fill='none' stroke='%23E8708A' stroke-width='5'/%3E%3Cline x1='88' y1='96' x2='104' y2='96' stroke='%23E8708A' stroke-width='5' stroke-linecap='round'/%3E%3Cline x1='144' y1='96' x2='172' y2='88' stroke='%23E8708A' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='68' cy='96' r='10' fill='%23E8708A' opacity='0.25'/%3E%3Ccircle cx='124' cy='96' r='10' fill='%23E8708A' opacity='0.25'/%3E%3Cline x1='40' y1='148' x2='152' y2='148' stroke='%23C8904A' stroke-width='1.5' opacity='0.6'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23060403'/%3E%3Crect x='3' y='11' width='9' height='9' rx='4.5' fill='none' stroke='%23E8708A' stroke-width='1.5'/%3E%3Crect x='19' y='11' width='9' height='9' rx='4.5' fill='none' stroke='%23E8708A' stroke-width='1.5'/%3E%3Cline x1='12' y1='15.5' x2='19' y2='15.5' stroke='%23E8708A' stroke-width='1.5' stroke-linecap='round'/%3E%3Cline x1='1' y1='14' x2='3' y2='15.5' stroke='%23E8708A' stroke-width='1.5' stroke-linecap='round'/%3E%3Cline x1='31' y1='14' x2='28' y2='15.5' stroke='%23E8708A' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -37,7 +44,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(6,4,3,0.93);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);height:var(--nav-h);display:flex;align-items:center;padding:0 28px;transition:background 0.5s,border-color 0.5s;}
 .rose-mode nav{background:rgba(24,6,16,0.95);border-bottom-color:var(--border);}
-.nav-logo{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;font-style:italic;color:var(--text);letter-spacing:0.01em;white-space:nowrap;margin-right:28px;cursor:pointer;flex-shrink:0;}
+.nav-logo{display:flex;align-items:center;margin-right:28px;cursor:pointer;flex-shrink:0;transition:opacity 0.2s;}
+.nav-logo:hover{opacity:0.85;}
 .nav-logo span{color:var(--accent);}
 .nav-tabs-wrap{flex:1;overflow:hidden;position:relative;}
 .nav-tabs-wrap::after{content:'';position:absolute;right:0;top:0;bottom:0;width:44px;background:linear-gradient(to left,rgba(6,4,3,0.95),transparent);pointer-events:none;transition:background 0.5s;}
@@ -60,7 +68,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(6,4,3,0.93)
 .glasses-svg .arm{fill:none;stroke:var(--rose);stroke-width:1.5;transition:stroke 0.3s;}
 .glasses-wrap:hover .glasses-svg .lens,.glasses-wrap:hover .glasses-svg .bridge,.glasses-wrap:hover .glasses-svg .arm{stroke:var(--rose);fill:var(--rose);}
 .gl-label{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--rose);transition:color 0.3s;white-space:nowrap;}
-/* Always pulsing rose glow */
+/* Hide glasses label on non-home tabs */
+nav.compact-nav .gl-label{display:none;}
+nav.compact-nav .glasses-wrap{padding:7px 10px;}
 @keyframes roseGlow{0%,100%{box-shadow:0 0 0 0 transparent;border-color:var(--border);}50%{box-shadow:0 0 12px var(--rose-glow);border-color:var(--rose);}}
 .glasses-wrap{animation:roseGlow 2.6s ease-in-out infinite;}
 .glasses-wrap.lens-on{animation:roseGlowOn 2.6s ease-in-out infinite;}
@@ -221,6 +231,7 @@ span.d{display:inline !important;}span.r{display:none !important;}
 .spotlight-card{background:linear-gradient(135deg,var(--bg3),var(--bg4));border:1px solid var(--border);border-radius:16px;padding:36px;margin-bottom:40px;position:relative;overflow:hidden;}
 .spotlight-card::before{content:'SPOTLIGHT';position:absolute;top:20px;right:24px;font-family:'Syne',sans-serif;font-size:9px;font-weight:800;letter-spacing:0.2em;color:var(--accent);background:rgba(200,144,74,0.1);border:1px solid rgba(200,144,74,0.3);padding:5px 12px;border-radius:50px;}
 .spotlight-inner{display:grid;grid-template-columns:80px 1fr;gap:24px;align-items:start;}
+@media(max-width:600px){.spotlight-inner{grid-template-columns:1fr;gap:16px;}.spotlight-avatar{width:64px;height:64px;}}
 .spotlight-avatar{width:80px;height:80px;border-radius:50%;background:var(--bg5);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .therapist-initials{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:var(--accent);}
 .spotlight-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;margin-bottom:4px;}
@@ -739,7 +750,36 @@ span.d{display:inline !important;}span.r{display:none !important;}
 
 <!-- ═══════════ NAV ═══════════ -->
 <nav>
-  <div class="nav-logo" onclick="showTab('home',true)">Rose <span>Colored</span></div>
+  <div class="nav-logo" onclick="showTab('home',true)" title="Rose Colored">
+    <svg viewBox="0 0 220 36" height="28" xmlns="http://www.w3.org/2000/svg" style="display:block;overflow:visible;">
+      <defs>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap');
+        </style>
+        <clipPath id="leftClip"><rect x="0" y="0" width="110" height="40"/></clipPath>
+        <clipPath id="rightClip"><rect x="110" y="0" width="110" height="40"/></clipPath>
+        <linearGradient id="ulineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#C8904A"/>
+          <stop offset="100%" stop-color="#C8904A" stop-opacity="0.5"/>
+        </linearGradient>
+      </defs>
+      <!-- Wordmark text — cream -->
+      <text x="4" y="26" font-family="'Cormorant Garamond', Georgia, serif" font-size="26" font-weight="500" letter-spacing="2" fill="#F0E6D6">ROSE COLORED</text>
+      <!-- The O split circle overlay — left half cream, right half rose -->
+      <g>
+        <!-- Find the O in COLORED — approximately at x=131 -->
+        <circle cx="133" cy="19" r="9.5" fill="#E8708A" clip-path="url(#rightClip)"/>
+        <circle cx="133" cy="19" r="9.5" fill="#F0E6D6" clip-path="url(#leftClip)" opacity="0.92"/>
+        <!-- Redraw the text over the circle so it shows through -->
+        <text x="4" y="26" font-family="'Cormorant Garamond', Georgia, serif" font-size="26" font-weight="500" letter-spacing="2" fill="#F0E6D6" clip-path="url(#leftClip)">ROSE COLORED</text>
+        <text x="4" y="26" font-family="'Cormorant Garamond', Georgia, serif" font-size="26" font-weight="500" letter-spacing="2" fill="#060403" clip-path="url(#rightClip)">ROSE COLORED</text>
+      </g>
+      <!-- Gold underline with pulse animation -->
+      <line x1="4" y1="33" x2="216" y2="33" stroke="url(#ulineGrad)" stroke-width="1" opacity="0.7">
+        <animate attributeName="opacity" values="0.4;1;0.4" dur="3s" repeatCount="indefinite"/>
+      </line>
+    </svg>
+  </div>
   <div class="nav-tabs-wrap">
     <div class="nav-tabs">
       <div class="nav-tab active" onclick="showTab('home',true)" data-tab="home">Home</div>
@@ -750,7 +790,7 @@ span.d{display:inline !important;}span.r{display:none !important;}
       <div class="nav-tab" onclick="showTab('create')" data-tab="create">Create</div>
       <div class="nav-tab" onclick="showTab('library')" data-tab="library">Library</div>
       <div class="nav-tab" onclick="showTab('events')" data-tab="events">Events</div>
-      <div class="nav-tab" onclick="showTab('shop')" data-tab="shop">Shop</div>
+      <!-- Shop tab tabled for now -->
     </div>
   </div>
   <!-- Quick Nav Dropdown - shows when not on home -->
@@ -769,7 +809,6 @@ span.d{display:inline !important;}span.r{display:none !important;}
       <div class="quick-nav-item" onclick="showTab('create');closeQuickNav()">Create</div>
       <div class="quick-nav-item" onclick="showTab('library');closeQuickNav()">Library</div>
       <div class="quick-nav-item" onclick="showTab('events');closeQuickNav()">Events</div>
-      <div class="quick-nav-item" onclick="showTab('shop');closeQuickNav()">Shop</div>
     </div>
   </div>
   <div class="nav-right">
@@ -1025,29 +1064,29 @@ span.d{display:inline !important;}span.r{display:none !important;}
           <div class="chat-msg">
             <div class="chat-avatar">SH</div>
             <div class="chat-msg-body">
-              <div class="chat-msg-meta"><span class="chat-msg-name">SacredHarvest</span><span class="chat-msg-time">2:18 PM</span></div>
-              <div class="chat-bubble">That's such a real moment. I stayed too long with the wrong therapist. Check the Rose Colored directory — I found my current one there and it's been a completely different experience 🙏</div>
+              <div class="chat-msg-meta"><span class="chat-msg-name">SacredHarvest</span><span class="chat-msg-time">2:19 PM</span></div>
+              <div class="chat-bubble">Okay different energy but — can we talk about Black girl vacation mode? I took my first solo trip and I didn't check my email ONCE. I'm healed 😭✈️</div>
             </div>
           </div>
           <div class="chat-msg">
             <div class="chat-avatar" style="background:rgba(200,144,74,0.15);">QC</div>
             <div class="chat-msg-body">
               <div class="chat-msg-meta"><span class="chat-msg-name">QuietCipher</span><span class="chat-msg-time">2:21 PM</span></div>
-              <div class="chat-bubble">Something about having to explain why "just breathe" doesn't work when you're constantly code-switching at work, managing family, and absorbing the news... the context IS the work.</div>
+              <div class="chat-bubble">WAIT where did you go?? I need a full debrief. Also yes to not explaining "just breathe" — the context IS the work.</div>
             </div>
           </div>
           <div class="chat-msg">
             <div class="chat-avatar">VB</div>
             <div class="chat-msg-body">
               <div class="chat-msg-meta"><span class="chat-msg-name">VividBloom</span><span class="chat-msg-time">2:24 PM</span></div>
-              <div class="chat-bubble">Also — has anyone tried asking their therapist to read something before your session? I've started sending articles and it's changed the dynamic entirely.</div>
+              <div class="chat-bubble">My cousin called me "bougie" for going to therapy and I said "yes AND?" 😂 The bar for bougie in our family is wild.</div>
             </div>
           </div>
           <div class="chat-msg">
             <div class="chat-avatar">TE</div>
             <div class="chat-msg-body">
               <div class="chat-msg-meta"><span class="chat-msg-name">TenderEmber</span><span class="chat-msg-time">2:27 PM</span></div>
-              <div class="chat-bubble">That's actually genius. Taking that idea. Also this whole thread is what I needed today — thank you all 💛</div>
+              <div class="chat-bubble">The "bougie" thing LMAO. My mom called therapy "telling your business to strangers" and now she's the one asking me what my therapist said about HER 💀</div>
             </div>
           </div>
         </div>
@@ -1087,9 +1126,9 @@ span.d{display:inline !important;}span.r{display:none !important;}
           <div class="fq-footer"><span class="fq-stat">&#10022; 23 answers</span><span class="fq-stat">&#9670; 47 views</span><span class="fq-author">Asked by VividBloom</span></div>
         </div>
         <div class="forum-question-card">
-          <div class="fq-meta"><span class="fq-tag">Identity</span><span class="fq-time">5 hours ago</span></div>
-          <div class="fq-title">Does anyone else feel guilty for not being "strong" enough? How did you start letting that go?</div>
-          <div class="fq-footer"><span class="fq-stat">&#10022; 41 answers</span><span class="fq-stat">&#9670; 89 views</span><span class="fq-author">Asked by QuietCipher</span></div>
+          <div class="fq-meta"><span class="fq-tag">Joy</span><span class="fq-time">3 hours ago</span></div>
+          <div class="fq-title">What's a Black TV show, movie, or album that actually saved you during a hard season? Drop your recs — I'm building a healing playlist and watchlist.</div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 58 answers</span><span class="fq-stat">&#9670; 213 views</span><span class="fq-author">Asked by SacredHarvest</span></div>
         </div>
         <div class="forum-question-card">
           <div class="fq-meta"><span class="fq-tag">Work &amp; Career</span><span class="fq-time">Yesterday</span></div>
@@ -1097,14 +1136,24 @@ span.d{display:inline !important;}span.r{display:none !important;}
           <div class="fq-footer"><span class="fq-stat">&#10022; 18 answers</span><span class="fq-stat">&#9670; 62 views</span><span class="fq-author">Asked by RootedCrown</span></div>
         </div>
         <div class="forum-question-card">
-          <div class="fq-meta"><span class="fq-tag">Relationships</span><span class="fq-time">Yesterday</span></div>
+          <div class="fq-meta"><span class="fq-tag">Culture</span><span class="fq-time">Yesterday</span></div>
+          <div class="fq-title">Okay real talk — what's a completely irrational thing your Black family does that you've stopped trying to explain to outsiders? 😂 (mine: plastic on the furniture until further notice)</div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 141 answers</span><span class="fq-stat">&#9670; 890 views</span><span class="fq-author">Asked by TenderEmber</span></div>
+        </div>
+        <div class="forum-question-card">
+          <div class="fq-meta"><span class="fq-tag">Relationships</span><span class="fq-time">2 days ago</span></div>
           <div class="fq-title">How do you have honest conversations about mental health with parents from a generation that didn't talk about it?</div>
-          <div class="fq-footer"><span class="fq-stat">&#10022; 35 answers</span><span class="fq-stat">&#9670; 104 views</span><span class="fq-author">Asked by TenderEmber</span></div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 35 answers</span><span class="fq-stat">&#9670; 104 views</span><span class="fq-author">Asked by QuietCipher</span></div>
         </div>
         <div class="forum-question-card">
           <div class="fq-meta"><span class="fq-tag">Joy</span><span class="fq-time">2 days ago</span></div>
           <div class="fq-title">What's one small thing you did this week that was purely for your own joy? Sharing for accountability.</div>
-          <div class="fq-footer"><span class="fq-stat">&#10022; 67 answers</span><span class="fq-stat">&#9670; 201 views</span><span class="fq-author">Asked by SacredHarvest</span></div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 67 answers</span><span class="fq-stat">&#9670; 201 views</span><span class="fq-author">Asked by DeepSignal</span></div>
+        </div>
+        <div class="forum-question-card">
+          <div class="fq-meta"><span class="fq-tag">Culture</span><span class="fq-time">3 days ago</span></div>
+          <div class="fq-title">Which era of Black music do you think had the most healing power and why? I said what I said: 90s R&amp;B was group therapy.</div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 93 answers</span><span class="fq-stat">&#9670; 476 views</span><span class="fq-author">Asked by VividBloom</span></div>
         </div>
       </div>
     </div>
@@ -1437,6 +1486,10 @@ span.d{display:inline !important;}span.r{display:none !important;}
 <div class="tab-content" id="tab-library">
   <div class="wrap">
     <div class="page-header"><div class="eyebrow">&#10022; Library</div><h1 class="display d" style="font-size:clamp(32px,5vw,56px);">Reading that <em>sees you</em> in the subject.</h1><h1 class="display r" style="font-size:clamp(32px,5vw,56px);">Knowledge written <em>with you in mind.</em></h1></div>
+    <div class="search-wrap">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text-muted)"><circle cx="5.5" cy="5.5" r="4.5"/><path d="M9 9l3.5 3.5"/></svg>
+      <input type="text" placeholder="Search articles, topics, or themes..." oninput="filterLibSearch(this.value)">
+    </div>
     <div class="filter-bar" style="margin-bottom:28px;"><div class="filter-pill active" onclick="filterLib(this,'all')">All</div><div class="filter-pill" onclick="filterLib(this,'trauma')">Trauma</div><div class="filter-pill" onclick="filterLib(this,'anxiety')">Anxiety</div><div class="filter-pill" onclick="filterLib(this,'stress')">Stress</div><div class="filter-pill" onclick="filterLib(this,'identity')">Identity</div><div class="filter-pill" onclick="filterLib(this,'grief')">Grief</div><div class="filter-pill" onclick="filterLib(this,'joy')">Joy</div><div class="filter-pill" onclick="filterLib(this,'relationships')">Relationships</div></div>
     <div class="lib-featured"><div><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">&#10022; Featured &#183; Trauma</div><h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3vw,32px);font-weight:400;line-height:1.2;margin-bottom:16px;">The Body Keeps Score — And So Does the Community: Understanding Racial Trauma</h2><p style="font-size:13.5px;color:var(--text-soft);line-height:1.75;margin-bottom:20px;">Racial trauma isn't metaphorical — it's physiological. This piece traces the science, the history, and the daily lived experience of being Black in a body that has learned to brace for impact.</p><div style="display:flex;align-items:center;gap:16px;"><button class="btn btn-outline btn-sm">Read Article</button><span style="font-family:'Syne',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">12 min read</span></div></div><div style="background:var(--bg5);border-radius:12px;height:200px;display:flex;align-items:center;justify-content:center;"><svg width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1" style="color:var(--border)"><circle cx="30" cy="20" r="10"/><path d="M10 52c0-11 9-20 20-20s20 9 20 20"/></svg></div></div>
     <div class="lib-grid" id="libGrid">
@@ -1538,7 +1591,7 @@ span.d{display:inline !important;}span.r{display:none !important;}
           <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;">Community &amp; Education</div>
         </div>
         <div style="padding:14px 18px;display:flex;flex-direction:column;gap:10px;">
-          <div><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;">1M4 Foundation</div><div style="font-size:11px;color:var(--text-muted);">1m4.org · Destigmatizing mental illness in the Black community</div></div>
+          <div><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;">1M4</div><div style="font-size:11px;color:var(--text-muted);">1m4.org · Destigmatizing mental illness in the Black community</div></div>
           <div><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;">B.E.A.M. Learning</div><div style="font-size:11px;color:var(--text-muted);">beam.community · Free training &amp; mental wellness education</div></div>
           <div><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;">Melanin &amp; Mental Health</div><div style="font-size:11px;color:var(--text-muted);">melaninandmentalhealth.com · Therapist directory &amp; community</div></div>
         </div>
@@ -1612,42 +1665,42 @@ span.d{display:inline !important;}span.r{display:none !important;}
       <!-- Event 1 -->
       <div class="event-card" data-format="virtual" data-cost="free">
         <div class="event-card-top">
-          <div class="event-date-block"><div class="event-month">APR</div><div class="event-day">12</div></div>
+          <div class="event-date-block"><div class="event-month">APR</div><div class="event-day">10</div></div>
           <div class="event-badges">
             <span class="event-badge virtual">Virtual</span>
             <span class="event-badge free">Free</span>
           </div>
         </div>
         <div class="event-body">
-          <div class="event-time">Saturday · 3:00 PM EST</div>
-          <div class="event-title">Anxiety in the Body: Understanding Your Nervous System as a Black Person</div>
-          <div class="event-host">Hosted by Dr. Nia Wallace, Ph.D.</div>
-          <div class="event-desc">A live conversation on why anxiety presents differently in Black bodies — and practical tools to regulate, not just cope.</div>
+          <div class="event-time">Thursday · 7:00 PM EST</div>
+          <div class="event-title">Sista Check-in: Real Talk, Real Support</div>
+          <div class="event-host">Hosted by 1M4</div>
+          <div class="event-desc">A recurring virtual gathering for Black women and girls to come as they are — vent, laugh, breathe, and be held by community. No agenda, no performance required.</div>
         </div>
         <div class="event-footer">
-          <div class="event-spots">42 spots left</div>
+          <div class="event-spots">Open to all</div>
           <button class="btn btn-sm btn-primary" onclick="rsvpEvent(this)">RSVP</button>
         </div>
       </div>
 
       <!-- Event 2 -->
-      <div class="event-card" data-format="in-person" data-cost="free">
+      <div class="event-card" data-format="virtual" data-cost="free">
         <div class="event-card-top">
-          <div class="event-date-block"><div class="event-month">APR</div><div class="event-day">19</div></div>
+          <div class="event-date-block"><div class="event-month">APR</div><div class="event-day">11</div></div>
           <div class="event-badges">
-            <span class="event-badge in-person">In-Person</span>
+            <span class="event-badge virtual">Virtual</span>
             <span class="event-badge free">Free</span>
           </div>
         </div>
         <div class="event-body">
-          <div class="event-time">Friday · 7:00 PM · Atlanta, GA</div>
-          <div class="event-title">Community Night: Black Joy as Practice</div>
-          <div class="event-host">Rose Colored ATL Chapter</div>
-          <div class="event-desc">An evening of connection, conversation, food, and intentional celebration. No agenda. Just presence.</div>
+          <div class="event-time">Every Friday · 10:00 AM – 12:00 PM EST</div>
+          <div class="event-title">Black & Building: Weekly Coworking Session</div>
+          <div class="event-host">Rose Colored Community</div>
+          <div class="event-desc">Show up, focus, and get things done alongside other Black creatives, founders, and professionals. Body-doubling for people who work better with company. Camera optional, vibe mandatory.</div>
         </div>
         <div class="event-footer">
-          <div class="event-spots">18 spots left</div>
-          <button class="btn btn-sm btn-primary" onclick="rsvpEvent(this)">RSVP</button>
+          <div class="event-spots">Recurring · Open link</div>
+          <button class="btn btn-sm btn-primary" onclick="rsvpEvent(this)">Join Weekly</button>
         </div>
       </div>
 
@@ -1775,8 +1828,8 @@ span.d{display:inline !important;}span.r{display:none !important;}
 
     <!-- Step 2: Feeling check -->
     <div class="ritual-step" id="ritual-feeling">
-      <div class="ritual-house">This is your house.</div>
-      <div class="ritual-house-sub">How are you walking in today?</div>
+      <div class="ritual-house">What's the mood today?</div>
+      <div class="ritual-house-sub">No sugarcoating.</div>
       <div class="feeling-grid">
         <div class="feeling-opt heavy" onclick="selectFeeling(this,'heavy')">
           <div class="feeling-emoji">🌧</div>
@@ -2549,10 +2602,13 @@ function showTab(id,forceRitual){
   document.querySelector(`[data-tab="${id}"]`)?.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
   if(id==='home' && forceRitual) openRitual();
+  // Compact nav on non-home tabs
+  const navEl = document.querySelector('nav');
+  if(navEl) navEl.classList.toggle('compact-nav', id !== 'home');
   // Quick nav
   const qn=document.getElementById('quickNav');
   const lbl=document.getElementById('quickNavLabel');
-  const tabNames={'therapists':'Therapists','community':'Community','news':'News','wellness':'Wellness','create':'Create','library':'Library','events':'Events','shop':'Shop'};
+  const tabNames={'therapists':'Therapists','community':'Community','news':'News','wellness':'Wellness','create':'Create','library':'Library','events':'Events','shop':'Shop','crisis':'Support'};
   if(qn) qn.style.display=id==='home'?'none':'flex';
   if(lbl && tabNames[id]) lbl.textContent=tabNames[id];
   closeQuickNav();
@@ -2942,7 +2998,7 @@ function openTool(id,cardEl){
     window.scrollTo({top:document.getElementById('tab-wellness').offsetTop - 70,behavior:'smooth'});
     // Update label
     const lbl = document.getElementById('wellnessSelectorLabel');
-    if(lbl) lbl.textContent='&#10022; Switch tool';
+    if(lbl) lbl.textContent='\u2726 Switch tool';
   }
 }
 function toggleSound(btn,name){
@@ -3006,6 +3062,12 @@ function filterLib(el,cat){
   el.classList.add('active');
   document.querySelectorAll('#libGrid .lib-card').forEach(c=>{
     c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none';
+  });
+}
+function filterLibSearch(v){
+  const q=v.toLowerCase();
+  document.querySelectorAll('#libGrid .lib-card').forEach(c=>{
+    c.style.display=(!q||c.textContent.toLowerCase().includes(q))?'':'none';
   });
 }
 
