@@ -453,7 +453,40 @@ span.d{display:inline !important;}span.r{display:none !important;}
 .accordion-body ol{padding-left:20px;}
 .accordion-body li{margin-bottom:6px;}
 
-/* ═══════════ SHOP ═══════════ */
+/* ═══════════ HOUSE TOUR ═══════════ */
+/* Floating tour prompt */
+.tour-float{position:fixed;bottom:28px;right:24px;z-index:1500;display:flex;align-items:center;gap:9px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:11px 18px 11px 14px;cursor:pointer;box-shadow:0 6px 28px rgba(0,0,0,0.4);transition:var(--transition);animation:floatIn 0.5s cubic-bezier(0.25,0.46,0.45,0.94) both;}
+.tour-float:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 10px 36px rgba(0,0,0,0.5);}
+@keyframes floatIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.tour-float-icon{font-size:16px;line-height:1;}
+.tour-float-label{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-soft);white-space:nowrap;}
+position:fixed;inset:0;z-index:3000;background:rgba(6,4,3,0.92);backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn 0.3s ease;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.tour-modal{background:var(--bg2);border:1px solid var(--border);border-radius:22px;width:100%;max-width:480px;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;animation:slideUp 0.35s cubic-bezier(0.25,0.46,0.45,0.94);}
+.tour-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 14px;border-bottom:1px solid var(--border2);flex-shrink:0;}
+.tour-skip-btn{font-family:'Syne',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);background:transparent;border:none;cursor:pointer;padding:4px 0;transition:color 0.2s;}
+.tour-skip-btn:hover{color:var(--accent);}
+.tour-dots{display:flex;gap:5px;padding:14px 24px 0;flex-shrink:0;justify-content:center;}
+.tour-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background 0.3s,width 0.3s;cursor:pointer;}
+.tour-dot.active{background:var(--accent);width:18px;border-radius:3px;}
+.tour-dot.done{background:var(--border);}
+.tour-slides{flex:1;overflow:hidden;position:relative;min-height:320px;}
+.tour-slide{position:absolute;inset:0;padding:28px 24px 20px;opacity:0;transform:translateX(32px);transition:opacity 0.32s ease,transform 0.32s ease;pointer-events:none;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;}
+.tour-slide.active{opacity:1;transform:translateX(0);pointer-events:all;}
+.tour-slide.exit{opacity:0;transform:translateX(-32px);}
+.tour-slide-icon{width:52px;height:52px;border-radius:14px;background:var(--bg4);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:18px;flex-shrink:0;}
+.tour-slide-tag{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.tour-slide-title{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,4vw,28px);font-weight:400;line-height:1.2;margin-bottom:10px;color:var(--text);}
+.tour-slide-body{font-size:14px;color:var(--text-soft);line-height:1.7;}
+.tour-slide-body em{font-style:italic;color:var(--text);}
+.tour-slide-note{margin-top:14px;padding:12px 14px;background:var(--bg4);border-radius:10px;border-left:2px solid var(--accent);font-size:12.5px;color:var(--text-muted);line-height:1.6;font-style:italic;}
+.tour-footer{display:flex;align-items:center;justify-content:space-between;padding:14px 24px 22px;border-top:1px solid var(--border2);flex-shrink:0;}
+
+/* Last slide — enter button full width */
+.tour-enter-btn{width:100%;justify-content:center;display:flex;font-size:11px;padding:13px;background:var(--accent);color:#060403;border-color:var(--accent);}
+.tour-enter-btn:hover{background:var(--rose);border-color:var(--rose);color:#fff;}
+
+
 .shop-item{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;transition:var(--transition);}
 .shop-item:hover{background:var(--card-hover);border-color:var(--border);transform:translateY(-2px);}
 .shop-thumb{height:200px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:var(--bg3);}
@@ -552,6 +585,13 @@ span.d{display:inline !important;}span.r{display:none !important;}
 .profile-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
 .profile-pane{display:none;}
 .profile-pane.active{display:block;animation:tabIn 0.3s ease;}
+/* BC consolidated single screen */
+.bc-single-q{margin-bottom:4px;}
+.bc-divider{height:1px;background:var(--border2);margin:22px 0;}
+.bc-write-field{width:100%;background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-top:10px;transition:border-color 0.25s;display:block;}
+.bc-write-field:focus{border-color:var(--accent);}
+.bc-write-field::placeholder{color:var(--text-muted);}
+
 /* BC multi-select option */
 .bc-opt.multi::before{content:'';width:14px;height:14px;border:1.5px solid var(--border);border-radius:3px;flex-shrink:0;transition:var(--transition);}
 .bc-opt.multi.selected::before{background:var(--accent);border-color:var(--accent);}
@@ -2021,88 +2061,95 @@ span.d{display:inline !important;}span.r{display:none !important;}
       <div style="text-align:center;padding:16px 0 24px;">
         <div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:var(--rose);margin-bottom:16px;">Your Black Card</div>
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(24px,4vw,32px);font-weight:400;line-height:1.15;margin-bottom:16px;">You decide what passes<br>the <em style="color:var(--accent);">culture test.</em></h2>
-        <p style="font-size:13.5px;color:var(--text-soft);line-height:1.75;max-width:380px;margin:0 auto 28px;">No right answers. No gatekeeping. Just four questions that help us understand you — and connect you with people who get it.</p>
+        <p style="font-size:13.5px;color:var(--text-soft);line-height:1.75;max-width:380px;margin:0 auto 28px;">No right answers. No gatekeeping. Four quick questions — all at once.</p>
         <button class="modal-nav-btn primary" onclick="showBCStep(1)">Fill Out My Card &#8594;</button>
       </div>
     </div>
 
-    <!-- BC Step 1 — Love language with Black culture -->
+    <!-- BC — All 4 questions on one screen -->
     <div class="modal-step" id="bc-step-1">
-      <div class="bc-q-counter">Black Card &#183; 1 of 4</div>
-      <div class="bc-q-text">What's your love language with Black culture?</div>
-      <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">Pick all that apply — or write in your own.</p>
-      <div class="bc-opts">
-        <div class="bc-opt multi" onclick="toggleBC(this,0)">Music — it's always music first</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,0)">Food — love is made in the kitchen</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,0)">Humor — we laugh to stay sane and to celebrate</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,0)">Storytelling — the oral tradition runs deep</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,0)">Fashion — the way we dress is the way we speak</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,0)">Ceremony — church, ritual, gathering, all of it</div>
-      </div>
-      <div class="bc-write-in"><input type="text" placeholder="Or write in your own..." oninput="writeInBC(this,0)" style="width:100%;background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-top:10px;transition:border-color 0.25s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border2)'"></div>
-      <div class="bc-nav">
-        <button class="modal-nav-btn" onclick="document.querySelectorAll('.modal-step').forEach(s=>s.classList.remove('active'));document.getElementById('bc-intro').classList.add('active');">&#8592; Back</button>
-        <button class="modal-nav-btn primary" id="bc-next-1" onclick="nextBCStep(1)" disabled>Next &#8594;</button>
-      </div>
-    </div>
+      <div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--rose);margin-bottom:20px;">Your Black Card</div>
 
-    <!-- BC Step 2 — Generational pattern -->
-    <div class="modal-step" id="bc-step-2">
-      <div class="bc-q-counter">Black Card &#183; 2 of 4</div>
-      <div class="bc-q-text">The generational pattern you're interrupting.</div>
-      <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">Pick all that apply — or write in your own.</p>
-      <div class="bc-opts">
-        <div class="bc-opt multi" onclick="toggleBC(this,1)">Financial scarcity as identity</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,1)">Emotional unavailability as strength</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,1)">Silence about mental health</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,1)">Overworking as worth</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,1)">Everyone else first — always</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,1)">Shrinking to make others comfortable</div>
+      <!-- Q1 -->
+      <div class="bc-single-q" id="bcq-0">
+        <div class="bc-q-text" style="font-size:clamp(16px,2.5vw,20px);margin-bottom:10px;">What's your love language with Black culture?</div>
+        <div class="bc-opts">
+          <div class="bc-opt multi" onclick="toggleBC(this,0)">Music — it's always music first</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,0)">Food — love is made in the kitchen</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,0)">Humor — we laugh to stay sane and to celebrate</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,0)">Storytelling — the oral tradition runs deep</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,0)">Fashion — the way we dress is the way we speak</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,0)">Ceremony — church, ritual, gathering, all of it</div>
+        </div>
+        <input type="text" class="bc-write-field" placeholder="Or write in your own..." oninput="writeInBC(this,0)">
       </div>
-      <div class="bc-write-in"><input type="text" placeholder="Or write in your own..." oninput="writeInBC(this,1)" style="width:100%;background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-top:10px;transition:border-color 0.25s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border2)'"></div>
-      <div class="bc-nav">
-        <button class="modal-nav-btn" onclick="prevBCStep(2)">&#8592; Back</button>
-        <button class="modal-nav-btn primary" id="bc-next-2" onclick="nextBCStep(2)" disabled>Next &#8594;</button>
-      </div>
-    </div>
 
-    <!-- BC Step 3 — Recharge / who you are when nobody's watching -->
-    <div class="modal-step" id="bc-step-3">
-      <div class="bc-q-counter">Black Card &#183; 3 of 4</div>
-      <div class="bc-q-text">What does your recharge look like?</div>
-      <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">Pick all that apply — or write in your own.</p>
-      <div class="bc-opts">
-        <div class="bc-opt multi" onclick="toggleBC(this,2)">Silence and solitude</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,2)">Music loud enough to feel it</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,2)">Movement — a walk, a run, a workout</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,2)">Being around my people</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,2)">Creating something</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,2)">Prayer, meditation, stillness</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,2)">A long shower and a good cry</div>
-      </div>
-      <div class="bc-write-in"><input type="text" placeholder="Or write in your own..." oninput="writeInBC(this,2)" style="width:100%;background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-top:10px;transition:border-color 0.25s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border2)'"></div>
-      <div class="bc-nav">
-        <button class="modal-nav-btn" onclick="prevBCStep(3)">&#8592; Back</button>
-        <button class="modal-nav-btn primary" id="bc-next-3" onclick="nextBCStep(3)" disabled>Next &#8594;</button>
-      </div>
-    </div>
+      <div class="bc-divider"></div>
 
-    <!-- BC Step 4 — Cookout -->
-    <div class="modal-step" id="bc-step-4">
-      <div class="bc-q-counter">Black Card &#183; 4 of 4</div>
-      <div class="bc-q-text">What are you bringing to the cookout?</div>
-      <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">Pick all that apply — or write in your own.</p>
-      <div class="bc-opts">
-        <div class="bc-opt multi" onclick="toggleBC(this,3)">Mac &amp; cheese from scratch. Obviously.</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,3)">The playlist — I always bring the playlist</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,3)">Stories that make everybody stop eating</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,3)">Grandma's recipe they'll never let me forget</div>
-        <div class="bc-opt multi" onclick="toggleBC(this,3)">Myself. That's more than enough.</div>
+      <!-- Q2 -->
+      <div class="bc-single-q" id="bcq-1">
+        <div class="bc-q-text" style="font-size:clamp(16px,2.5vw,20px);margin-bottom:10px;">The generational pattern you're interrupting.</div>
+        <div class="bc-opts">
+          <div class="bc-opt multi" onclick="toggleBC(this,1)">Financial scarcity as identity</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,1)">Emotional unavailability as strength</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,1)">Silence about mental health</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,1)">Overworking as worth</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,1)">Everyone else first — always</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,1)">Shrinking to make others comfortable</div>
+        </div>
+        <input type="text" class="bc-write-field" placeholder="Or write in your own..." oninput="writeInBC(this,1)">
       </div>
-      <div class="bc-write-in"><input type="text" placeholder="Or write in your own..." oninput="writeInBC(this,3)" style="width:100%;background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-top:10px;transition:border-color 0.25s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border2)'"></div>
-      <div class="bc-nav">
-        <button class="modal-nav-btn" onclick="prevBCStep(4)">&#8592; Back</button>
-        <button class="modal-nav-btn primary" id="bc-next-4" onclick="goToPresence()" disabled>Continue &#8594;</button>
+
+      <div class="bc-divider"></div>
+
+      <!-- Q3 -->
+      <div class="bc-single-q" id="bcq-2">
+        <div class="bc-q-text" style="font-size:clamp(16px,2.5vw,20px);margin-bottom:10px;">What does your recharge look like?</div>
+        <div class="bc-opts">
+          <div class="bc-opt multi" onclick="toggleBC(this,2)">Silence and solitude</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,2)">Music loud enough to feel it</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,2)">Movement — a walk, a run, a workout</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,2)">Being around my people</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,2)">Creating something</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,2)">Prayer, meditation, stillness</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,2)">A long shower and a good cry</div>
+        </div>
+        <input type="text" class="bc-write-field" placeholder="Or write in your own..." oninput="writeInBC(this,2)">
+      </div>
+
+      <div class="bc-divider"></div>
+
+      <!-- Q4 -->
+      <div class="bc-single-q" id="bcq-3">
+        <div class="bc-q-text" style="font-size:clamp(16px,2.5vw,20px);margin-bottom:10px;">What are you bringing to the cookout?</div>
+        <div class="bc-opts">
+          <div class="bc-opt multi" onclick="toggleBC(this,3)">Mac &amp; cheese from scratch. Obviously.</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,3)">The playlist — I always bring the playlist</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,3)">Stories that make everybody stop eating</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,3)">Grandma's recipe they'll never let me forget</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,3)">Myself. That's more than enough.</div>
+        </div>
+        <input type="text" class="bc-write-field" placeholder="Or write in your own..." oninput="writeInBC(this,3)">
+      </div>
+
+      <div class="bc-divider"></div>
+
+      <!-- Q5 -->
+      <div class="bc-single-q" id="bcq-4">
+        <div class="bc-q-text" style="font-size:clamp(16px,2.5vw,20px);margin-bottom:10px;">What brought you here today?</div>
+        <div class="bc-opts">
+          <div class="bc-opt multi" onclick="toggleBC(this,4)">I'm looking for a therapist</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,4)">I need community right now</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,4)">I want to understand myself better</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,4)">I'm processing something heavy</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,4)">Just exploring — no pressure</div>
+          <div class="bc-opt multi" onclick="toggleBC(this,4)">All of the above, honestly</div>
+        </div>
+      </div>
+
+      <div style="margin-top:28px;">
+        <button class="modal-nav-btn primary" id="bc-next-1" onclick="goToPresence()" style="width:100%;justify-content:center;display:flex;" disabled>Continue &#8594;</button>
+        <p style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:10px;">Pick at least one answer per question to continue.</p>
       </div>
     </div>
 
@@ -2152,7 +2199,7 @@ span.d{display:inline !important;}span.r{display:none !important;}
         </div>
       </div>
       <div class="modal-footer">
-        <button class="modal-nav-btn" onclick="showBCStep(4)">&#8592; Back</button>
+        <button class="modal-nav-btn" onclick="showBCStep(1)">&#8592; Back</button>
         <button class="modal-nav-btn primary" onclick="goToDisclaimer()" id="presenceNext" disabled>Continue &#8594;</button>
       </div>
     </div>
@@ -2190,6 +2237,37 @@ span.d{display:inline !important;}span.r{display:none !important;}
     </div>
   </div>
 </div>
+</div>
+
+<!-- ═══════════ FLOATING TOUR BUTTON ═══════════ -->
+<div class="tour-float" id="tourFloat" style="display:none;" onclick="startTour()">
+  <span class="tour-float-icon">🏠</span>
+  <span class="tour-float-label">Show me around the house</span>
+</div>
+
+<!-- ═══════════ HOUSE TOUR OVERLAY ═══════════ -->
+<div class="tour-overlay" id="tourOverlay" style="display:none;">
+  <div class="tour-modal">
+
+    <!-- Header -->
+    <div class="tour-header">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;font-style:italic;color:var(--text);">The House Tour</div>
+      <button class="tour-skip-btn" onclick="endTour()">Skip &#8594;</button>
+    </div>
+
+    <!-- Progress dots -->
+    <div class="tour-dots" id="tourDots"></div>
+
+    <!-- Slides -->
+    <div class="tour-slides" id="tourSlides"></div>
+
+    <!-- Footer nav -->
+    <div class="tour-footer">
+      <button class="modal-nav-btn" id="tourPrevBtn" onclick="tourNav(-1)" style="visibility:hidden;">&#8592; Back</button>
+      <button class="modal-nav-btn primary" id="tourNextBtn" onclick="tourNav(1)">Next &#8594;</button>
+    </div>
+
+  </div>
 </div>
 
 <!-- ═══════════ PROFILE MODAL ═══════════ -->
@@ -2425,8 +2503,8 @@ span.d{display:inline !important;}span.r{display:none !important;}
 <script>
 // ── State ──
 let roseOn=false,joined=false,selectedPresence='',selectedAvatar=-1;
-const bcAnswers=[[],[],[],[]]; // multi-select arrays
-const bcLabels=['Culture Love Language','Breaking the Pattern','Recharge','Cookout'];
+const bcAnswers=[[],[],[],[],[]]; // 5th is "what brought you here" — optional
+const bcLabels=['Culture Love Language','Breaking the Pattern','Recharge','Cookout','Here For'];
 const bcProfileIds=['pb-spades','pb-cookout','pb-pattern','pb-energy'];
 const userAdj=['Rooted','Vivid','Quiet','Tender','Risen','Sacred','Boundless','Luminous','Sovereign','Grounded','Radiant','Deep','Bold','Defiant'];
 const userNoun=['Crown','Current','Legacy','Frequency','Bloom','Ember','Horizon','Rhythm','Cipher','Pulse','Archive','Signal','Harvest','Dawn'];
@@ -2715,34 +2793,30 @@ function toggleBC(el,qIdx){
   const arr=bcAnswers[qIdx];
   const i=arr.indexOf(val);
   if(i>=0) arr.splice(i,1); else arr.push(val);
-  const nextBtn=document.getElementById('bc-next-'+(qIdx+1));
-  if(nextBtn) nextBtn.disabled=arr.length===0;
+  checkBCComplete();
 }
 function writeInBC(input,qIdx){
   const val=input.value.trim();
-  // Keep any checkbox selections, add/replace write-in at end
-  const arr=bcAnswers[qIdx];
-  // Remove previous write-in (anything not matching a checkbox label)
   const checkboxLabels=Array.from(
-    document.querySelectorAll('#bc-step-'+(qIdx+1)+' .bc-opt.selected')
+    document.querySelectorAll('#bcq-'+qIdx+' .bc-opt.selected')
   ).map(el=>el.textContent.trim());
   bcAnswers[qIdx]=checkboxLabels;
   if(val) bcAnswers[qIdx].push(val);
-  const nextBtn=document.getElementById('bc-next-'+(qIdx+1));
-  if(nextBtn) nextBtn.disabled=bcAnswers[qIdx].length===0;
+  checkBCComplete();
+}
+function checkBCComplete(){
+  // Only first 4 questions required; Q5 is optional data
+  const allAnswered = bcAnswers.slice(0,4).every(arr => arr.length > 0);
+  const btn = document.getElementById('bc-next-1');
+  if(btn) btn.disabled = !allAnswered;
 }
 function showBCStep(n){
   document.querySelectorAll('.modal-step').forEach(s=>s.classList.remove('active'));
-  document.getElementById('bc-step-'+n)?.classList.add('active');
+  document.getElementById('bc-step-1')?.classList.add('active');
+  updateProgress(35);
 }
-function nextBCStep(n){
-  const pcts=[15,32,50,65];
-  updateProgress(pcts[n-1]||65);
-  showBCStep(n+1);
-}
-function prevBCStep(n){
-  if(n===2){showBCStep(1);}else{showBCStep(n-1);}
-}
+function nextBCStep(n){ goToPresence(); }
+function prevBCStep(n){ showBCIntro(); }
 function goToPresence(){
   document.querySelectorAll('.modal-step').forEach(s=>s.classList.remove('active'));
   document.getElementById('step-presence')?.classList.add('active');
@@ -2795,11 +2869,13 @@ function goToWelcome(){
   buildBCSummary();
 }
 function buildBCSummary(){
-  const labels=['Spades','Cookout','Pattern','Energy'];
+  const labels=['Love Language','Breaking','Recharge','Cookout','Here For'];
+  const profileIds=['pb-spades','pb-cookout','pb-pattern','pb-energy','pb-here'];
   let html='';
   bcAnswers.forEach((arr,i)=>{
+    if(i===4 && arr.length===0) return; // skip Q5 if unanswered
     const val=arr.length?arr.join(', '):'Not selected';
-    const pId=bcProfileIds[i];
+    const pId=profileIds[i];
     const el=document.getElementById(pId);
     if(el) el.textContent=val;
     html+=`<div style="margin-bottom:6px;"><span style="color:var(--text-muted);font-size:11px;">${labels[i]}: </span><span style="font-size:13px;">${val}</span></div>`;
@@ -2834,6 +2910,11 @@ function completeSignup(){
   const cl=document.getElementById('currentPresenceLabel');
   if(cl) cl.textContent=tierName;
   closeModal('joinModal');
+  // Show floating tour button after a short delay
+  setTimeout(()=>{
+    const fb = document.getElementById('tourFloat');
+    if(fb) fb.style.display='flex';
+  }, 800);
 }
 function signOut(){
   joined=false;
@@ -3072,6 +3153,154 @@ function filterLibSearch(v){
   document.querySelectorAll('#libGrid .lib-card').forEach(c=>{
     c.style.display=(!q||c.textContent.toLowerCase().includes(q))?'':'none';
   });
+}
+
+// ═══════════ HOUSE TOUR ═══════════
+const TOUR_SLIDES = [
+  {
+    tag: '01 — Home',
+    title: 'This is your front door.',
+    body: 'Every time you walk in, the house checks in with you first. Pick your mood, catch up on what you missed, or go straight to where you need to be. <em>No performance required.</em>',
+    note: 'The daily ritual at the top? That\'s just us being nosy before things get real.',
+    icon: `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M3 10L11 3l8 7v9a1 1 0 01-1 1H14v-5H8v5H4a1 1 0 01-1-1V10z"/></svg>`
+  },
+  {
+    tag: '02 — Community',
+    title: 'Your people are already in here.',
+    body: 'Live threads, forums, groups, and members near you. Ask a question. Drop a rec. Jump into a conversation already in progress. <em>No context needed. No explaining yourself.</em>',
+    note: 'The mac and cheese with eggs debate has 203 replies and counting. You\'re welcome.',
+    icon: `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M20 14c0 2.2-1.8 4-4 4H6l-3 2v-6c0-2.2 1.8-4 4-4h6"/><circle cx="15" cy="6" r="4"/></svg>`
+  },
+  {
+    tag: '03 — Therapists',
+    title: 'Find someone who already speaks your language.',
+    body: 'Every therapist here is culturally competent and Black-affirming. Filter by insurance, specialty, or location. <em>No explaining the news. No starting from scratch.</em>',
+    note: 'The spotlight therapist changes regularly — that\'s a real review from a real community member.',
+    icon: `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="11" cy="7" r="3.5"/><path d="M3 20c0-4.5 3.6-8 8-8s8 3.5 8 8"/></svg>`
+  },
+  {
+    tag: '04 — Wellness',
+    title: 'The daily work of being whole.',
+    body: 'The Lens rewrites your limiting beliefs. The journal has prompts that actually go somewhere. Soundscapes, affirmations, visual cleanse — <em>tools built for your nervous system, not a general audience.</em>',
+    note: 'The Lens is powered by AI. Drop a thought that\'s been sitting heavy. See what comes back.',
+    icon: `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--rose)" stroke-width="1.5"><circle cx="8" cy="11" r="3.5"/><circle cx="14" cy="11" r="3.5"/><path d="M4.5 11H2M18 11h2.5"/></svg>`
+  },
+  {
+    tag: '05 — News & Library',
+    title: 'The same world. A different lens.',
+    body: 'News tab reframes headlines through a lens that centers Black humanity — not deficit. The library is long-form reading that <em>sees you in the subject.</em>',
+    note: 'Paste any headline into the Live Lens and watch it transform in real time.',
+    icon: `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="3" y="4" width="16" height="14" rx="2"/><path d="M3 9h16M8 4v5"/></svg>`
+  },
+  {
+    tag: '06 — The Nav',
+    title: 'Four things at the top. Always.',
+    body: '<em>RC</em> takes you home. The <em>bulb</em> goes straight to crisis resources — no navigation, no questions. The <em>glasses</em> toggle rose mode. Your <em>profile icon</em> is you.',
+    note: 'Rose mode changes how content is framed across the whole app. Try it anytime — no one knows but you.',
+    icon: `<svg width="22" height="22" viewBox="0 0 24 10" fill="none"><circle cx="5" cy="5" r="4" stroke="var(--rose)" stroke-width="1.5"/><circle cx="19" cy="5" r="4" stroke="var(--rose)" stroke-width="1.5"/><path d="M9 5h6" stroke="var(--rose)" stroke-width="1.5" stroke-linecap="round"/></svg>`
+  },
+  {
+    tag: '07 — You\'re in.',
+    title: 'That\'s the house.',
+    body: 'It\'s yours now. Explore at whatever pace feels right. Come back every day or when you need it. <em>This space doesn\'t expire on you.</em>',
+    note: null,
+    isLast: true,
+    icon: `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M4 11l5 5L18 6"/></svg>`
+  }
+];
+
+let tourIdx = 0;
+
+function startTour(){
+  // Hide the floating button
+  const fb = document.getElementById('tourFloat');
+  if(fb) fb.style.display = 'none';
+  tourIdx = 0;
+  const overlay = document.getElementById('tourOverlay');
+  overlay.style.display = 'flex';
+  buildTourSlides();
+  renderTour();
+}
+
+function buildTourSlides(){
+  const slidesEl = document.getElementById('tourSlides');
+  const dotsEl = document.getElementById('tourDots');
+  slidesEl.innerHTML = '';
+  dotsEl.innerHTML = '';
+  TOUR_SLIDES.forEach((s, i) => {
+    // Slide
+    const div = document.createElement('div');
+    div.className = 'tour-slide' + (i === 0 ? ' active' : '');
+    div.id = 'tour-slide-' + i;
+    div.innerHTML = `
+      <div class="tour-slide-icon">${s.icon}</div>
+      <div class="tour-slide-tag">${s.tag}</div>
+      <div class="tour-slide-title">${s.title}</div>
+      <div class="tour-slide-body">${s.body}</div>
+      ${s.note ? `<div class="tour-slide-note">${s.note}</div>` : ''}
+    `;
+    slidesEl.appendChild(div);
+    // Dot
+    const dot = document.createElement('div');
+    dot.className = 'tour-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToTourSlide(i);
+    dotsEl.appendChild(dot);
+  });
+}
+
+function renderTour(){
+  const slides = document.querySelectorAll('.tour-slide');
+  const dots = document.querySelectorAll('.tour-dot');
+  slides.forEach((s, i) => {
+    s.classList.remove('active','exit');
+    if(i === tourIdx) s.classList.add('active');
+  });
+  dots.forEach((d, i) => {
+    d.classList.remove('active','done');
+    if(i === tourIdx) d.classList.add('active');
+    else if(i < tourIdx) d.classList.add('done');
+  });
+  // Prev button
+  const prevBtn = document.getElementById('tourPrevBtn');
+  if(prevBtn) prevBtn.style.visibility = tourIdx === 0 ? 'hidden' : 'visible';
+  // Next button
+  const nextBtn = document.getElementById('tourNextBtn');
+  const isLast = tourIdx === TOUR_SLIDES.length - 1;
+  if(nextBtn){
+    nextBtn.textContent = isLast ? 'Enter the space \u2192' : 'Next \u2192';
+    nextBtn.className = isLast ? 'modal-nav-btn primary tour-enter-btn' : 'modal-nav-btn primary';
+    nextBtn.onclick = isLast ? endTour : () => tourNav(1);
+  }
+}
+
+function tourNav(dir){
+  const prev = document.getElementById('tour-slide-' + tourIdx);
+  if(prev){
+    prev.classList.remove('active');
+    prev.classList.add('exit');
+    setTimeout(() => prev.classList.remove('exit'), 340);
+  }
+  tourIdx = Math.max(0, Math.min(TOUR_SLIDES.length - 1, tourIdx + dir));
+  renderTour();
+}
+
+function goToTourSlide(i){
+  document.querySelectorAll('.tour-slide').forEach(s => { s.classList.remove('active','exit'); });
+  tourIdx = i;
+  renderTour();
+}
+
+function endTour(){
+  const overlay = document.getElementById('tourOverlay');
+  overlay.style.opacity = '0';
+  overlay.style.transition = 'opacity 0.4s';
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    overlay.style.opacity = '';
+    overlay.style.transition = '';
+    tourIdx = 0;
+  }, 400);
+  showTab('home', true);
 }
 
 // ── Accordion ──
