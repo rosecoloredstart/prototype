@@ -44,8 +44,11 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(6,4,3,0.93);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);height:var(--nav-h);display:flex;align-items:center;padding:0 28px;transition:background 0.5s,border-color 0.5s;}
 .rose-mode nav{background:rgba(24,6,16,0.95);border-bottom-color:var(--border);}
-.nav-logo{display:flex;align-items:center;margin-right:28px;cursor:pointer;flex-shrink:0;transition:opacity 0.2s;}
+.nav-logo{display:flex;align-items:center;gap:8px;margin-right:28px;cursor:pointer;flex-shrink:0;transition:opacity 0.2s;position:relative;}
 .nav-logo:hover{opacity:0.85;}
+.nav-logo-rc{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;font-style:italic;color:var(--text);letter-spacing:-0.01em;line-height:1;position:relative;}
+.nav-logo-rc::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--accent),var(--rose));animation:logoPulse 2.8s ease-in-out infinite;}
+@keyframes logoPulse{0%,100%{opacity:0.35;transform:scaleX(0.7);transform-origin:left;}50%{opacity:1;transform:scaleX(1);transform-origin:left;}}
 .nav-logo span{color:var(--accent);}
 .nav-tabs-wrap{flex:1;overflow:hidden;position:relative;}
 .nav-tabs-wrap::after{content:'';position:absolute;right:0;top:0;bottom:0;width:44px;background:linear-gradient(to left,rgba(6,4,3,0.95),transparent);pointer-events:none;transition:background 0.5s;}
@@ -751,34 +754,8 @@ span.d{display:inline !important;}span.r{display:none !important;}
 <!-- ═══════════ NAV ═══════════ -->
 <nav>
   <div class="nav-logo" onclick="showTab('home',true)" title="Rose Colored">
-    <svg viewBox="0 0 220 36" height="28" xmlns="http://www.w3.org/2000/svg" style="display:block;overflow:visible;">
-      <defs>
-        <style>
-          @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap');
-        </style>
-        <clipPath id="leftClip"><rect x="0" y="0" width="110" height="40"/></clipPath>
-        <clipPath id="rightClip"><rect x="110" y="0" width="110" height="40"/></clipPath>
-        <linearGradient id="ulineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#C8904A"/>
-          <stop offset="100%" stop-color="#C8904A" stop-opacity="0.5"/>
-        </linearGradient>
-      </defs>
-      <!-- Wordmark text — cream -->
-      <text x="4" y="26" font-family="'Cormorant Garamond', Georgia, serif" font-size="26" font-weight="500" letter-spacing="2" fill="#F0E6D6">ROSE COLORED</text>
-      <!-- The O split circle overlay — left half cream, right half rose -->
-      <g>
-        <!-- Find the O in COLORED — approximately at x=131 -->
-        <circle cx="133" cy="19" r="9.5" fill="#E8708A" clip-path="url(#rightClip)"/>
-        <circle cx="133" cy="19" r="9.5" fill="#F0E6D6" clip-path="url(#leftClip)" opacity="0.92"/>
-        <!-- Redraw the text over the circle so it shows through -->
-        <text x="4" y="26" font-family="'Cormorant Garamond', Georgia, serif" font-size="26" font-weight="500" letter-spacing="2" fill="#F0E6D6" clip-path="url(#leftClip)">ROSE COLORED</text>
-        <text x="4" y="26" font-family="'Cormorant Garamond', Georgia, serif" font-size="26" font-weight="500" letter-spacing="2" fill="#060403" clip-path="url(#rightClip)">ROSE COLORED</text>
-      </g>
-      <!-- Gold underline with pulse animation -->
-      <line x1="4" y1="33" x2="216" y2="33" stroke="url(#ulineGrad)" stroke-width="1" opacity="0.7">
-        <animate attributeName="opacity" values="0.4;1;0.4" dur="3s" repeatCount="indefinite"/>
-      </line>
-    </svg>
+    <span class="nav-logo-rc">RC</span>
+    <span class="nav-logo-pulse"></span>
   </div>
   <div class="nav-tabs-wrap">
     <div class="nav-tabs">
