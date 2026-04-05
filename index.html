@@ -455,12 +455,12 @@ span.d{display:inline !important;}span.r{display:none !important;}
 
 /* ═══════════ HOUSE TOUR ═══════════ */
 /* Floating tour prompt */
-.tour-float{position:fixed;bottom:28px;right:24px;z-index:1500;display:flex;align-items:center;gap:9px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:11px 18px 11px 14px;cursor:pointer;box-shadow:0 6px 28px rgba(0,0,0,0.4);transition:var(--transition);animation:floatIn 0.5s cubic-bezier(0.25,0.46,0.45,0.94) both;}
+.tour-float{position:fixed;bottom:28px;right:24px;z-index:1500;display:flex;align-items:center;gap:9px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:11px 18px 11px 14px;cursor:pointer;box-shadow:0 6px 28px rgba(0,0,0,0.4);transition:var(--transition);}
 .tour-float:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 10px 36px rgba(0,0,0,0.5);}
 @keyframes floatIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 .tour-float-icon{font-size:16px;line-height:1;}
 .tour-float-label{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-soft);white-space:nowrap;}
-position:fixed;inset:0;z-index:3000;background:rgba(6,4,3,0.92);backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn 0.3s ease;}
+.tour-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9998;background:rgba(6,4,3,0.96);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:20px;}
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 .tour-modal{background:var(--bg2);border:1px solid var(--border);border-radius:22px;width:100%;max-width:480px;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;animation:slideUp 0.35s cubic-bezier(0.25,0.46,0.45,0.94);}
 .tour-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 14px;border-bottom:1px solid var(--border2);flex-shrink:0;}
@@ -481,8 +481,6 @@ position:fixed;inset:0;z-index:3000;background:rgba(6,4,3,0.92);backdrop-filter:
 .tour-slide-body em{font-style:italic;color:var(--text);}
 .tour-slide-note{margin-top:14px;padding:12px 14px;background:var(--bg4);border-radius:10px;border-left:2px solid var(--accent);font-size:12.5px;color:var(--text-muted);line-height:1.6;font-style:italic;}
 .tour-footer{display:flex;align-items:center;justify-content:space-between;padding:14px 24px 22px;border-top:1px solid var(--border2);flex-shrink:0;}
-
-/* Last slide — enter button full width */
 .tour-enter-btn{width:100%;justify-content:center;display:flex;font-size:11px;padding:13px;background:var(--accent);color:#060403;border-color:var(--accent);}
 .tour-enter-btn:hover{background:var(--rose);border-color:var(--rose);color:#fff;}
 
@@ -591,6 +589,13 @@ position:fixed;inset:0;z-index:3000;background:rgba(6,4,3,0.92);backdrop-filter:
 .bc-write-field{width:100%;background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-top:10px;transition:border-color 0.25s;display:block;}
 .bc-write-field:focus{border-color:var(--accent);}
 .bc-write-field::placeholder{color:var(--text-muted);}
+
+/* Inline write-your-own option */
+.bc-write-opt{flex-direction:column;align-items:flex-start;gap:6px;}
+.bc-write-opt span{pointer-events:none;}
+.bc-inline-write{width:100%;background:transparent;border:none;border-top:1px solid var(--border2);padding:8px 0 2px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;display:none;}
+.bc-write-opt.selected .bc-inline-write{display:block;}
+.bc-inline-write::placeholder{color:var(--text-muted);}
 
 /* BC multi-select option */
 .bc-opt.multi::before{content:'';width:14px;height:14px;border:1.5px solid var(--border);border-radius:3px;flex-shrink:0;transition:var(--transition);}
@@ -2061,95 +2066,92 @@ position:fixed;inset:0;z-index:3000;background:rgba(6,4,3,0.92);backdrop-filter:
       <div style="text-align:center;padding:16px 0 24px;">
         <div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:var(--rose);margin-bottom:16px;">Your Black Card</div>
         <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(24px,4vw,32px);font-weight:400;line-height:1.15;margin-bottom:16px;">You decide what passes<br>the <em style="color:var(--accent);">culture test.</em></h2>
-        <p style="font-size:13.5px;color:var(--text-soft);line-height:1.75;max-width:380px;margin:0 auto 28px;">No right answers. No gatekeeping. Four quick questions — all at once.</p>
-        <button class="modal-nav-btn primary" onclick="showBCStep(1)">Fill Out My Card &#8594;</button>
+        <p style="font-size:13.5px;color:var(--text-soft);line-height:1.75;max-width:380px;margin:0 auto 28px;">Four quick questions. No right answers. No gatekeeping.</p>
+        <button class="modal-nav-btn primary" onclick="showBCStep(1)">Let's go &#8594;</button>
       </div>
     </div>
 
-    <!-- BC — All 4 questions on one screen -->
+    <!-- BC Step 1 — What brought you here -->
     <div class="modal-step" id="bc-step-1">
-      <div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--rose);margin-bottom:20px;">Your Black Card</div>
-
-      <!-- Q1 -->
-      <div class="bc-single-q" id="bcq-0">
-        <div class="bc-q-text" style="font-size:clamp(16px,2.5vw,20px);margin-bottom:10px;">What's your love language with Black culture?</div>
-        <div class="bc-opts">
-          <div class="bc-opt multi" onclick="toggleBC(this,0)">Music — it's always music first</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,0)">Food — love is made in the kitchen</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,0)">Humor — we laugh to stay sane and to celebrate</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,0)">Storytelling — the oral tradition runs deep</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,0)">Fashion — the way we dress is the way we speak</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,0)">Ceremony — church, ritual, gathering, all of it</div>
-        </div>
-        <input type="text" class="bc-write-field" placeholder="Or write in your own..." oninput="writeInBC(this,0)">
-      </div>
-
-      <div class="bc-divider"></div>
-
-      <!-- Q2 -->
-      <div class="bc-single-q" id="bcq-1">
-        <div class="bc-q-text" style="font-size:clamp(16px,2.5vw,20px);margin-bottom:10px;">The generational pattern you're interrupting.</div>
-        <div class="bc-opts">
-          <div class="bc-opt multi" onclick="toggleBC(this,1)">Financial scarcity as identity</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,1)">Emotional unavailability as strength</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,1)">Silence about mental health</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,1)">Overworking as worth</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,1)">Everyone else first — always</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,1)">Shrinking to make others comfortable</div>
-        </div>
-        <input type="text" class="bc-write-field" placeholder="Or write in your own..." oninput="writeInBC(this,1)">
-      </div>
-
-      <div class="bc-divider"></div>
-
-      <!-- Q3 -->
-      <div class="bc-single-q" id="bcq-2">
-        <div class="bc-q-text" style="font-size:clamp(16px,2.5vw,20px);margin-bottom:10px;">What does your recharge look like?</div>
-        <div class="bc-opts">
-          <div class="bc-opt multi" onclick="toggleBC(this,2)">Silence and solitude</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,2)">Music loud enough to feel it</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,2)">Movement — a walk, a run, a workout</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,2)">Being around my people</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,2)">Creating something</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,2)">Prayer, meditation, stillness</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,2)">A long shower and a good cry</div>
-        </div>
-        <input type="text" class="bc-write-field" placeholder="Or write in your own..." oninput="writeInBC(this,2)">
-      </div>
-
-      <div class="bc-divider"></div>
-
-      <!-- Q4 -->
-      <div class="bc-single-q" id="bcq-3">
-        <div class="bc-q-text" style="font-size:clamp(16px,2.5vw,20px);margin-bottom:10px;">What are you bringing to the cookout?</div>
-        <div class="bc-opts">
-          <div class="bc-opt multi" onclick="toggleBC(this,3)">Mac &amp; cheese from scratch. Obviously.</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,3)">The playlist — I always bring the playlist</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,3)">Stories that make everybody stop eating</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,3)">Grandma's recipe they'll never let me forget</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,3)">Myself. That's more than enough.</div>
-        </div>
-        <input type="text" class="bc-write-field" placeholder="Or write in your own..." oninput="writeInBC(this,3)">
-      </div>
-
-      <div class="bc-divider"></div>
-
-      <!-- Q5 -->
-      <div class="bc-single-q" id="bcq-4">
-        <div class="bc-q-text" style="font-size:clamp(16px,2.5vw,20px);margin-bottom:10px;">What brought you here today?</div>
-        <div class="bc-opts">
-          <div class="bc-opt multi" onclick="toggleBC(this,4)">I'm looking for a therapist</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,4)">I need community right now</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,4)">I want to understand myself better</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,4)">I'm processing something heavy</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,4)">Just exploring — no pressure</div>
-          <div class="bc-opt multi" onclick="toggleBC(this,4)">All of the above, honestly</div>
+      <div class="bc-q-counter">Black Card &#183; 1 of 4</div>
+      <div class="bc-q-text">What brought you here today?</div>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">Pick all that apply.</p>
+      <div class="bc-opts">
+        <div class="bc-opt multi" onclick="toggleBC(this,0)">I need community right now</div>
+        <div class="bc-opt multi" onclick="toggleBC(this,0)">I'm looking for a therapist</div>
+        <div class="bc-opt multi" onclick="toggleBC(this,0)">I want to understand myself better</div>
+        <div class="bc-opt multi" onclick="toggleBC(this,0)">I'm processing something heavy</div>
+        <div class="bc-opt multi bc-write-opt" onclick="focusBCWrite(this,'bc-wi-0')">
+          <span>Write your own</span>
+          <input id="bc-wi-0" type="text" class="bc-inline-write" placeholder="say it in your words..." oninput="writeInBC(this,0)" onclick="event.stopPropagation()">
         </div>
       </div>
+      <div class="bc-nav">
+        <button class="modal-nav-btn" onclick="showBCIntro()">&#8592; Back</button>
+        <button class="modal-nav-btn primary" id="bc-next-1" onclick="nextBCStep(1)" disabled>Next &#8594;</button>
+      </div>
+    </div>
 
-      <div style="margin-top:28px;">
-        <button class="modal-nav-btn primary" id="bc-next-1" onclick="goToPresence()" style="width:100%;justify-content:center;display:flex;" disabled>Continue &#8594;</button>
-        <p style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:10px;">Pick at least one answer per question to continue.</p>
+    <!-- BC Step 2 — Generational pattern -->
+    <div class="modal-step" id="bc-step-2">
+      <div class="bc-q-counter">Black Card &#183; 2 of 4</div>
+      <div class="bc-q-text">The generational pattern you're interrupting.</div>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">Pick all that apply.</p>
+      <div class="bc-opts">
+        <div class="bc-opt multi" onclick="toggleBC(this,1)">Silence about mental health</div>
+        <div class="bc-opt multi" onclick="toggleBC(this,1)">Overworking as worth</div>
+        <div class="bc-opt multi" onclick="toggleBC(this,1)">Everyone else first — always</div>
+        <div class="bc-opt multi" onclick="toggleBC(this,1)">Shrinking to make others comfortable</div>
+        <div class="bc-opt multi bc-write-opt" onclick="focusBCWrite(this,'bc-wi-1')">
+          <span>Write your own</span>
+          <input id="bc-wi-1" type="text" class="bc-inline-write" placeholder="say it in your words..." oninput="writeInBC(this,1)" onclick="event.stopPropagation()">
+        </div>
+      </div>
+      <div class="bc-nav">
+        <button class="modal-nav-btn" onclick="prevBCStep(2)">&#8592; Back</button>
+        <button class="modal-nav-btn primary" id="bc-next-2" onclick="nextBCStep(2)" disabled>Next &#8594;</button>
+      </div>
+    </div>
+
+    <!-- BC Step 3 — Recharge -->
+    <div class="modal-step" id="bc-step-3">
+      <div class="bc-q-counter">Black Card &#183; 3 of 4</div>
+      <div class="bc-q-text">What does your recharge look like?</div>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">Pick all that apply.</p>
+      <div class="bc-opts">
+        <div class="bc-opt multi" onclick="toggleBC(this,2)">Silence and solitude</div>
+        <div class="bc-opt multi" onclick="toggleBC(this,2)">Music loud enough to feel it</div>
+        <div class="bc-opt multi" onclick="toggleBC(this,2)">Being around my people</div>
+        <div class="bc-opt multi" onclick="toggleBC(this,2)">A long shower and a good cry</div>
+        <div class="bc-opt multi bc-write-opt" onclick="focusBCWrite(this,'bc-wi-2')">
+          <span>Write your own</span>
+          <input id="bc-wi-2" type="text" class="bc-inline-write" placeholder="say it in your words..." oninput="writeInBC(this,2)" onclick="event.stopPropagation()">
+        </div>
+      </div>
+      <div class="bc-nav">
+        <button class="modal-nav-btn" onclick="prevBCStep(3)">&#8592; Back</button>
+        <button class="modal-nav-btn primary" id="bc-next-3" onclick="nextBCStep(3)" disabled>Next &#8594;</button>
+      </div>
+    </div>
+
+    <!-- BC Step 4 — Cookout -->
+    <div class="modal-step" id="bc-step-4">
+      <div class="bc-q-counter">Black Card &#183; 4 of 4</div>
+      <div class="bc-q-text">What are you bringing to the cookout?</div>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">Pick all that apply.</p>
+      <div class="bc-opts">
+        <div class="bc-opt multi" onclick="toggleBC(this,3)">Mac &amp; cheese from scratch. Obviously.</div>
+        <div class="bc-opt multi" onclick="toggleBC(this,3)">The playlist — I always bring the playlist</div>
+        <div class="bc-opt multi" onclick="toggleBC(this,3)">Stories that make everybody stop eating</div>
+        <div class="bc-opt multi" onclick="toggleBC(this,3)">Myself. That's more than enough.</div>
+        <div class="bc-opt multi bc-write-opt" onclick="focusBCWrite(this,'bc-wi-3')">
+          <span>Write your own</span>
+          <input id="bc-wi-3" type="text" class="bc-inline-write" placeholder="say it in your words..." oninput="writeInBC(this,3)" onclick="event.stopPropagation()">
+        </div>
+      </div>
+      <div class="bc-nav">
+        <button class="modal-nav-btn" onclick="prevBCStep(4)">&#8592; Back</button>
+        <button class="modal-nav-btn primary" id="bc-next-4" onclick="goToPresence()" disabled>Continue &#8594;</button>
       </div>
     </div>
 
@@ -2788,35 +2790,45 @@ function updateProgress(pct){document.getElementById('progressBar').style.width=
 
 // ── BC Multi-select ──
 function toggleBC(el,qIdx){
+  if(el.classList.contains('bc-write-opt')) return;
   el.classList.toggle('selected');
   const val=el.textContent.trim();
   const arr=bcAnswers[qIdx];
   const i=arr.indexOf(val);
   if(i>=0) arr.splice(i,1); else arr.push(val);
-  checkBCComplete();
+  updateBCNextBtn(qIdx);
+}
+function focusBCWrite(el,inputId){
+  el.classList.add('selected');
+  const input=document.getElementById(inputId);
+  if(input) setTimeout(()=>input.focus(),50);
 }
 function writeInBC(input,qIdx){
   const val=input.value.trim();
-  const checkboxLabels=Array.from(
-    document.querySelectorAll('#bcq-'+qIdx+' .bc-opt.selected')
-  ).map(el=>el.textContent.trim());
-  bcAnswers[qIdx]=checkboxLabels;
-  if(val) bcAnswers[qIdx].push(val);
-  checkBCComplete();
+  const el=input.closest('.bc-write-opt');
+  if(el){
+    if(val){ el.classList.add('selected'); } else { el.classList.remove('selected'); }
+  }
+  const checkboxVals=Array.from(
+    input.closest('.bc-opts').querySelectorAll('.bc-opt.selected:not(.bc-write-opt)')
+  ).map(e=>e.textContent.trim());
+  bcAnswers[qIdx]=val?[...checkboxVals,val]:checkboxVals;
+  updateBCNextBtn(qIdx);
 }
-function checkBCComplete(){
-  // Only first 4 questions required; Q5 is optional data
-  const allAnswered = bcAnswers.slice(0,4).every(arr => arr.length > 0);
-  const btn = document.getElementById('bc-next-1');
-  if(btn) btn.disabled = !allAnswered;
+function updateBCNextBtn(qIdx){
+  const btnId = qIdx===3 ? 'bc-next-4' : 'bc-next-'+(qIdx+1);
+  const btn=document.getElementById(btnId);
+  if(btn) btn.disabled=bcAnswers[qIdx].length===0;
 }
+function checkBCComplete(){ /* unused in step-by-step mode */ }
 function showBCStep(n){
   document.querySelectorAll('.modal-step').forEach(s=>s.classList.remove('active'));
-  document.getElementById('bc-step-1')?.classList.add('active');
-  updateProgress(35);
+  document.getElementById('bc-step-'+n)?.classList.add('active');
+  const pcts={1:20,2:35,3:50,4:65};
+  updateProgress(pcts[n]||20);
 }
-function nextBCStep(n){ goToPresence(); }
-function prevBCStep(n){ showBCIntro(); }
+function nextBCStep(n){showBCStep(n+1);}
+function prevBCStep(n){if(n===2)showBCIntro();else showBCStep(n-1);}
 function goToPresence(){
   document.querySelectorAll('.modal-step').forEach(s=>s.classList.remove('active'));
   document.getElementById('step-presence')?.classList.add('active');
