@@ -4581,10 +4581,13 @@ function renderMoodReflection(log){
 
   let ctaHTML = '';
   if(cta){
-    const btnHTML = cta.buttons.map(b=>`
-      <button class="btn btn-sm btn-outline" onclick="${b.action==='tab' ? `showTab('${b.tab}');document.getElementById('profileModal') && (document.getElementById('profileModal').style.display='none')` : `showTab('wellness');setTimeout(()=>openTool('${b.tool}',null),300)`}">${b.label}</button>
-    `).join('');
-    ctaHTML = `<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;">${btnHTML}</div>`;
+    const btnHTML = cta.buttons.map(function(b){
+      const onclick = b.action==='tab'
+        ? "showTab('"+b.tab+"');var pm=document.getElementById('profileModal');if(pm)pm.classList.remove('open');"
+        : "showTab('wellness');setTimeout(function(){openTool('"+b.tool+"',null);},300);";
+      return '<button class="btn btn-sm btn-outline" onclick="'+onclick+'">'+b.label+'</button>';
+    }).join('');
+    ctaHTML = '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;">'+btnHTML+'</div>';
   }
 
   el.innerHTML = `
@@ -4611,4 +4614,341 @@ function renderProfileMoodStrip(log){
   }
   strip.innerHTML = days.map(d=>`
     <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
-      <div title="${d.mood ? moodLabel[d.mood] : 'No check-in'}" style="width:36px;height:36px;border-radius:50%;background:var(--bg2);border:1px solid var(--border2);display:flex;
+      <div title="${d.mood ? moodLabel[d.mood] : 'No check-in'}" style="width:36px;height:36px;border-radius:50%;background:var(--bg2);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:16px;">
+        ${d.mood ? moodEmoji[d.mood] : '<span style="width:8px;height:8px;border-radius:50%;background:var(--border);display:inline-block;"></span>'}
+      </div>
+      <div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);">${d.label}</div>
+    </div>
+  `).join('');
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const log = JSON.parse(localStorage.getItem('rcMoodLog')||'[]');
+  renderMoodMap(log);
+});
+
+function selectFeeling(el, type){
+  document.querySelectorAll('.feeling-opt').forEach(o=>{o.classList.remove('selected','heavy-feel');});
+  el.classList.add('selected');
+  if(type==='heavy'||type==='foggy') el.classList.add('heavy-feel');
+  selectedFeeling = type;
+  logMoodEntry(type);
+  const data = FEELING_DATA[type];
+  const responseEl = document.getElementById('feelingResponse');
+  document.getElementById('feelingResponseText').textContent = data.response;
+  const actionsEl = document.getElementById('feelingResponseActions');
+  actionsEl.innerHTML = '';
+  data.actions.forEach(a => {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-sm btn-outline';
+    btn.textContent = a.label;
+    btn.onclick = () => {
+      skipRitual();
+      if(a.action==='catchup') openCatchUp();
+      else if(a.tab) showTab(a.tab);
+    };
+    actionsEl.appendChild(btn);
+  });
+  responseEl.style.display = 'block';
+  // Add "I'm good for now" button
+  const skipBtn = document.createElement('button');
+  skipBtn.className = 'btn btn-sm';
+  skipBtn.textContent = "I'm good for now";
+  skipBtn.style.cssText = 'margin-top:12px;width:100%;justify-content:center;display:flex;color:var(--text-muted);';
+  skipBtn.onclick = () => goToPaths();
+  actionsEl.appendChild(skipBtn);
+}
+
+function goToPaths(){
+  const feeling = selectedFeeling || 'steady';
+  const data = FEELING_DATA[feeling];
+  document.getElementById('ritualQuoteText').textContent = data.quote.text;
+  document.getElementById('ritualQuoteAttr').textContent = data.quote.attr;
+  // Also update home page quote
+  const homeQuoteText = document.getElementById('homeQuoteText');
+  const homeQuoteAttr = document.getElementById('homeQuoteAttr');
+  if(homeQuoteText) homeQuoteText.textContent = data.quote.text;
+  if(homeQuoteAttr) homeQuoteAttr.textContent = data.quote.attr;
+  showRitualStep('ritual-paths');
+}
+
+function showRitualStep(id){
+  document.querySelectorAll('.ritual-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id)?.classList.add('active');
+}
+
+function skipRitual(){
+  const overlay = document.getElementById('ritualOverlay');
+  if(overlay){
+    overlay.style.pointerEvents='none'; // immediately stop blocking clicks
+    overlay.style.opacity='0';
+    overlay.style.transition='opacity 0.3s';
+    setTimeout(()=>{
+      overlay.classList.add('hidden');
+      overlay.style.opacity='';
+      overlay.style.transition='';
+      overlay.style.pointerEvents='';
+    },320);
+  }
+  try{ localStorage.setItem('rcRitualDate', new Date().toDateString()); }catch(e){}
+  ritualDone = true;
+}
+
+// ── Catch Me Up ──
+function openCatchUp(){
+  const overlay = document.getElementById('catchupOverlay');
+  if(!overlay){ console.error('catchupOverlay not found'); return; }
+  catchupSlide = 0;
+  updateCatchupProgress();
+  document.querySelectorAll('.catchup-slide').forEach((s,i)=>{
+    s.classList.toggle('active', i===0);
+    s.classList.remove('exit');
+  });
+  const prev = document.getElementById('catchupPrev');
+  const next = document.getElementById('catchupNext');
+  if(prev) prev.style.visibility='hidden';
+  if(next) next.textContent='Next →';
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeCatchUp(){
+  document.getElementById('catchupOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function updateCatchupProgress(){
+  const prog = document.getElementById('catchupProgress');
+  if(!prog) return;
+  prog.innerHTML='';
+  for(let i=0;i<CATCHUP_TOTAL;i++){
+    const d=document.createElement('div');
+    d.className='catchup-progress-dot' + (i<catchupSlide?' done':i===catchupSlide?' active':'');
+    prog.appendChild(d);
+  }
+  document.getElementById('catchupCounter').textContent = (catchupSlide+1)+' of '+CATCHUP_TOTAL;
+}
+
+function nextCatchUp(){
+  if(catchupSlide >= CATCHUP_TOTAL-1){ closeCatchUp(); return; }
+  const current = document.getElementById('catchup-'+catchupSlide);
+  catchupSlide++;
+  const next = document.getElementById('catchup-'+catchupSlide);
+  current?.classList.add('exit');
+  current?.classList.remove('active');
+  setTimeout(()=>current?.classList.remove('exit'),350);
+  next?.classList.add('active');
+  document.getElementById('catchupPrev').style.visibility='visible';
+  document.getElementById('catchupNext').textContent = catchupSlide===CATCHUP_TOTAL-1?'Done ✓':'Next →';
+  updateCatchupProgress();
+}
+
+function prevCatchUp(){
+  if(catchupSlide<=0) return;
+  const current = document.getElementById('catchup-'+catchupSlide);
+  catchupSlide--;
+  const prev = document.getElementById('catchup-'+catchupSlide);
+  current?.classList.remove('active');
+  prev?.classList.add('active');
+  document.getElementById('catchupPrev').style.visibility = catchupSlide===0?'hidden':'visible';
+  document.getElementById('catchupNext').textContent='Next →';
+  updateCatchupProgress();
+}
+
+// Set greeting time on home load
+(function(){
+  const hr=new Date().getHours();
+  const el=document.getElementById('homeTimeLabel');
+  if(el) el.textContent = hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
+})();
+
+// Init ritual on page load
+function tryInitRitual(){
+  const overlay = document.getElementById('ritualOverlay');
+  if(!overlay){ setTimeout(tryInitRitual, 200); return; }
+  if(!ritualDone) initRitual();
+}
+setTimeout(tryInitRitual, 400);
+
+
+
+showTab('home');
+</script>
+
+<script>
+// ── Hero image shuffle ──
+const HERO_IMGS = [
+  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/-NGLqDIlJGL1SIQZphpv1.jpg",
+  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/4N1na1T2MnV6GpU55X4PX.jpg",
+  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/7_JzOURrlme8f2DNW9-l_.jpg",
+  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/7xp4-gneX2cmRGTaSTOn1.jpg",
+  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/AfZHr_yLmnusAfREx__vj.jpg",
+  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/B_f7AX6gEmgS1UgJWIY_M.jpg",
+  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/BlVLMpuVKnJXr5EKcrHK3.jpg",
+  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/ByopUyXY2cr06AosfmbIs.jpg",
+  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/F6D3dr6ZzDzQhR2VpfXgn.jpg",
+  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/FHSEAvB5DITNDWeCHJj5I.jpg",
+  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/GrKs6IaW9xrMUfNRc7j8Y.jpg",
+  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/Jj7p5QIJBPTqIEDqf68cZ.jpg",
+  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/Kuso_IRZGHx1NA5dx79SF.jpg",
+  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/LUbfy2IGmZJEE2kr1WHtF.jpg"
+];
+
+
+// Shuffle 14 images across 3 slots, rotating every 4s with crossfade
+// Assign distinct images to each slot, no repeats within same view
+let heroSets = [];
+let heroSetIdx = 0;
+
+function buildHeroSets() {
+  // Create shuffled rotation sets ensuring no slot shows same img consecutively
+  const indices = Array.from({length: HERO_IMGS.length}, (_, i) => i); // 14 images
+  // Shuffle
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  // Build groups of 3 (one per slot)
+  heroSets = [];
+  for (let i = 0; i < indices.length - 2; i += 3) {
+    heroSets.push([indices[i], indices[i+1], indices[i+2]]);
+  }
+  // Pad if needed with remaining
+  if (heroSets.length === 0) heroSets.push([0, 1, 2]);
+}
+
+function applyHeroSet(setIdx, fade) {
+  const set = heroSets[setIdx % heroSets.length];
+  for (let slot = 0; slot < 3; slot++) {
+    const img = document.getElementById('hero-img-' + slot);
+    if (!img) continue;
+    if (fade) {
+      img.style.opacity = '0';
+      img.style.transition = 'opacity 0.8s ease';
+      setTimeout(() => {
+        img.src = HERO_IMGS[set[slot]];
+        img.style.display = 'block';
+        img.onload = () => { img.style.opacity = '1'; };
+        img.onerror = () => { img.style.opacity = '1'; };
+      }, 400);
+    } else {
+      img.src = HERO_IMGS[set[slot]];
+      img.style.display = 'block';
+      img.style.opacity = '1';
+    }
+  }
+}
+
+let heroStarted = false;
+function startHeroShuffle() {
+  if (heroStarted) return;
+  heroStarted = true;
+  buildHeroSets();
+  // Set first batch immediately, no transition
+  const firstSet = heroSets[0];
+  for (let slot = 0; slot < 3; slot++) {
+    const img = document.getElementById('hero-img-' + slot);
+    if (!img) return; // DOM not ready yet
+    img.src = HERO_IMGS[firstSet[slot]];
+    img.style.opacity = '1';
+    img.style.transition = 'none';
+    img.style.display = 'block';
+  }
+  setInterval(() => {
+    heroSetIdx = (heroSetIdx + 1) % heroSets.length;
+    const set = heroSets[heroSetIdx];
+    for (let slot = 0; slot < 3; slot++) {
+      const img = document.getElementById('hero-img-' + slot);
+      if (!img) continue;
+      // Fade out
+      img.style.transition = 'opacity 0.7s ease';
+      img.style.opacity = '0';
+      // After fade out, swap src and fade in
+      const capturedSlot = slot;
+      const capturedSet = set;
+      setTimeout(() => {
+        const el = document.getElementById('hero-img-' + capturedSlot);
+        if (!el) return;
+        el.src = HERO_IMGS[capturedSet[capturedSlot]];
+        el.style.display = 'block';
+        el.style.transition = 'opacity 0.9s ease';
+        el.style.opacity = '1';
+      }, 750);
+    }
+  }, 6000);
+}
+
+// Single entry point — whichever fires first wins, guard prevents double-run
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startHeroShuffle);
+} else {
+  startHeroShuffle();
+}
+
+
+// ── News accordion ──
+function toggleNewsAccordion(el){
+  el.classList.toggle('open');
+}
+
+// ── Visual Cleanse ──
+function selectVisual(tile, url, label){
+  document.querySelectorAll('.visual-tile').forEach(t=>t.classList.remove('active-visual'));
+  tile.classList.add('active-visual');
+  const player = document.getElementById('visualPlayer');
+  const frame = document.getElementById('visualFrame');
+  const nowPlaying = document.getElementById('visualNowPlaying');
+  const nowLabel = document.getElementById('visualNowLabel');
+  frame.src = url;
+  player.style.display = 'block';
+  nowPlaying.style.display = 'flex';
+  nowLabel.textContent = label;
+}
+function stopVisual(){
+  document.getElementById('visualFrame').src = '';
+  document.getElementById('visualPlayer').style.display = 'none';
+  document.getElementById('visualNowPlaying').style.display = 'none';
+  document.querySelectorAll('.visual-tile').forEach(t=>t.classList.remove('active-visual'));
+}
+
+// ── Events ──
+let evtShowFree=true, evtShowTicketed=true, evtFormatFilter='all';
+function filterEvents(el,format){
+  document.querySelectorAll('#tab-events .filter-pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  evtFormatFilter=format;
+  applyEventFilters();
+}
+function toggleEventCost(type){
+  if(type==='free'){
+    evtShowFree=!evtShowFree;
+    document.getElementById('evtFree').classList.toggle('active',evtShowFree);
+  } else {
+    evtShowTicketed=!evtShowTicketed;
+    document.getElementById('evtTicketed').classList.toggle('active',evtShowTicketed);
+  }
+  applyEventFilters();
+}
+function applyEventFilters(){
+  document.querySelectorAll('#eventsGrid .event-card').forEach(c=>{
+    const fmt=c.dataset.format;
+    const cost=c.dataset.cost;
+    const fmtOk=evtFormatFilter==='all'||fmt===evtFormatFilter;
+    const costOk=(cost==='free'&&evtShowFree)||(cost==='ticketed'&&evtShowTicketed);
+    c.style.display=(fmtOk&&costOk)?'':'none';
+  });
+}
+function rsvpEvent(btn){
+  const card=btn.closest('.event-card');
+  const title=card.querySelector('.event-title').textContent;
+  btn.textContent='Reserved ✓';
+  btn.style.cssText='font-family:Syne,sans-serif;font-size:9.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:7px 14px;border-radius:50px;border:1px solid rgba(62,207,79,0.3);background:rgba(62,207,79,0.12);color:#3ecf4f;cursor:default;';
+  btn.disabled=true;
+  showToast('You\'re in: ' + title.slice(0,36) + (title.length>36?'…':''));
+}
+
+</script>
+
+
+
+</body>
+</html>
