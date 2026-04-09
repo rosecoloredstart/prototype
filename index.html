@@ -1094,13 +1094,6 @@ span.d{display:inline !important;}span.r{display:none !important;}
       <!-- Destinations -->
       <div class="home-dest-label">&#10022; Where are we headed?</div>
       <div class="home-dest-grid">
-        <div class="home-dest-card home-dest-card-visual" onclick="showTab('therapists')">
-          <div class="home-dest-img" style="background-image:url('https://raw.githubusercontent.com/rosecoloredstart/prototype/main/Home%20page%20-Therapists.jpg');background-position:center 25%;background-size:cover;"></div>
-          <div class="home-dest-body">
-            <div class="home-dest-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><circle cx="10" cy="6" r="3.5"/><path d="M3 18c0-4 3.1-7 7-7s7 3 7 7"/></svg></div>
-            <div class="home-dest-name">Therapists</div>
-          </div>
-        </div>
         <div class="home-dest-card home-dest-card-visual" onclick="showTab('community')">
           <div class="home-dest-img" style="background-image:url('https://raw.githubusercontent.com/rosecoloredstart/prototype/main/Home%20page%20-Community.jpg');background-position:center 35%;background-size:cover;"></div>
           <div class="home-dest-body">
@@ -1143,6 +1136,13 @@ span.d{display:inline !important;}span.r{display:none !important;}
             <div class="home-dest-name">Events</div>
           </div>
         </div>
+        <div class="home-dest-card home-dest-card-visual" onclick="showTab('therapists')">
+          <div class="home-dest-img" style="background-image:url('https://raw.githubusercontent.com/rosecoloredstart/prototype/main/Home%20page%20-Therapists.jpg');background-position:center 25%;background-size:cover;"></div>
+          <div class="home-dest-body">
+            <div class="home-dest-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><circle cx="10" cy="6" r="3.5"/><path d="M3 18c0-4 3.1-7 7-7s7 3 7 7"/></svg></div>
+            <div class="home-dest-name">Therapists</div>
+          </div>
+        </div>
         <div class="home-dest-card home-dest-card-visual" onclick="showTab('crisis')">
           <div class="home-dest-img" style="background-image:url('https://raw.githubusercontent.com/rosecoloredstart/prototype/main/Home%20page%20-Support.jpg');background-position:center 30%;background-size:cover;"></div>
           <div class="home-dest-body">
@@ -1150,6 +1150,7 @@ span.d{display:inline !important;}span.r{display:none !important;}
             <div class="home-dest-name">Support</div>
           </div>
         </div>
+      </div>
       </div>
 </div>
 
@@ -1266,156 +1267,157 @@ span.d{display:inline !important;}span.r{display:none !important;}
       <div class="eyebrow">&#10022; Community</div>
       <h1 class="display d" style="font-size:clamp(32px,5vw,56px);">Your people. <em>All in one place.</em></h1>
       <h1 class="display r" style="font-size:clamp(32px,5vw,56px);">Your people are already here. <em>Come as you are.</em></h1>
-      <p class="body-text" style="margin-top:16px;max-width:560px;">The group chat, the forums — your whole community, finally in one room.</p>
+      <p class="body-text" style="margin-top:16px;max-width:560px;">The living room, the ask, your groups, your city.</p>
     </div>
     <div class="sub-tabs" style="margin-bottom:16px;">
-      <div class="sub-tab active" onclick="showSubTab('community','threads',this)">Group Chat</div>
-      <div class="sub-tab" onclick="showSubTab('community','forums',this)">Forums</div>
+      <div class="sub-tab active" onclick="showSubTab('community','livingroom',this)">Living Room</div>
+      <div class="sub-tab" onclick="showSubTab('community','theask',this)">The Ask</div>
       <div class="sub-tab" onclick="showSubTab('community','groups',this)">Groups</div>
       <div class="sub-tab" onclick="showSubTab('community','nearby',this)">Near You</div>
     </div>
 
-    <!-- Live Threads - Chat UI -->
-    <div class="sub-panel active" id="community-threads">
+    <!-- Living Room -->
+    <div class="sub-panel active" id="community-livingroom">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div class="chat-online"><div class="chat-online-dot"></div>84 members online now</div>
-        <button class="btn btn-sm btn-outline" onclick="openJoinModal()">+ New Thread</button>
+        <div class="chat-online"><div class="chat-online-dot"></div>247 in here rn</div>
       </div>
-      <div class="chat-container" id="chatContainer">
-        <div class="chat-header">
-          <span class="chat-title">&#10022; Rose Colored — Group Chat</span>
-          <div class="chat-online" style="margin-left:auto;"><div class="chat-online-dot"></div>Active</div>
-        </div>
-        <div class="chat-messages" id="chatMessages">
-          <div class="chat-msg">
-            <div class="chat-avatar">RG</div>
-            <div class="chat-msg-body">
-              <div class="chat-msg-meta"><span class="chat-msg-name">RootedGlow</span><span class="chat-msg-time">2:09 PM</span></div>
-              <div class="chat-bubble">okay i need everyone to drop what they're doing and watch The Lesson is the Lord on Netflix RIGHT NOW. I'm not okay.</div>
+
+      <!-- Quiet prompt - shown when room is slow -->
+      <div id="quietPrompt" style="background:var(--bg3);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:12px;padding:14px 16px;margin-bottom:20px;">
+        <div class="eyebrow" style="font-size:9px;margin-bottom:6px;color:var(--accent);">&#10022; the room woke up</div>
+        <p style="font-size:13px;color:var(--text-soft);line-height:1.6;margin:0;">okay it got quiet for a second — real quick: living single or girlfriends? no wrong answers but also there are wrong answers</p>
+      </div>
+
+      <!-- Feed posts -->
+      <div style="display:flex;flex-direction:column;gap:14px;" id="livingRoomFeed">
+
+        <div class="lr-post" style="background:var(--bg3);border:1px solid var(--border2);border-radius:14px;padding:16px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <div class="chat-avatar">JT</div>
+            <div>
+              <div style="font-size:13px;font-weight:500;color:var(--text);">jasmine.t</div>
+              <div style="font-size:11px;color:var(--text-muted);">2m ago</div>
             </div>
           </div>
-          <div class="chat-msg">
-            <div class="chat-avatar">DS</div>
-            <div class="chat-msg-body">
-              <div class="chat-msg-meta"><span class="chat-msg-name">DeepSignal</span><span class="chat-msg-time">2:11 PM</span></div>
-              <div class="chat-bubble">WAIT i been seeing that pop up. is it actually good or is this one of those "good for us" situations 😭</div>
-            </div>
-          </div>
-          <div class="chat-msg">
-            <div class="chat-avatar">SH</div>
-            <div class="chat-msg-body">
-              <div class="chat-msg-meta"><span class="chat-msg-name">SacredHarvest</span><span class="chat-msg-time">2:13 PM</span></div>
-              <div class="chat-bubble">lmaooo "good for us" 💀 also hi everyone. just got off a 3 hour meeting that could have been a slack message and I need community right now</div>
-            </div>
-          </div>
-          <div class="chat-msg">
-            <div class="chat-avatar" style="background:rgba(200,144,74,0.15);">QC</div>
-            <div class="chat-msg-body">
-              <div class="chat-msg-meta"><span class="chat-msg-name">QuietCipher</span><span class="chat-msg-time">2:15 PM</span></div>
-              <div class="chat-bubble">welcome to the group chat babe 🫂 also yes it's genuinely good. I cried twice and then made a snack and cried again</div>
-            </div>
-          </div>
-          <div class="chat-msg">
-            <div class="chat-avatar">VB</div>
-            <div class="chat-msg-body">
-              <div class="chat-msg-meta"><span class="chat-msg-name">VividBloom</span><span class="chat-msg-time">2:18 PM</span></div>
-              <div class="chat-bubble">random but has anyone been listening to Cleo Sol's new stuff?? she said something to me personally and I need to talk about it</div>
-            </div>
-          </div>
-          <div class="chat-msg">
-            <div class="chat-avatar">TE</div>
-            <div class="chat-msg-body">
-              <div class="chat-msg-meta"><span class="chat-msg-name">TenderEmber</span><span class="chat-msg-time">2:21 PM</span></div>
-              <div class="chat-bubble">she WHISPERED IN MY EAR and she doesn't even know me. yes we need a full debrief 🙌🏾</div>
-            </div>
+          <p style="font-size:13px;color:var(--text-soft);line-height:1.7;margin-bottom:12px;">made my grandma's oxtail for the first time by memory and it actually slapped. she passed last year so i was shaking the whole time tbh &#10022;</p>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button onclick="toggleReaction(this)" style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:5px 10px;font-size:14px;cursor:pointer;transition:all 0.2s;" data-reacted="false">&#x1F56F;</button>
+            <button onclick="toggleReaction(this)" style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:5px 10px;font-size:14px;cursor:pointer;transition:all 0.2s;" data-reacted="false">&#x2764;&#xFE0F;</button>
+            <button onclick="toggleReaction(this)" style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:5px 10px;font-size:14px;cursor:pointer;transition:all 0.2s;" data-reacted="false">&#x1F62D;</button>
+            <button onclick="toggleReaction(this)" style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:5px 10px;font-size:14px;cursor:pointer;transition:all 0.2s;" data-reacted="false">&#x2728;</button>
+            <span style="margin-left:auto;font-size:12px;color:var(--text-muted);cursor:pointer;" onclick="openJoinModal()">reply</span>
           </div>
         </div>
-        <div class="chat-input-wrap">
-          <input class="chat-input" id="chatInput" placeholder="Join the conversation..." onkeydown="if(event.key==='Enter')sendChat()">
-          <button class="chat-send" onclick="sendChat()">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="2"><path d="M2 8h12M8 3l7 5-7 5"/></svg>
-          </button>
+
+        <div class="lr-post" style="background:var(--bg3);border:1px solid var(--border2);border-radius:14px;padding:16px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <div class="chat-avatar">DR</div>
+            <div>
+              <div style="font-size:13px;font-weight:500;color:var(--text);">dee.real</div>
+              <div style="font-size:11px;color:var(--text-muted);">8m ago</div>
+            </div>
+          </div>
+          <p style="font-size:13px;color:var(--text-soft);line-height:1.7;margin-bottom:12px;">why does my therapist keep asking me "how does that make you feel" like sir i came here BECAUSE i don't know how i feel &#128557;</p>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button onclick="toggleReaction(this)" style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:5px 10px;font-size:14px;cursor:pointer;transition:all 0.2s;" data-reacted="false">&#128557;</button>
+            <button onclick="toggleReaction(this)" style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:5px 10px;font-size:14px;cursor:pointer;transition:all 0.2s;" data-reacted="false">&#128128;</button>
+            <button onclick="toggleReaction(this)" style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:5px 10px;font-size:14px;cursor:pointer;transition:all 0.2s;" data-reacted="false">&#10022;</button>
+            <span style="margin-left:auto;font-size:12px;color:var(--text-muted);cursor:pointer;" onclick="openJoinModal()">reply</span>
+          </div>
+        </div>
+
+        <div class="lr-post" style="background:var(--bg3);border:1px solid var(--border2);border-radius:14px;padding:16px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <div class="chat-avatar">KM</div>
+            <div>
+              <div style="font-size:13px;font-weight:500;color:var(--text);">k.creates</div>
+              <div style="font-size:11px;color:var(--text-muted);">15m ago</div>
+            </div>
+          </div>
+          <p style="font-size:13px;color:var(--text-soft);line-height:1.7;margin-bottom:12px;">nobody told me that healing would make me grieve the version of myself that survived by staying small. that part.</p>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button onclick="toggleReaction(this)" style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:5px 10px;font-size:14px;cursor:pointer;transition:all 0.2s;" data-reacted="false">&#x1F56F;</button>
+            <button onclick="toggleReaction(this)" style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:5px 10px;font-size:14px;cursor:pointer;transition:all 0.2s;" data-reacted="false">&#x2764;&#xFE0F;</button>
+            <button onclick="toggleReaction(this)" style="background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:5px 10px;font-size:14px;cursor:pointer;transition:all 0.2s;" data-reacted="false">&#128565;</button>
+            <span style="font-size:11px;color:var(--text-muted);font-style:italic;">people felt this</span>
+            <span style="margin-left:auto;font-size:12px;color:var(--text-muted);cursor:pointer;" onclick="openJoinModal()">reply</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Compose -->
+      <div style="margin-top:24px;display:flex;gap:12px;align-items:flex-start;">
+        <div class="chat-avatar" style="flex-shrink:0;">me</div>
+        <div style="flex:1;">
+          <textarea placeholder="what's on your mind..." style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:12px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;resize:none;min-height:60px;transition:border-color 0.25s;line-height:1.6;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border2)'"></textarea>
+          <div style="display:flex;justify-content:flex-end;margin-top:8px;">
+            <button class="btn btn-sm" onclick="openJoinModal()">post it</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Forums - Q&A style with search -->
-    <div class="sub-panel" id="community-forums">
-      <!-- Search bar -->
+    <!-- The Ask -->
+    <div class="sub-panel" id="community-theask">
       <div style="display:flex;gap:10px;margin-bottom:20px;align-items:center;">
         <div style="flex:1;position:relative;">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none;"><circle cx="6" cy="6" r="4"/><path d="M10 10l2.5 2.5"/></svg>
-          <input type="text" placeholder="Search questions..." style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:50px;padding:10px 14px 10px 34px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color 0.25s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border2)'">
+          <input type="text" placeholder="search questions..." style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:50px;padding:10px 14px 10px 34px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color 0.25s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border2)'">
         </div>
-        <button class="btn btn-sm" onclick="openJoinModal()">+ Ask a Question</button>
+        <button class="btn btn-sm" onclick="openJoinModal()">+ ask something</button>
       </div>
-      <!-- Category filter dropdown -->
-      <div class="filter-dropdown" id="forumFilterDrop" style="margin-bottom:22px;">
-        <div class="filter-dropdown-btn" onclick="toggleFilterDrop('forumFilterDrop')" id="forumFilterBtn">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 3h10M3 6h6M5 9h2"/></svg>
-          <span id="forumFilterLabel">All Topics</span>
-          <svg class="filter-dropdown-chevron" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3.5l3 3 3-3"/></svg>
-        </div>
-        <div class="filter-dropdown-menu" id="forumFilterMenu">
-          <div class="filter-dropdown-item active" onclick="setForumFilterDrop(this,'all','All Topics')">All Topics</div>
-          <div class="filter-dropdown-divider"></div>
-          <div class="filter-dropdown-item" onclick="setForumFilterDrop(this,'mental-health','Mental Health')">Mental Health</div>
-          <div class="filter-dropdown-item" onclick="setForumFilterDrop(this,'identity','Identity')">Identity</div>
-          <div class="filter-dropdown-item" onclick="setForumFilterDrop(this,'relationships','Relationships')">Relationships</div>
-          <div class="filter-dropdown-item" onclick="setForumFilterDrop(this,'career','Work & Career')">Work & Career</div>
-          <div class="filter-dropdown-item" onclick="setForumFilterDrop(this,'joy','Joy')">Joy</div>
-          <div class="filter-dropdown-item" onclick="setForumFilterDrop(this,'recs','Recs')">Recs</div>
-          <div class="filter-dropdown-item" onclick="setForumFilterDrop(this,'culture','Culture')">Culture</div>
-          <div class="filter-dropdown-item" onclick="setForumFilterDrop(this,'food','Food')">Food</div>
-        </div>
+
+      <!-- Tag filters -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+        <button onclick="filterAsk(this,'all')" class="ask-filter active" style="padding:5px 14px;border-radius:20px;font-size:12px;border:1px solid var(--accent);background:var(--accent);color:#060403;cursor:pointer;font-family:'DM Sans',sans-serif;">all</button>
+        <button onclick="filterAsk(this,'therapy')" class="ask-filter" style="padding:5px 14px;border-radius:20px;font-size:12px;border:1px solid var(--border2);background:transparent;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;">therapy</button>
+        <button onclick="filterAsk(this,'health')" class="ask-filter" style="padding:5px 14px;border-radius:20px;font-size:12px;border:1px solid var(--border2);background:transparent;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;">health</button>
+        <button onclick="filterAsk(this,'relationships')" class="ask-filter" style="padding:5px 14px;border-radius:20px;font-size:12px;border:1px solid var(--border2);background:transparent;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;">relationships</button>
+        <button onclick="filterAsk(this,'money')" class="ask-filter" style="padding:5px 14px;border-radius:20px;font-size:12px;border:1px solid var(--border2);background:transparent;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;">money</button>
+        <button onclick="filterAsk(this,'culture')" class="ask-filter" style="padding:5px 14px;border-radius:20px;font-size:12px;border:1px solid var(--border2);background:transparent;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;">culture</button>
       </div>
-      <!-- Questions list -->
-      <div style="display:flex;flex-direction:column;gap:12px;">
-        <div class="forum-question-card">
-          <div class="fq-meta"><span class="fq-tag">Culture</span><span class="fq-time">45 min ago</span></div>
-          <div class="fq-title">anyone watching anything good right now?? I just finished Severance and I need something immediately or I'm going to spiral</div>
-          <div class="fq-footer"><span class="fq-stat">&#10022; 84 answers</span><span class="fq-stat">&#9670; 312 views</span><span class="fq-author">Asked by TenderEmber</span></div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;" id="askList">
+        <div class="forum-question-card" data-tag="therapy">
+          <div class="fq-meta"><span class="fq-tag">Therapy</span><span class="fq-time">1h ago</span></div>
+          <div class="fq-title">anyone dealt with a therapist who wasn't a good fit? how did you bring it up without making it weird?</div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 14 replies</span><span class="fq-author">Asked by maya.c</span></div>
         </div>
-        <div class="forum-question-card">
-          <div class="fq-meta"><span class="fq-tag">Culture</span><span class="fq-time">2 hours ago</span></div>
-          <div class="fq-title">have y'all heard Doechii's new stuff?? like where did she come from and why is she saying everything I needed said &#128064; drop your current artist obsessions below</div>
-          <div class="fq-footer"><span class="fq-stat">&#10022; 47 answers</span><span class="fq-stat">&#9670; 190 views</span><span class="fq-author">Asked by VividBloom</span></div>
+        <div class="forum-question-card" data-tag="health">
+          <div class="fq-meta"><span class="fq-tag">Health</span><span class="fq-time">3h ago</span></div>
+          <div class="fq-title">Black women in Atlanta — who is your ob/gyn and do they actually listen to you?</div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 31 replies</span><span class="fq-author">Asked by tee.wrote</span></div>
         </div>
-        <div class="forum-question-card">
-          <div class="fq-meta"><span class="fq-tag">Joy</span><span class="fq-time">3 hours ago</span></div>
-          <div class="fq-title">I'm tryna start a personal library &#8212; what are your top 3 books you'd press into someone's hands? any genre, no wrong answers</div>
-          <div class="fq-footer"><span class="fq-stat">&#10022; 61 answers</span><span class="fq-stat">&#9670; 228 views</span><span class="fq-author">Asked by RootedCrown</span></div>
+        <div class="forum-question-card" data-tag="relationships">
+          <div class="fq-meta"><span class="fq-tag">Relationships</span><span class="fq-time">5h ago</span></div>
+          <div class="fq-title">is it normal to feel guilty for setting boundaries with your parents even when you know you're right?</div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 57 replies</span><span class="fq-author">Asked by anon</span></div>
         </div>
-        <div class="forum-question-card">
-          <div class="fq-meta"><span class="fq-tag">Culture</span><span class="fq-time">5 hours ago</span></div>
-          <div class="fq-title">okay it's time. definitive Beyonc&#233; era ranking. go. I'll start &#8212; Renaissance is her most underrated and I will die on this hill &#128566;</div>
-          <div class="fq-footer"><span class="fq-stat">&#10022; 203 answers</span><span class="fq-stat">&#9670; 1.4k views</span><span class="fq-author">Asked by SacredHarvest</span></div>
+        <div class="forum-question-card" data-tag="money">
+          <div class="fq-meta"><span class="fq-tag">Money</span><span class="fq-time">6h ago</span></div>
+          <div class="fq-title">first time freelancing — when do y'all actually start charging what you're worth and how did you get there?</div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 22 replies</span><span class="fq-author">Asked by k.creates</span></div>
         </div>
-        <div class="forum-question-card">
-          <div class="fq-meta"><span class="fq-tag">Work &amp; Career</span><span class="fq-time">Yesterday</span></div>
-          <div class="fq-title">I'm the only Black person at my company. How do you protect your peace while still advocating for yourself?</div>
-          <div class="fq-footer"><span class="fq-stat">&#10022; 18 answers</span><span class="fq-stat">&#9670; 62 views</span><span class="fq-author">Asked by RootedCrown</span></div>
+        <div class="forum-question-card" data-tag="culture">
+          <div class="fq-meta"><span class="fq-tag">Culture</span><span class="fq-time">Yesterday</span></div>
+          <div class="fq-title">okay it's time. definitive Beyoncé era ranking. go. I'll start — Renaissance is her most underrated and I will die on this hill &#128566;</div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 203 replies</span><span class="fq-author">Asked by SacredHarvest</span></div>
         </div>
-        <div class="forum-question-card">
-          <div class="fq-meta"><span class="fq-tag">Joy</span><span class="fq-time">Yesterday</span></div>
-          <div class="fq-title">What's one small thing you did this week that was purely for your own joy? Sharing for accountability.</div>
-          <div class="fq-footer"><span class="fq-stat">&#10022; 67 answers</span><span class="fq-stat">&#9670; 201 views</span><span class="fq-author">Asked by DeepSignal</span></div>
-        </div>
-        <div class="forum-question-card">
-          <div class="fq-meta"><span class="fq-tag">Relationships</span><span class="fq-time">2 days ago</span></div>
-          <div class="fq-title">How do you have honest conversations about mental health with parents from a generation that didn't talk about it?</div>
-          <div class="fq-footer"><span class="fq-stat">&#10022; 35 answers</span><span class="fq-stat">&#9670; 104 views</span><span class="fq-author">Asked by QuietCipher</span></div>
-        </div>
-        <div class="forum-question-card">
-          <div class="fq-meta"><span class="fq-tag">Mental Health</span><span class="fq-time">3 days ago</span></div>
+        <div class="forum-question-card" data-tag="therapy">
+          <div class="fq-meta"><span class="fq-tag">Therapy</span><span class="fq-time">Yesterday</span></div>
           <div class="fq-title">How do you find a therapist who actually understands racial trauma without having to explain everything from scratch?</div>
-          <div class="fq-footer"><span class="fq-stat">&#10022; 23 answers</span><span class="fq-stat">&#9670; 47 views</span><span class="fq-author">Asked by VividBloom</span></div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 23 replies</span><span class="fq-author">Asked by VividBloom</span></div>
         </div>
-      </div>
+        <div class="forum-question-card" data-tag="culture">
+          <div class="fq-meta"><span class="fq-tag">Culture</span><span class="fq-time">2 days ago</span></div>
+          <div class="fq-title">I'm tryna start a personal library — what are your top 3 books you'd press into someone's hands? any genre, no wrong answers</div>
+          <div class="fq-footer"><span class="fq-stat">&#10022; 61 replies</span><span class="fq-author">Asked by RootedCrown</span></div>
+        </div>
       </div>
     </div>
 
-    <!-- Groups -->
+    <!-- Groups (preserved) -->
     <div class="sub-panel" id="community-groups">
       <div class="grid-3" style="margin-bottom:36px;">
         <div class="group-card"><div class="group-name">Healing Brotherhood</div><div class="group-members">&#10022; 234 Members</div><div class="group-desc">For Black men who are doing the work — together.</div><button class="btn btn-sm" style="margin-top:16px;">Request to Join</button></div>
@@ -1429,7 +1431,9 @@ span.d{display:inline !important;}span.r{display:none !important;}
     </div>
 
     <!-- Near You - Members -->
-                    <div class="sub-panel" id="community-nearby">
+                    
+    <!-- Near You (preserved) -->
+    <div class="sub-panel" id="community-nearby">
       <div style="margin-bottom:20px;">
         <div class="label" style="margin-bottom:6px;">&#10022; Members Near You</div>
         <p class="body-text" style="font-size:13px;color:var(--text-muted);">Full Color members who have chosen to share their location.</p>
@@ -1544,6 +1548,9 @@ span.d{display:inline !important;}span.r{display:none !important;}
         </div>
       </div>
     </div>
+  </div>
+</div>
+
   </div>
 </div>
 
@@ -1742,6 +1749,25 @@ span.d{display:inline !important;}span.r{display:none !important;}
       <h1 class="display r" style="font-size:clamp(32px,5vw,56px);">Take care of yourself. <em>We made it easy.</em></h1>
       <p class="body-text" style="margin-top:16px;max-width:560px;">The Lens, the journal, soundscapes, affirmations, and more. Pick what you need today.</p>
     </div>
+    <!-- Mood Reflection -->
+    <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:20px;padding:24px;margin-bottom:28px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div class="eyebrow" style="font-size:9px;">&#10022; How You've Been</div>
+        <button id="moodInfoBtn" onclick="toggleMoodInfo()" style="background:none;border:1px solid var(--border2);border-radius:50%;width:18px;height:18px;font-size:10px;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Syne',sans-serif;font-weight:700;">i</button>
+      </div>
+
+      <!-- Info tooltip -->
+      <div id="moodInfoTooltip" style="display:none;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:var(--text-muted);line-height:1.6;">
+        This message is shaped by the moods you've logged in your daily check-in over the past 7 days.
+      </div>
+
+      <!-- Word reflection — rendered by JS -->
+      <div id="moodReflection" style="margin-bottom:20px;"></div>
+
+      <!-- Hidden grid anchor still needed for JS compat -->
+      <div id="moodMapGrid" style="display:none;"></div>
+    </div>
+
     <!-- Active tool panel - shows at top when a tool is selected -->
     <div id="wellness-active-panel" style="margin-bottom:28px;display:none;"></div>
     <!-- Tool selector grid -->
@@ -2889,8 +2915,11 @@ span.d{display:inline !important;}span.r{display:none !important;}
 
     <!-- Profile tab -->
     <div class="profile-pane active" id="ppane-profile">
+      <!-- Mood strip -->
       <div class="profile-section">
-        <h4>&#10022; Your Presence</h4>
+        <h4>&#10022; Your Last 8 Days</h4>
+        <div id="profileMoodStrip" style="display:flex;gap:6px;align-items:flex-end;flex-wrap:wrap;"></div>
+      </div>
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
           <div class="profile-tier-badge"><span class="profile-tier-name" id="profileTierName">Full Color</span></div>
           <button class="btn btn-sm" onclick="showProfileTab('privacy',document.querySelectorAll('.profile-tab')[4])">Change Presence</button>
@@ -3425,6 +3454,8 @@ function openProfileModal(){
   document.getElementById('profileModal').classList.add('open');
   document.body.style.overflow='hidden';
   if(selectedPresence) switchPresence(selectedPresence);
+  const log = JSON.parse(localStorage.getItem('rcMoodLog')||'[]');
+  renderProfileMoodStrip(log);
 }
 function updateProgress(pct){document.getElementById('progressBar').style.width=pct+'%';}
 
@@ -3717,6 +3748,33 @@ function filterSpec(el,spec){
 }
 
 // ── Chat ──
+function toggleReaction(btn){
+  const reacted = btn.getAttribute('data-reacted') === 'true';
+  if(reacted){
+    btn.style.background = 'var(--bg2)';
+    btn.style.borderColor = 'var(--border2)';
+    btn.setAttribute('data-reacted','false');
+  } else {
+    btn.style.background = 'rgba(232,112,138,0.12)';
+    btn.style.borderColor = 'var(--accent)';
+    btn.setAttribute('data-reacted','true');
+  }
+}
+
+function filterAsk(btn, tag){
+  document.querySelectorAll('.ask-filter').forEach(b=>{
+    b.style.background='transparent';
+    b.style.color='var(--text-muted)';
+    b.style.borderColor='var(--border2)';
+  });
+  btn.style.background='var(--accent)';
+  btn.style.color='#060403';
+  btn.style.borderColor='var(--accent)';
+  document.querySelectorAll('#askList .forum-question-card').forEach(card=>{
+    card.style.display=(tag==='all'||card.getAttribute('data-tag')===tag)?'':'none';
+  });
+}
+
 function sendChat(){
   if(!joined){openJoinModal();return;}
   const inp=document.getElementById('chatInput');
@@ -4386,328 +4444,171 @@ function goToFeeling(){
   showRitualStep('ritual-feeling');
 }
 
-function selectFeeling(el, type){
-  document.querySelectorAll('.feeling-opt').forEach(o=>{o.classList.remove('selected','heavy-feel');});
-  el.classList.add('selected');
-  if(type==='heavy'||type==='foggy') el.classList.add('heavy-feel');
-  selectedFeeling = type;
-  const data = FEELING_DATA[type];
-  const responseEl = document.getElementById('feelingResponse');
-  document.getElementById('feelingResponseText').textContent = data.response;
-  const actionsEl = document.getElementById('feelingResponseActions');
-  actionsEl.innerHTML = '';
-  data.actions.forEach(a => {
-    const btn = document.createElement('button');
-    btn.className = 'btn btn-sm btn-outline';
-    btn.textContent = a.label;
-    btn.onclick = () => {
-      skipRitual();
-      if(a.action==='catchup') openCatchUp();
-      else if(a.tab) showTab(a.tab);
+// ── Mood logging & map ──
+const HEAVY_MOODS = ['heavy','foggy'];
+function logMoodEntry(type){
+  const today = new Date().toISOString().slice(0,10);
+  let log = JSON.parse(localStorage.getItem('rcMoodLog')||'[]');
+  // Only one entry per day
+  log = log.filter(e=>e.date!==today);
+  log.push({date:today, mood:type});
+  // Keep last 60 days
+  log = log.slice(-60);
+  localStorage.setItem('rcMoodLog', JSON.stringify(log));
+  checkMoodStreak(log);
+  renderMoodMap(log);
+}
+function checkMoodStreak(log){
+  if(!log.length) return;
+  // Check last 7 consecutive days of heavy/foggy
+  const sorted = [...log].sort((a,b)=>a.date.localeCompare(b.date));
+  let streak = 0;
+  const today = new Date();
+  for(let i=0;i<7;i++){
+    const d = new Date(today);
+    d.setDate(d.getDate()-i);
+    const ds = d.toISOString().slice(0,10);
+    const entry = sorted.find(e=>e.date===ds);
+    if(entry && HEAVY_MOODS.includes(entry.mood)) streak++;
+    else break;
+  }
+  if(streak>=7){
+    setTimeout(()=>showMoodCheckIn(),800);
+  }
+}
+function showMoodCheckIn(){
+  const existing = document.getElementById('moodCheckInBanner');
+  if(existing) return;
+  const banner = document.createElement('div');
+  banner.id = 'moodCheckInBanner';
+  banner.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);width:min(360px,90vw);background:var(--bg2);border:1px solid var(--accent);border-radius:16px;padding:18px 20px;z-index:3000;box-shadow:0 8px 32px rgba(0,0,0,0.4);animation:slideUp 0.35s ease;';
+  banner.innerHTML=`
+    <div style="display:flex;align-items:flex-start;gap:12px;">
+      <div style="font-size:20px;flex-shrink:0;">&#x1F56F;</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;">hey, we see you</div>
+        <p style="font-size:12px;color:var(--text-soft);line-height:1.6;margin:0 0 12px;">you've been carrying something heavy for a while. no pressure — but we're here if you want to talk, or connect with someone who gets it.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-sm" onclick="showTab('crisis');document.getElementById('moodCheckInBanner').remove()">find support</button>
+          <button class="btn btn-sm btn-outline" onclick="showTab('therapists');document.getElementById('moodCheckInBanner').remove()">find a therapist</button>
+          <button style="background:none;border:none;font-size:11px;color:var(--text-muted);cursor:pointer;padding:6px 0;" onclick="document.getElementById('moodCheckInBanner').remove()">i'm okay, thanks</button>
+        </div>
+      </div>
+    </div>`;
+  document.body.appendChild(banner);
+}
+function toggleMoodInfo(){
+  const tip = document.getElementById('moodInfoTooltip');
+  if(tip) tip.style.display = tip.style.display === 'none' ? 'block' : 'none';
+}
+
+function renderMoodMap(log){
+  renderMoodReflection(log);
+  renderProfileMoodStrip(log);
+}
+
+function renderMoodReflection(log){
+  const el = document.getElementById('moodReflection');
+  if(!el) return;
+
+  const HEAVY = ['heavy','foggy'];
+  const GOOD  = ['litup','expansive','hopeful','steady'];
+
+  // Get last 7 logged days
+  const sorted = [...log].sort((a,b)=>b.date.localeCompare(a.date));
+  const recent = sorted.slice(0,7);
+  const count  = recent.length;
+
+  if(count < 5){
+    el.innerHTML = `
+      <p style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;line-height:1.6;color:var(--text);margin:0 0 6px;">Nothing here yet.</p>
+      <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin:0;">Check in each morning and this space will start to reflect you back.</p>`;
+    return;
+  }
+
+  const heavyCount   = recent.filter(e=>e.mood==='heavy').length;
+  const foggyCount   = recent.filter(e=>e.mood==='foggy').length;
+  const litupCount   = recent.filter(e=>['litup','expansive'].includes(e.mood)).length;
+  const hopefulCount = recent.filter(e=>['hopeful','steady'].includes(e.mood)).length;
+  const lowCount     = heavyCount + foggyCount;
+
+  let message = '';
+  let sub = '';
+  let cta = null;
+
+  if(lowCount >= 5){
+    message = "You've been carrying something.";
+    sub = "You don't have to figure it all out right now — but you don't have to carry it alone either.";
+    cta = {
+      buttons: [
+        {label:'The Lens', action:'tool', tool:'lens-w'},
+        {label:'Find a Therapist', action:'tab', tab:'therapists'}
+      ]
     };
-    actionsEl.appendChild(btn);
-  });
-  responseEl.style.display = 'block';
-  // Add "I'm good for now" button
-  const skipBtn = document.createElement('button');
-  skipBtn.className = 'btn btn-sm';
-  skipBtn.textContent = "I'm good for now";
-  skipBtn.style.cssText = 'margin-top:12px;width:100%;justify-content:center;display:flex;color:var(--text-muted);';
-  skipBtn.onclick = () => goToPaths();
-  actionsEl.appendChild(skipBtn);
-}
-
-function goToPaths(){
-  const feeling = selectedFeeling || 'steady';
-  const data = FEELING_DATA[feeling];
-  document.getElementById('ritualQuoteText').textContent = data.quote.text;
-  document.getElementById('ritualQuoteAttr').textContent = data.quote.attr;
-  // Also update home page quote
-  const homeQuoteText = document.getElementById('homeQuoteText');
-  const homeQuoteAttr = document.getElementById('homeQuoteAttr');
-  if(homeQuoteText) homeQuoteText.textContent = data.quote.text;
-  if(homeQuoteAttr) homeQuoteAttr.textContent = data.quote.attr;
-  showRitualStep('ritual-paths');
-}
-
-function showRitualStep(id){
-  document.querySelectorAll('.ritual-step').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id)?.classList.add('active');
-}
-
-function skipRitual(){
-  const overlay = document.getElementById('ritualOverlay');
-  if(overlay){
-    overlay.style.pointerEvents='none'; // immediately stop blocking clicks
-    overlay.style.opacity='0';
-    overlay.style.transition='opacity 0.3s';
-    setTimeout(()=>{
-      overlay.classList.add('hidden');
-      overlay.style.opacity='';
-      overlay.style.transition='';
-      overlay.style.pointerEvents='';
-    },320);
-  }
-  try{ localStorage.setItem('rcRitualDate', new Date().toDateString()); }catch(e){}
-  ritualDone = true;
-}
-
-// ── Catch Me Up ──
-function openCatchUp(){
-  const overlay = document.getElementById('catchupOverlay');
-  if(!overlay){ console.error('catchupOverlay not found'); return; }
-  catchupSlide = 0;
-  updateCatchupProgress();
-  document.querySelectorAll('.catchup-slide').forEach((s,i)=>{
-    s.classList.toggle('active', i===0);
-    s.classList.remove('exit');
-  });
-  const prev = document.getElementById('catchupPrev');
-  const next = document.getElementById('catchupNext');
-  if(prev) prev.style.visibility='hidden';
-  if(next) next.textContent='Next →';
-  overlay.classList.add('open');
-  document.body.style.overflow='hidden';
-}
-
-function closeCatchUp(){
-  document.getElementById('catchupOverlay').classList.remove('open');
-  document.body.style.overflow='';
-}
-
-function updateCatchupProgress(){
-  const prog = document.getElementById('catchupProgress');
-  if(!prog) return;
-  prog.innerHTML='';
-  for(let i=0;i<CATCHUP_TOTAL;i++){
-    const d=document.createElement('div');
-    d.className='catchup-progress-dot' + (i<catchupSlide?' done':i===catchupSlide?' active':'');
-    prog.appendChild(d);
-  }
-  document.getElementById('catchupCounter').textContent = (catchupSlide+1)+' of '+CATCHUP_TOTAL;
-}
-
-function nextCatchUp(){
-  if(catchupSlide >= CATCHUP_TOTAL-1){ closeCatchUp(); return; }
-  const current = document.getElementById('catchup-'+catchupSlide);
-  catchupSlide++;
-  const next = document.getElementById('catchup-'+catchupSlide);
-  current?.classList.add('exit');
-  current?.classList.remove('active');
-  setTimeout(()=>current?.classList.remove('exit'),350);
-  next?.classList.add('active');
-  document.getElementById('catchupPrev').style.visibility='visible';
-  document.getElementById('catchupNext').textContent = catchupSlide===CATCHUP_TOTAL-1?'Done ✓':'Next →';
-  updateCatchupProgress();
-}
-
-function prevCatchUp(){
-  if(catchupSlide<=0) return;
-  const current = document.getElementById('catchup-'+catchupSlide);
-  catchupSlide--;
-  const prev = document.getElementById('catchup-'+catchupSlide);
-  current?.classList.remove('active');
-  prev?.classList.add('active');
-  document.getElementById('catchupPrev').style.visibility = catchupSlide===0?'hidden':'visible';
-  document.getElementById('catchupNext').textContent='Next →';
-  updateCatchupProgress();
-}
-
-// Set greeting time on home load
-(function(){
-  const hr=new Date().getHours();
-  const el=document.getElementById('homeTimeLabel');
-  if(el) el.textContent = hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
-})();
-
-// Init ritual on page load
-function tryInitRitual(){
-  const overlay = document.getElementById('ritualOverlay');
-  if(!overlay){ setTimeout(tryInitRitual, 200); return; }
-  if(!ritualDone) initRitual();
-}
-setTimeout(tryInitRitual, 400);
-
-
-
-showTab('home');
-</script>
-
-<script>
-// ── Hero image shuffle ──
-const HERO_IMGS = [
-  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/-NGLqDIlJGL1SIQZphpv1.jpg",
-  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/4N1na1T2MnV6GpU55X4PX.jpg",
-  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/7_JzOURrlme8f2DNW9-l_.jpg",
-  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/7xp4-gneX2cmRGTaSTOn1.jpg",
-  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/AfZHr_yLmnusAfREx__vj.jpg",
-  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/B_f7AX6gEmgS1UgJWIY_M.jpg",
-  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/BlVLMpuVKnJXr5EKcrHK3.jpg",
-  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/ByopUyXY2cr06AosfmbIs.jpg",
-  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/F6D3dr6ZzDzQhR2VpfXgn.jpg",
-  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/FHSEAvB5DITNDWeCHJj5I.jpg",
-  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/GrKs6IaW9xrMUfNRc7j8Y.jpg",
-  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/Jj7p5QIJBPTqIEDqf68cZ.jpg",
-  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/Kuso_IRZGHx1NA5dx79SF.jpg",
-  "https://raw.githubusercontent.com/rosecoloredstart/waitlist/main/LUbfy2IGmZJEE2kr1WHtF.jpg"
-];
-
-
-// Shuffle 14 images across 3 slots, rotating every 4s with crossfade
-// Assign distinct images to each slot, no repeats within same view
-let heroSets = [];
-let heroSetIdx = 0;
-
-function buildHeroSets() {
-  // Create shuffled rotation sets ensuring no slot shows same img consecutively
-  const indices = Array.from({length: HERO_IMGS.length}, (_, i) => i); // 14 images
-  // Shuffle
-  for (let i = indices.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [indices[i], indices[j]] = [indices[j], indices[i]];
-  }
-  // Build groups of 3 (one per slot)
-  heroSets = [];
-  for (let i = 0; i < indices.length - 2; i += 3) {
-    heroSets.push([indices[i], indices[i+1], indices[i+2]]);
-  }
-  // Pad if needed with remaining
-  if (heroSets.length === 0) heroSets.push([0, 1, 2]);
-}
-
-function applyHeroSet(setIdx, fade) {
-  const set = heroSets[setIdx % heroSets.length];
-  for (let slot = 0; slot < 3; slot++) {
-    const img = document.getElementById('hero-img-' + slot);
-    if (!img) continue;
-    if (fade) {
-      img.style.opacity = '0';
-      img.style.transition = 'opacity 0.8s ease';
-      setTimeout(() => {
-        img.src = HERO_IMGS[set[slot]];
-        img.style.display = 'block';
-        img.onload = () => { img.style.opacity = '1'; };
-        img.onerror = () => { img.style.opacity = '1'; };
-      }, 400);
-    } else {
-      img.src = HERO_IMGS[set[slot]];
-      img.style.display = 'block';
-      img.style.opacity = '1';
-    }
-  }
-}
-
-let heroStarted = false;
-function startHeroShuffle() {
-  if (heroStarted) return;
-  heroStarted = true;
-  buildHeroSets();
-  // Set first batch immediately, no transition
-  const firstSet = heroSets[0];
-  for (let slot = 0; slot < 3; slot++) {
-    const img = document.getElementById('hero-img-' + slot);
-    if (!img) return; // DOM not ready yet
-    img.src = HERO_IMGS[firstSet[slot]];
-    img.style.opacity = '1';
-    img.style.transition = 'none';
-    img.style.display = 'block';
-  }
-  setInterval(() => {
-    heroSetIdx = (heroSetIdx + 1) % heroSets.length;
-    const set = heroSets[heroSetIdx];
-    for (let slot = 0; slot < 3; slot++) {
-      const img = document.getElementById('hero-img-' + slot);
-      if (!img) continue;
-      // Fade out
-      img.style.transition = 'opacity 0.7s ease';
-      img.style.opacity = '0';
-      // After fade out, swap src and fade in
-      const capturedSlot = slot;
-      const capturedSet = set;
-      setTimeout(() => {
-        const el = document.getElementById('hero-img-' + capturedSlot);
-        if (!el) return;
-        el.src = HERO_IMGS[capturedSet[capturedSlot]];
-        el.style.display = 'block';
-        el.style.transition = 'opacity 0.9s ease';
-        el.style.opacity = '1';
-      }, 750);
-    }
-  }, 6000);
-}
-
-// Single entry point — whichever fires first wins, guard prevents double-run
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', startHeroShuffle);
-} else {
-  startHeroShuffle();
-}
-
-
-// ── News accordion ──
-function toggleNewsAccordion(el){
-  el.classList.toggle('open');
-}
-
-// ── Visual Cleanse ──
-function selectVisual(tile, url, label){
-  document.querySelectorAll('.visual-tile').forEach(t=>t.classList.remove('active-visual'));
-  tile.classList.add('active-visual');
-  const player = document.getElementById('visualPlayer');
-  const frame = document.getElementById('visualFrame');
-  const nowPlaying = document.getElementById('visualNowPlaying');
-  const nowLabel = document.getElementById('visualNowLabel');
-  frame.src = url;
-  player.style.display = 'block';
-  nowPlaying.style.display = 'flex';
-  nowLabel.textContent = label;
-}
-function stopVisual(){
-  document.getElementById('visualFrame').src = '';
-  document.getElementById('visualPlayer').style.display = 'none';
-  document.getElementById('visualNowPlaying').style.display = 'none';
-  document.querySelectorAll('.visual-tile').forEach(t=>t.classList.remove('active-visual'));
-}
-
-// ── Events ──
-let evtShowFree=true, evtShowTicketed=true, evtFormatFilter='all';
-function filterEvents(el,format){
-  document.querySelectorAll('#tab-events .filter-pill').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');
-  evtFormatFilter=format;
-  applyEventFilters();
-}
-function toggleEventCost(type){
-  if(type==='free'){
-    evtShowFree=!evtShowFree;
-    document.getElementById('evtFree').classList.toggle('active',evtShowFree);
+  } else if(foggyCount >= 3 && heavyCount < 2){
+    message = "Feeling a little foggy this week?";
+    sub = "Sometimes the mind just needs quiet more than answers.";
+    cta = {
+      buttons: [
+        {label:'Noise Cleanse', action:'tool', tool:'noise'},
+        {label:'Visual Cleanse', action:'tool', tool:'visual'}
+      ]
+    };
+  } else if(heavyCount >= 3){
+    message = "You've been carrying something.";
+    sub = "You don't have to figure it all out right now — but you don't have to carry it alone either.";
+    cta = {
+      buttons: [
+        {label:'The Lens', action:'tool', tool:'lens-w'},
+        {label:'Find a Therapist', action:'tab', tab:'therapists'}
+      ]
+    };
+  } else if(litupCount >= 3){
+    message = "You've been in a good place lately.";
+    sub = "Whatever's working right now — hold onto it.";
+  } else if(hopefulCount >= 3){
+    message = "You've been holding it together and then some.";
+    sub = "That steadiness is real. Don't take it for granted.";
   } else {
-    evtShowTicketed=!evtShowTicketed;
-    document.getElementById('evtTicketed').classList.toggle('active',evtShowTicketed);
+    message = "It's been a whole journey this week.";
+    sub = "The hard days were real, and so was your ability to keep showing up.";
+    cta = {
+      buttons: [
+        {label:'Journal', action:'tool', tool:'journal'}
+      ]
+    };
   }
-  applyEventFilters();
-}
-function applyEventFilters(){
-  document.querySelectorAll('#eventsGrid .event-card').forEach(c=>{
-    const fmt=c.dataset.format;
-    const cost=c.dataset.cost;
-    const fmtOk=evtFormatFilter==='all'||fmt===evtFormatFilter;
-    const costOk=(cost==='free'&&evtShowFree)||(cost==='ticketed'&&evtShowTicketed);
-    c.style.display=(fmtOk&&costOk)?'':'none';
-  });
-}
-function rsvpEvent(btn){
-  const card=btn.closest('.event-card');
-  const title=card.querySelector('.event-title').textContent;
-  btn.textContent='Reserved ✓';
-  btn.style.cssText='font-family:Syne,sans-serif;font-size:9.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:7px 14px;border-radius:50px;border:1px solid rgba(62,207,79,0.3);background:rgba(62,207,79,0.12);color:#3ecf4f;cursor:default;';
-  btn.disabled=true;
-  showToast('You\'re in: ' + title.slice(0,36) + (title.length>36?'…':''));
+
+  let ctaHTML = '';
+  if(cta){
+    const btnHTML = cta.buttons.map(b=>`
+      <button class="btn btn-sm btn-outline" onclick="${b.action==='tab' ? `showTab('${b.tab}');document.getElementById('profileModal') && (document.getElementById('profileModal').style.display='none')` : `showTab('wellness');setTimeout(()=>openTool('${b.tool}',null),300)`}">${b.label}</button>
+    `).join('');
+    ctaHTML = `<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;">${btnHTML}</div>`;
+  }
+
+  el.innerHTML = `
+    <p style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;line-height:1.5;color:var(--text);margin:0 0 8px;">${message}</p>
+    <p style="font-size:13px;color:var(--text-soft);line-height:1.7;margin:0;">${sub}</p>
+    ${ctaHTML}
+  `;
 }
 
-</script>
-
-
-
-</body>
-</html>
+function renderProfileMoodStrip(log){
+  const strip = document.getElementById('profileMoodStrip');
+  if(!strip) return;
+  const moodEmoji = {heavy:'🌧',foggy:'🌫',steady:'🌱',hopeful:'🌤',expansive:'✨',litup:'🔥'};
+  const moodLabel = {heavy:'Carrying a lot',foggy:'Foggy',steady:'Steady',hopeful:'Hopeful',expansive:'Expansive',litup:'Lit up'};
+  const today = new Date();
+  const days = [];
+  for(let i=7;i>=0;i--){
+    const d = new Date(today);
+    d.setDate(d.getDate()-i);
+    const ds = d.toISOString().slice(0,10);
+    const entry = log.find(e=>e.date===ds);
+    const label = d.toLocaleDateString('en-US',{weekday:'short'});
+    days.push({ds, label, mood: entry?entry.mood:null});
+  }
+  strip.innerHTML = days.map(d=>`
+    <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+      <div title="${d.mood ? moodLabel[d.mood] : 'No check-in'}" style="width:36px;height:36px;border-radius:50%;background:var(--bg2);border:1px solid var(--border2);display:flex;
