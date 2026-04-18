@@ -20,21 +20,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #0d0a07; }
 .label { position: absolute; bottom: 24px; left: 24px; color: rgba(240,220,180,0.65); font-family: Georgia, serif; font-style: italic; font-size: 13px; letter-spacing: 1.5px; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
 .music-btn { position: absolute; top: 16px; right: 16px; width: 38px; height: 38px; border-radius: 50%; background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; cursor: pointer; color: rgba(255,255,255,0.55); font-size: 15px; transition: all 0.3s; user-select: none; }
 </style>
-<audio id="bgAudio" loop autoplay>
-  <source src="https://raw.githubusercontent.com/rosecoloredstart/prototype/main/mondamusic-lofi-beats-499181.mp3" type="audio/mpeg">
-</audio>
-<script>
-  // Autoplay is blocked by browsers — start on first user interaction
-  document.addEventListener('click', function startAudio() {
-    var audio = document.getElementById('bgAudio');
-    if (audio.paused) audio.play();
-    document.removeEventListener('click', startAudio);
-  }, { once: true });
-  // Also try immediate play (works in WebView)
-  document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('bgAudio').play().catch(function() {});
-  });
-</script>
+
 </head>
 <body>
 <div class="scene">
@@ -51,6 +37,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #0d0a07; }
 
 
 // Falling leaves
+const fx = document.getElementById('fx');
 const leafColors = ['rgba(200,120,30,0.6)','rgba(180,100,20,0.5)','rgba(220,160,40,0.5)','rgba(160,80,20,0.5)'];
 for (let i = 0; i < 25; i++) {
   const l = document.createElement('div');
@@ -58,8 +45,6 @@ for (let i = 0; i < 25; i++) {
   l.style.cssText = 'position:absolute;width:'+s+'px;height:'+(s*0.7)+'px;border-radius:50% 0 50% 0;background:'+leafColors[Math.floor(Math.random()*leafColors.length)]+';left:'+Math.random()*110+'%;animation:leaffall '+(Math.random()*6+4)+'s linear '+(Math.random()*4)+'s infinite;';
   fx.appendChild(l);
 }
-
-const fx = document.getElementById('fx');
 for (let i = 0; i < 0; i++) {
   const p = document.createElement('div');
   p.className = 'particle';
